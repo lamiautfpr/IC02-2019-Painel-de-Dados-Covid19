@@ -1,0 +1,2 @@
+# IC02-2019-Painel-de-Dados-Covid19
+Desenvolvimento de uma Plataforma de Análise Inteligente de Dados de Saúde do Estado para auxílio a predição e tomada de decisão pelos órgãos governamentais. A plataforma contará com diversas funções que irão mapear quantidade de recursos, possibilidade de remanejamento destes e estimativa de necessidade futura, com análise de dados e impactos econômicos relacionados com a curva de casos em nível municipal, regional, estadual, nacional.
