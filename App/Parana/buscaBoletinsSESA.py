@@ -3,6 +3,7 @@ import pandas as pd
 import unicodedata
 import itertools
 import re
+import numpy as np
 
 initial_date = 0
 dataset = 0
@@ -26,6 +27,10 @@ def getData(date, url_data, date_control):
                ).format(url_data)
     dataset = pd.read_csv(
         url, sep=',|;', encoding='ISO-8859-1', error_bad_lines=False, engine='python')
+    if len(dataset.columns) < 7:
+        dataset["DESCARTADOS"] = np.nan
+        dataset["EM INVESTIGAÇÃO"] = np.nan
+        dataset["TOTAL"] = np.nan
     dataset["Data"] = date
     date = datetime.strptime(date, '%d/%m/%Y')
     datevar = datetime(2020, 4, 27)
