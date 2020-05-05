@@ -1,5 +1,6 @@
 from datetime import timedelta, datetime, date
 import pandas as pd
+import numpy as np
 import unicodedata
 import itertools
 import re
@@ -10,8 +11,8 @@ date_control = True
 
 
 def today():
-    today = datetime.now()
-    today = today.strftime('%d/%m/%Y')
+    today = datetime.now() + timedelta(days=1)
+    today = datetime.strftime(today, '%d/%m/%Y')
 
     return today
 
@@ -26,10 +27,9 @@ def getData(date, url_data, date_control):
                ).format(url_data)
     dataset = pd.read_csv(
         url, sep=',|;', encoding='ISO-8859-1', error_bad_lines=False, engine='python')
-    dataset["Data"] = date
+
     date = datetime.strptime(date, '%d/%m/%Y')
-    datevar = datetime(2020, 4, 27)
-    if date > datevar:
+    if date > datetime(2020, 4, 27):
         pass
     else:
         empty_cols = [
@@ -38,6 +38,14 @@ def getData(date, url_data, date_control):
         dataset.drop(empty_cols,
                      axis=1,
                      inplace=True)
+    if date == datetime(2020, 5, 3):
+        dataset["None"] = 'NaN'
+    if date >= datetime(2020, 5, 4):
+        dataset = dataset.drop(['Unnamed: 1'], axis=1)
+        dataset["None1"] = 'NaN'
+        dataset["None2"] = 'NaN'
+        dataset["None3"] = 'NaN'
+    dataset["Data"] = date
 
     return(dataset)
 
