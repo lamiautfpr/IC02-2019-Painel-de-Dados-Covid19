@@ -12,5 +12,6 @@ ENV/
 env.bak/
 venv.bak/
 pip-selfcheck.json
+.vscode/launch.json
 
 # End for VirtualEnv
