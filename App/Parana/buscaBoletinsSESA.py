@@ -8,6 +8,9 @@ initial_date = 0
 dataset = 0
 date_control = True
 
+date_remove_column = [
+    {"date": "04/05/2020", "column": ["Unnamed: 1"]},
+]
 
 def today():
     today = datetime.now()
@@ -27,15 +30,16 @@ def getData(date, url_data, date_control):
     dataset = pd.read_csv(
         url, sep=',|;', encoding='ISO-8859-1', error_bad_lines=False, engine='python')
 
-    if date == '03/05/2020':
-        dataset['None'] = 'NaN'
-
-    if date == '04/05/2020':
-        dataset.drop('Unnamed: 1', axis=1, inplace=True)
-        dataset['Aux 1'] = 'NaN'
-        dataset['Aux 2'] = 'NaN'
-        dataset['Aux 3'] = 'NaN'
-
+    for date_remove in date_remove_column:
+        if date == date_remove['date']:
+            for column in date_remove['column']:
+                dataset.drop(column, axis=1, inplace=True)
+    
+    i = 1
+    while len(dataset.columns) < 7:
+        dataset['Aux-' + str(i)] = 'NaN'
+        i += 1
+        
     dataset["Data"] = date
     date = datetime.strptime(date, '%d/%m/%Y')
     datevar = datetime(2020, 4, 27)
