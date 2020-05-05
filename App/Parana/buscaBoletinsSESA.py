@@ -26,6 +26,16 @@ def getData(date, url_data, date_control):
                ).format(url_data)
     dataset = pd.read_csv(
         url, sep=',|;', encoding='ISO-8859-1', error_bad_lines=False, engine='python')
+
+    if date == '03/05/2020':
+        dataset['None'] = 'NaN'
+
+    if date == '04/05/2020':
+        dataset.drop('Unnamed: 1', axis=1, inplace=True)
+        dataset['Aux 1'] = 'NaN'
+        dataset['Aux 2'] = 'NaN'
+        dataset['Aux 3'] = 'NaN'
+
     dataset["Data"] = date
     date = datetime.strptime(date, '%d/%m/%Y')
     datevar = datetime(2020, 4, 27)
