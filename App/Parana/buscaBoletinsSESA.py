@@ -8,6 +8,16 @@ initial_date = 0
 dataset = 0
 date_control = True
 
+def cleaner(dataset, url_data):
+    i=0
+    while len(dataset.columns) < 7:
+        dataset['NaN{}'.format(i)] = np.nan
+        i+=1
+
+    if url_data == '04_05_2020':
+        dataset = dataset.drop(['Unnamed: 1'], axis=1)
+
+    return dataset
 
 def today():
     today = datetime.now()
@@ -26,6 +36,9 @@ def getData(date, url_data, date_control):
                ).format(url_data)
     dataset = pd.read_csv(
         url, sep=',|;', encoding='ISO-8859-1', error_bad_lines=False, engine='python')
+
+    cleaner(dataset, url_data)
+
     dataset["Data"] = date
     date = datetime.strptime(date, '%d/%m/%Y')
     datevar = datetime(2020, 4, 27)
