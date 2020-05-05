@@ -9,6 +9,16 @@ initial_date = 0
 dataset = 0
 date_control = True
 
+def cleaner(dataset, url_data):
+    i=0
+    while len(dataset.columns) < 7:
+        dataset['NaN{}'.format(i)] = np.nan
+        i+=1
+
+    if url_data == '04_05_2020':
+        dataset = dataset.drop(['Unnamed: 1'], axis=1)
+
+    return dataset
 
 def today():
     today = datetime.now() + timedelta(days=1)
