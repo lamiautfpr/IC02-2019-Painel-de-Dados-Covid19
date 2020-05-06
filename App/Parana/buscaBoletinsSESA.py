@@ -9,16 +9,41 @@ initial_date = 0
 dataset = 0
 date_control = True
 
-def cleaner(dataset, url_data):
+def cleaner(temp_dataset):
+    columns = [temp_dataset.columns[1:len(temp_dataset.columns)]]
+
+    if 'Unnamed' in str(columns):
+        newColumns = temp_dataset.loc[0].tolist()
+        temp_dataset.columns = newColumns
+        if 'IBGE' in str(newColumns):
+                temp_dataset = temp_dataset.drop(['IBGE'], axis=1)
+
+    if len(temp_dataset.columns) > 7:
+        over_columns = [temp_dataset.columns[7:len(temp_dataset.columns)]]
+        temp_dataset.drop(columns[0], inplace=True, axis=1)
+
     i=0
-    while len(dataset.columns) < 7:
-        dataset['NaN{}'.format(i)] = np.nan
+    while len(temp_dataset.columns) < 7:
+        temp_dataset['NaN{}'.format(i)] = np.nan
         i+=1
 
-    if url_data == '04_05_2020':
-        dataset = dataset.drop(['Unnamed: 1'], axis=1)
+    arr = temp_dataset[1:].values
+
+    head = [
+        'ID',
+        'UF',
+        'Estado',
+        'Confirmados',
+        'Mortes',
+        'Suspeitos',
+        'Descartados',
+        'Data'
+    ]
+
+    dataset = pd.DataFrame(data=arr, header=head)
 
     return dataset
+
 
 def today():
     today = datetime.now()
@@ -38,20 +63,11 @@ def getData(date, url_data, date_control):
     dataset = pd.read_csv(
         url, sep=',|;', encoding='ISO-8859-1', error_bad_lines=False, engine='python')
 
-    cleaner(dataset, url_data)
+    cleaner(dataset)
 
     dataset["Data"] = date
     date = datetime.strptime(date, '%d/%m/%Y')
     datevar = datetime(2020, 4, 27)
-    if date > datevar:
-        pass
-    else:
-        empty_cols = [
-            col for col in dataset.columns if dataset[col].isnull().all()]
-
-        dataset.drop(empty_cols,
-                     axis=1,
-                     inplace=True)
 
     return(dataset)
 
@@ -62,16 +78,16 @@ def datasetConstructor(dataset, date_control):
         dataset = dataset[2:]
     else:
         dataset = dataset[1:]
-
-    dataset.columns = [
-        "REGIONAL DE SAUDE",
-        "MUNICIPIO",
-        "CONFIRMADOS",
-        "OBITOS",
-        "DESCARTADOS",
-        "EM INVESTIGACAO",
-        "TOTAL",
-        "DATA"
+    
+    head = [
+        'ID',
+        'UF',
+        'Estado',
+        'Confirmados',
+        'Mortes',
+        'Suspeitos',
+        'Descartados',
+        'Data'
     ]
 
     return dataset
