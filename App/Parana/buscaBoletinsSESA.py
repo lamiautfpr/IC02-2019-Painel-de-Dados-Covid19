@@ -45,6 +45,9 @@ def getData(date, url_data, date_control):
     # Verificando se há necessidade de adicionar ou remover columns do dataset do dia
     dataset = organizesColumnDataset(date, dataset)
 
+    # Removendo linha do dataset que não tem dados cadastrados
+    dataset.dropna(thresh=1, inplace=True)
+    
     dataset["Data"] = date
     date = datetime.strptime(date, '%d/%m/%Y')
     datevar = datetime(2020, 4, 27)
