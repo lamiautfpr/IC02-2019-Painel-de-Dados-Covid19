@@ -9,14 +9,36 @@ initial_date = 0
 dataset = 0
 date_control = True
 
-def cleaner(dataset, url_data):
+def cleaner(temp_dataset):
+    columns = [temp_dataset.columns[1:len(temp_dataset.columns)]]
+
+    if 'Unnamed' in str(columns):
+        newColumns = temp_dataset.loc[0].tolist()
+        temp_dataset.columns = newColumns
+        if 'IBGE' in str(newColumns):
+                temp_dataset = temp_dataset.drop(['IBGE'], axis=1)
+
+    if len(temp_dataset.columns) > 7:
+        over_columns = [temp_dataset.columns[7:len(temp_dataset.columns)]]
+        temp_dataset.drop(columns[0], inplace=True, axis=1)
+
     i=0
-    while len(dataset.columns) < 7:
-        dataset['NaN{}'.format(i)] = np.nan
+    while len(temp_dataset.columns) < 7:
+        temp_dataset['NaN{}'.format(i)] = np.nan
         i+=1
 
-    if url_data == '04_05_2020':
-        dataset = dataset.drop(['Unnamed: 1'], axis=1)
+    head = [
+        "REGIONAL DE SAUDE",
+        "MUNICIPIO",
+        "CONFIRMADOS",
+        "OBITOS",
+        "DESCARTADOS",
+        "EM INVESTIGACAO",
+        "TOTAL",
+        "DATA"
+    ]
+
+    dataset = pd.DataFrame(data=arr, header=head)
 
     return dataset
 
