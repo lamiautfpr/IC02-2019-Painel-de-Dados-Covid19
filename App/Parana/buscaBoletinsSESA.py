@@ -10,6 +10,18 @@ date_control = True
 
 date_remove_column = [
     {"date": "04/05/2020", "column": ["Unnamed: 1"]},
+    {
+        "date": "05/05/2020", 
+        "column": [
+            "Unnamed: 1",
+            "Unnamed: 8",
+            "Unnamed: 9",
+            "Unnamed: 10",
+            "Unnamed: 11",
+            "Unnamed: 12",
+            "Unnamed: 13"
+        ]
+    },
 ]
 
 def today():
@@ -30,16 +42,9 @@ def getData(date, url_data, date_control):
     dataset = pd.read_csv(
         url, sep=',|;', encoding='ISO-8859-1', error_bad_lines=False, engine='python')
 
-    for date_remove in date_remove_column:
-        if date == date_remove['date']:
-            for column in date_remove['column']:
-                dataset.drop(column, axis=1, inplace=True)
-    
-    i = 1
-    while len(dataset.columns) < 7:
-        dataset['Aux-' + str(i)] = 'NaN'
-        i += 1
-        
+    # Verificando se há necessidade de adicionar ou remover columns do dataset do dia
+    dataset = organizesColumnDataset(date, dataset)
+
     dataset["Data"] = date
     date = datetime.strptime(date, '%d/%m/%Y')
     datevar = datetime(2020, 4, 27)
@@ -55,6 +60,18 @@ def getData(date, url_data, date_control):
 
     return(dataset)
 
+def organizesColumnDataset(date, dataset):
+    for date_remove in date_remove_column:
+        if date == date_remove['date']:
+            for column in date_remove['column']:
+                dataset.drop(column, axis=1, inplace=True)
+    
+    i = 1
+    while len(dataset.columns) < 7:
+        dataset['Aux-' + str(i)] = 'NaN'
+        i += 1
+    
+    return dataset
 
 def datasetConstructor(dataset, date_control):
 
@@ -115,3 +132,9 @@ def main(date, date_control, dataset):
 
 date = getDate(initial_date, date_control)
 dataset = main(date, date_control, dataset)
+
+print(dataset)
+
+# print('')
+# print(dataset)
+
