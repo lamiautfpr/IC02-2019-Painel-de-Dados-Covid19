@@ -1,9 +1,6 @@
 from datetime import timedelta, datetime, date
 import pandas as pd
-<<<<<<< HEAD
 import numpy as np
-=======
->>>>>>> parent of fd03fc6... Merge pull request #3 from lamia-utfpr/cristopher
 import unicodedata
 import itertools
 import re
@@ -12,7 +9,6 @@ initial_date = 0
 dataset = 0
 date_control = True
 
-<<<<<<< HEAD
 def cleaner(temp_dataset):
     columns = [temp_dataset.columns[1:len(temp_dataset.columns)]]
 
@@ -49,8 +45,6 @@ def cleaner(temp_dataset):
                         columns=head)
 
     return dataset
-=======
->>>>>>> parent of fd03fc6... Merge pull request #3 from lamia-utfpr/cristopher
 
 def today():
     today = datetime.now()
@@ -69,12 +63,9 @@ def getData(date, url_data, date_control):
                ).format(url_data)
     dataset = pd.read_csv(
         url, sep=',|;', encoding='ISO-8859-1', error_bad_lines=False, engine='python')
-<<<<<<< HEAD
 
     cleaner(dataset, url_data)
 
-=======
->>>>>>> parent of fd03fc6... Merge pull request #3 from lamia-utfpr/cristopher
     dataset["Data"] = date
     date = datetime.strptime(date, '%d/%m/%Y')
     datevar = datetime(2020, 4, 27)
