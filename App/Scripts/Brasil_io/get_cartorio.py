@@ -1,4 +1,3 @@
-import pandas as pd
 import requests
 import json
 
@@ -11,24 +10,6 @@ def getData(url):
     response = req.json()
 
     return response
-
-
-def datasetBuilder(listdate):
-    head = [
-        'Data',
-        'ObitosCovid',
-        'ObitosPneumo_2019',
-        'ObitosPneumo_2020',
-        'ObitosRespiracao_2019',
-        'ObitosRespiracao_2020',
-        'SemanaEpidemiologica',
-        'ObitosNovosCovid',
-        'Estado'
-    ]
-
-    dataset = pd.DataFrame(listdate, columns=head)
-
-    return dataset
 
 
 while url is not None:
@@ -44,7 +25,7 @@ while url is not None:
         epidemiological_week = row.get('epidemiological_week_2020')
         new_deaths_covid19 = row.get('new_deaths_covid19')
         state = row.get('state')
-        listdate.append([
+        listdate = [
             date,
             deaths_covid19,
             deaths_pneumo_2019,
@@ -54,7 +35,5 @@ while url is not None:
             epidemiological_week,
             new_deaths_covid19,
             state
-        ])
+        ]
     url = response.get('next')
-
-dataset = datasetBuilder(listdate)

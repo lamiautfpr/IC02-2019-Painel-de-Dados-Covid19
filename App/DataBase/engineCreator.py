@@ -1,18 +1,17 @@
+from App.config.configFile import databaseConfig
 from sqlalchemy import create_engine
 
-user = 'postgres'
-password = 'root'
-port = '5432'
-database = 'postgres'
+conf = databaseConfig()
 
 
 def engineDb():
 
     engine = create_engine(
-        'postgresql://{}:{}@localhost:{}/{}'.format(user,
-                                                    password,
-                                                    port,
-                                                    database
-                                                    ), echo=False)
+        'postgresql://{}:{}@localhost:{}/{}'.format(
+            conf[0],
+            conf[1],
+            conf[2],
+            conf[3]
+        ), echo=False)
 
     return engine
