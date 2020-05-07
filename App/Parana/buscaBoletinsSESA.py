@@ -15,8 +15,9 @@ def cleaner(temp_dataset):
     if 'Unnamed' in str(columns):
         newColumns = temp_dataset.loc[0].tolist()
         temp_dataset.columns = newColumns
-        if 'IBGE' in str(newColumns):
-                temp_dataset = temp_dataset.drop(['IBGE'], axis=1)
+
+    if 'IBGE' in str(newColumns):
+            temp_dataset = temp_dataset.drop(['IBGE'], axis=1)
 
     if len(temp_dataset.columns) > 7:
         over_columns = [temp_dataset.columns[7:len(temp_dataset.columns)]]
@@ -36,9 +37,12 @@ def cleaner(temp_dataset):
         "EM INVESTIGACAO",
         "TOTAL",
         "DATA"
-    ]
+    ]    
+    
+    arr = temp_dataset[1:].values
 
-    dataset = pd.DataFrame(data=arr, header=head)
+    dataset = pd.DataFrame(data=arr,
+                        columns=head)
 
     return dataset
 
