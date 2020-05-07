@@ -15,8 +15,8 @@ def getData(url):
 
 def datasetBuilder(listdate):
     head = [
-        # 'ID',
-        # 'UF'
+        'ID',
+        'UF',
         'Estado',
         'Confirmados',
         'Mortes',
@@ -29,30 +29,30 @@ def datasetBuilder(listdate):
 
     return dataset
 
-
-# while url is not None:
-response = getData(url)
-result = response.get('data')
-for row in result:
-    # cod = row.get('ID')
-    # uid = row.get('UF')
-    state = row.get('state')
-    cases = row.get('cases')
-    deaths = row.get('deaths')
-    suspects = row.get('suspects')
-    refuses = row.get('refuses')
-    date = row.get('datetime')
-    listdate.append([
-        # cod,
-        # uid,
-        state,
-        cases,
-        deaths,
-        suspects,
-        refuses,
-        date
-    ])
-# url = response.get('next')
+while url is not None:
+    response = getData(url)
+    result = response.get('data')
+    for row in result:
+        cod = row.get('ID')
+        uid = row.get('UF')
+        state = row.get('state')
+        cases = row.get('cases')
+        deaths = row.get('deaths')
+        suspects = row.get('suspects')
+        refuses = row.get('refuses')
+        date = row.get('datetime')
+        listdate.append([
+            cod,
+            uid,
+            state,
+            cases,
+            deaths,
+            suspects,
+            refuses,
+            date
+        ])
+    
+    url = response.get('next')
 
 dataset = datasetBuilder(listdate)
 

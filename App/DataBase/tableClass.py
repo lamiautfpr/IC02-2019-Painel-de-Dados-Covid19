@@ -29,20 +29,53 @@ class Brasilio_cartorio(Base):
     __tablename__ = 'Brasil_io_base_cartorio'
 
     id = Column(Integer, primary_key=True)
-
+    date = Column(String(10)),
+    state = Column(String(2)),
+    epidemiological_week_2019 = Column(Integer),
+    epidemiological_week_2020 = Column(Integer),
+    deaths_total_2019 = Column(Integer),
+    deaths_total_2020 = Column(Integer),
+    new_deaths_total_2019 = Column(Integer),
+    deaths_covid19 = Column(Integer),
+    new_deaths_total_2020 = Column(Integer),
+    deaths_indeterminate_2019 = Column(Integer),
+    deaths_indeterminate_2020 = Column(Integer),
+    deaths_others_2019 = Column(Integer),
+    deaths_others_2020 = Column(Integer),
+    deaths_pneumonia_2019 = Column(Integer),
+    deaths_pneumonia_2020 = Column(Integer),
+    deaths_respiratory_failure_2019 = Column(Integer),
+    deaths_respiratory_failure_2020 = Column(Integer),
+    deaths_sars_2019 = Column(Integer),
+    deaths_sars_2020 = Column(Integer),
+    deaths_septicemia_2019 = Column(Integer),
+    deaths_septicemia_2020 = Column(Integer),
+    new_deaths_covid19 = Column(Integer),
+    new_deaths_indeterminate_2019 = Column(Integer),
+    new_deaths_indeterminate_2020 = Column(Integer),
+    new_deaths_others_2019 = Column(Integer),
+    new_deaths_others_2020 = Column(Integer),
+    new_deaths_pneumonia_2019 = Column(Integer),
+    new_deaths_pneumonia_2020 = Column(Integer),
+    new_deaths_respiratory_failure_2019 = Column(Integer),
+    new_deaths_respiratory_failure_2020 = Column(Integer),
+    new_deaths_sars_2019 = Column(Integer),
+    new_deaths_sars_2020 = Column(Integer),
+    new_deaths_septicemia_2019 = Column(Integer),
+    new_deaths_septicemia_2020 = Column(Integer)
 
 class Brasilapi_nacional(Base):
     __tablename__ = 'Brasil_api_base_nacional'
 
     id = Column(Integer, primary_key=True)
-    uid = Column(String),
-    uf = Column(String),
-    state = Column(String),
-    cases = Column(String),
-    deaths = Column(String),
-    suspects = Column(String),
-    refuses = Column(String),
-    datetime = Column(String),
+    uid = Column(Integer),
+    uf = Column(String(64)),
+    state = Column(String(2)),
+    cases = Column(Integer),
+    deaths = Column(Integer),
+    suspects = Column(Integer),
+    refuses = Column(Integer),
+    datetime = Column(String(25)),
     insert_date = Column(Date)
 
 
@@ -50,10 +83,10 @@ class Brasilapi_mundo(Base):
     __tablename__ = 'Brasil_api_base_mundo'
 
     id = Column(Integer, primary_key=True)
-    country = Column(String),
-    cases = Column(String),
-    confirmed = Column(String),
-    deaths = Column(String),
-    recovered = Column(String),
-    updated_at = Column(String),
+    country = Column(String(64)),
+    cases = Column(Integer),
+    confirmed = Column(Integer),
+    deaths = Column(Integer),
+    recovered = Column(Integer),
+    updated_at = Column(String(25)),
     insert_date = Column(Date)
