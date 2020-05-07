@@ -4,6 +4,7 @@ import unicodedata
 import itertools
 import re
 import numpy as np
+import math
 
 initial_date = 0
 dataset = 0
@@ -28,14 +29,21 @@ def getData(date, url_data, date_control):
                ).format(url_data)
     dataset = pd.read_csv(
         url, sep=',|;', encoding='ISO-8859-1', error_bad_lines=False, engine='python')
-
-    for i in range(len(dataset.columns)):
-        if dataset.iloc[0, i] == 'IBGE':
-            dataset.drop(dataset.columns[i], inplace=True, axis=1)
-            break
+    colunas = str(dataset.iloc[0]).lower()
+    if 'munic' in colunas:    #garante estar na linha do cabeçalho
+        i=0
+        while i in range(len(dataset.columns)):
+            if isinstance(dataset.iloc[0, i], float) and math.isnan(dataset.iloc[0, i]):
+                dropcols = dataset.columns[i:]      
+                dataset.drop(dropcols, inplace=True, axis=1)    #apaga colunas vazias a partir da última coluna válida
+                break
+            if str(dataset.iloc[0, i]).lower() == 'ibge':
+                dataset.drop(dataset.columns[i], inplace=True, axis=1)
+                i-=1
+            i+=1
     missing_columns = 7 - len(dataset.columns)
     if missing_columns > 0:
-        for i in range(missing_columns):
+        for i in range(missing_columns):                   #garante que vai voltar a ter 7 colunas
             dataset[i] = np.nan
     dataset["Data"] = date
     date = datetime.strptime(date, '%d/%m/%Y')
@@ -47,8 +55,8 @@ def getData(date, url_data, date_control):
             col for col in dataset.columns if dataset[col].isnull().all()]
 
         dataset.drop(empty_cols,
-                     axis=1,
-                     inplace=True)
+                        axis=1,
+                        inplace=True)
 
     return(dataset)
 
