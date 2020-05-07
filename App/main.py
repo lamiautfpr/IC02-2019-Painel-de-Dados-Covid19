@@ -1,5 +1,5 @@
+from App.Scripts.Brasil_io import get_brasil, get_cartorio
 from App.DataBase.engineCreator import engineDb
-from App.Scripts.Brasil_io import get_brasil
 from sqlalchemy.orm import sessionmaker
 
 # Criando a Sessão com o Banco de Dados
@@ -8,3 +8,5 @@ session = Session()
 
 # Brasil.io Dados Nascionais
 get_brasil.insertData(session)
+# Brasil.io Dados Cartório
+get_cartorio.insertData(session)
