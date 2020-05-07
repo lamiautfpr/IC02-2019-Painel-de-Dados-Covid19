@@ -1,14 +1,6 @@
-from App.config.configFile import urlGeneretor
+from App.Scripts.functions import getData, urlGeneretor
 from App.DataBase import sqlCreator
-import requests
 import json
-
-
-def getData(url):
-    req = requests.get(url, timeout=3000)
-    response = req.json()
-
-    return response
 
 
 def insertData(session):
@@ -16,11 +8,10 @@ def insertData(session):
     selectObj = sqlCreator.Select(session)
 
     date = selectObj.LastDate("date", "Brasil_io_base_nacional")
-
-    listdate = []
     url = getData(urlGeneretor(1, date))
 
     while url is not None:
+        listdate = []
         response = getData(url)
         result = response.get('results')
         for row in result:

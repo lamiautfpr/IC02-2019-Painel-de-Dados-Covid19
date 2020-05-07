@@ -6,4 +6,5 @@ from sqlalchemy.orm import sessionmaker
 Session = sessionmaker(bind=engineDb())
 session = Session()
 
+# Brasil.io Dados Nascionais
 get_brasil.insertData(session)
