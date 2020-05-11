@@ -9,21 +9,28 @@ def now():
     return now
 
 
+def formatDate(date):
+    datetimeobject = datetime.strptime(date,"%d-%m-%Y")
+    date = datetimeobject.strftime('%d%m%Y')
+
+    return date
+
+
 def urlGeneretor(var, date):
     if var == 1:
         # Brasil.io --- Dados Brasil
         url = ('https://brasil.io/api/dataset/covid19/caso/data/?date<{}'
-               .format(date))
+            .format(date))
     elif var == 2:
         # Brasil.io --- Dados Cartórios
         url = ('https://brasil.io/api/dataset/covid19/obito_cartorio/data/?date<{}'
-               .format(date))
+            .format(date))
     elif var == 3:
         # Brasil.api
-        pass
+        url = ('https://covid19-brazil-api.now.sh/api/report/v1/brazil/{}'
+            .format(formatDate(date)))
     elif var == 4:
-        # Brasil.api
-        pass
+        url = ('https://covid19-brazil-api.now.sh/api/report/v1/countries')
     else:
         # ERROR
         pass

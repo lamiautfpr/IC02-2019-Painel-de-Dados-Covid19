@@ -29,6 +29,7 @@ def insertData(session):
             is_last = row.get('is_last')
             place_type = row.get('place_type')
             state = row.get('state')
+            
             listdate = [
                 city,
                 ibge_code,
