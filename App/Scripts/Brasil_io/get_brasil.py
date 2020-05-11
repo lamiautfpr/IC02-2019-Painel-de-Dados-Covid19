@@ -1,19 +1,22 @@
-from App.Scripts.functions import getData, urlGeneretor
-from App.DataBase import sqlCreator
-import json
+from Scripts.functions import urlGeneretor, getApi
+from DataBase import sqlCreator
 
 
 def insertData(session):
     insertObj = sqlCreator.Insert(session)
     selectObj = sqlCreator.Select(session)
+    listdate = []
+    loop = True
 
-    date = selectObj.LastDate("date", "Brasil_io_base_nacional")
-    url = getData(urlGeneretor(1, date))
+    # date = selectObj.LastDate("date", "Brasil_io_base_nacional")
+    date = "01-01-2020"
+    url = urlGeneretor(1, date)
+    res = getApi(url)
 
-    while url is not None:
-        listdate = []
-        response = getData(url)
-        result = response.get('results')
+    while loop is True:
+        next = res.get("next")
+        result = res.get('results')
+
         for row in result:
             city = row.get('city')
             ibge_code = row.get('city_ibge_code')
@@ -39,8 +42,12 @@ def insertData(session):
                 place_type,
                 state
             ]
+
             insertObj.Brasilio_nacional(listdate)
 
-        url = response.get('next')
+        if next is None:
+            loop = False
+        else:
+            res = getApi(next)
 
     return ''

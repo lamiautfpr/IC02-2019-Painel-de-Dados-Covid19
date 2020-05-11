@@ -1,5 +1,5 @@
-from App.Scripts.functions import getData, urlGeneretor
-from App.DataBase import sqlCreator
+from Scripts.functions import urlGeneretor
+from DataBase import sqlCreator
 import json
 
 

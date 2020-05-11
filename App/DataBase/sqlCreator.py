@@ -1,6 +1,6 @@
-from App.DataBase import tableClass
-from App.Scripts.functions import now
+from Scripts.functions import now
 from sqlalchemy import update, text
+from . import tableClass
 
 now = now()
 

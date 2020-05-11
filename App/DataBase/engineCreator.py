@@ -1,7 +1,7 @@
-from App.config.configFile import databaseConfig
+from Config import configFile
 from sqlalchemy import create_engine
 
-conf = databaseConfig()
+conf = configFile.databaseConfig()
 
 
 def engineDb():
@@ -12,6 +12,6 @@ def engineDb():
             conf[1],
             conf[2],
             conf[3]
-        ), echo=False)
+        ), echo=True)
 
     return engine
