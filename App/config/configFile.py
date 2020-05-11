@@ -1,7 +1,8 @@
 def databaseConfig():
-    user = 'postgres'
+    user = 'dashboardCovid'
     password = 'root'
     port = '5432'
-    database = 'postgres'
-    return [user, password, port, database]
+    server = '200.134.21.220'
+    database = 'teste'
+    return [user, password, server, port, database]
 

@@ -1,5 +1,5 @@
-from App.Scripts.functions import getData, urlGeneretor
-from App.DataBase import sqlCreator
+from Scripts.functions import getData, urlGeneretor
+from DataBase import sqlCreator
 import json
 
 
@@ -8,11 +8,11 @@ def insertData(session):
     selectObj = sqlCreator.Select(session)
 
     date = selectObj.LastDate("date", "Brasil_io_base_nacional")
-    url = getData(urlGeneretor(1, date))
+    url = urlGeneretor(1, date)
+    response = getData(url)
 
     while url is not None:
         listdate = []
-        response = getData(url)
         result = response.get('results')
         for row in result:
             city = row.get('city')
@@ -42,5 +42,6 @@ def insertData(session):
             insertObj.Brasilio_nacional(listdate)
 
         url = response.get('next')
+        response = getData(url)
 
     return ''
