@@ -9,11 +9,11 @@ def now():
     return now
 
 
-def formatDate(date):
-    datetimeobject = datetime.strptime(date,"%d-%m-%Y")
-    date = datetimeobject.strftime('%d%m%Y')
+# def formatDate(date):
+#     datetimeobject = datetime.strptime(date,"%d-%m-%Y")
+#     date = datetimeobject.strftime('%d%m%Y')
 
-    return date
+#     return date
 
 
 def urlGeneretor(var, date):

@@ -38,8 +38,41 @@ class Insert():
 
         table = tableClass.Brasilio_cartorio
 
-        insert = table(
-            city=data[0]
+        insert = table(    
+            date=data[0],
+            state=data[1],
+            epidemiological_week_2019=data[2],
+            epidemiological_week_2020=data[3],
+            deaths_total_2019=data[4],
+            deaths_total_2020=data[5],
+            new_deaths_total_2019=data[6],
+            deaths_covid19=data[7],
+            new_deaths_total_2020=data[8],
+            deaths_indeterminate_2019=data[9],
+            deaths_indeterminate_2020=data[10],
+            deaths_others_2019=data[11],
+            deaths_others_2020=data[12],
+            deaths_pneumonia_2019=data[13],
+            deaths_pneumonia_2020=data[14],
+            deaths_respiratory_failure_2019=data[15],
+            deaths_respiratory_failure_2020=data[16],
+            deaths_sars_2019=data[17],
+            deaths_sars_2020=data[18],
+            deaths_septicemia_2019=data[19],
+            deaths_septicemia_2020=data[20],
+            new_deaths_covid19=data[21],
+            new_deaths_indeterminate_2019=data[22],
+            new_deaths_indeterminate_2020=data[23],
+            new_deaths_others_2019=data[24],
+            new_deaths_others_2020=data[25],
+            new_deaths_pneumonia_2019=data[26],
+            new_deaths_pneumonia_2020=data[27],
+            new_deaths_respiratory_failure_2019=data[28],
+            new_deaths_respiratory_failure_2020=data[29],
+            new_deaths_sars_2019=data[29],
+            new_deaths_sars_2020=data[30],
+            new_deaths_septicemia_2019=data[31],
+            new_deaths_septicemia_2020=data[32]
         )
 
         self.session.add(insert)
