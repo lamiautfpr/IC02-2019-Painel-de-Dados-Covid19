@@ -2,20 +2,6 @@ import requests
 import datetime
 import json
 
-
-def now():
-    now = datetime.datetime.now()
-
-    return now
-
-
-# def formatDate(date):
-#     datetimeobject = datetime.strptime(date,"%d-%m-%Y")
-#     date = datetimeobject.strftime('%d%m%Y')
-
-#     return date
-
-
 def urlGeneretor(var, date):
     if var == 1:
         # Brasil.io --- Dados Brasil
@@ -28,7 +14,7 @@ def urlGeneretor(var, date):
     elif var == 3:
         # Brasil.api
         url = ('https://covid19-brazil-api.now.sh/api/report/v1/brazil/{}'
-            .format(formatDate(date)))
+            .format(date))
     elif var == 4:
         url = ('https://covid19-brazil-api.now.sh/api/report/v1/countries')
     else:
@@ -36,7 +22,6 @@ def urlGeneretor(var, date):
         pass
 
     return url
-
 
 def getApi(url):
     res = requests.request("GET", url)

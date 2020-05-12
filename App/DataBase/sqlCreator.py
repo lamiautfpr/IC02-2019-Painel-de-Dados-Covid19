@@ -1,6 +1,6 @@
+from DataBase import tableClass
 from Scripts.functions import now
 from sqlalchemy import update, text
-from . import tableClass
 
 now = now()
 
@@ -72,7 +72,8 @@ class Insert():
             new_deaths_sars_2019=data[29],
             new_deaths_sars_2020=data[30],
             new_deaths_septicemia_2019=data[31],
-            new_deaths_septicemia_2020=data[32]
+            new_deaths_septicemia_2020=data[32],
+            insert_date=now
         )
 
         self.session.add(insert)
@@ -80,6 +81,45 @@ class Insert():
 
         return ''
 
+    def Brasilapi_nacional(self, data):
+
+        table = tableClass.Brasilapi_nacional
+
+        insert = table(     
+            uid=data[0],
+            uf=data[1],
+            state=data[2],
+            cases=data[3],
+            deaths=data[4],
+            suspects=data[5],
+            refuses=data[6],
+            datetime=data[7],
+            insert_date=now
+        )
+
+        self.session.add(insert)
+        self.session.commit()
+
+        return ''
+
+    def Brasilapi_mundo(self, data):
+
+        table = tableClass.Brasilapi_mundo
+
+        insert = table(      
+            country=data[0],
+            cases=data[1],
+            confirmed=data[2],
+            deaths=data[3],
+            recovered=data[4],
+            updated_at=data[5],
+            insert_date=now
+        )
+
+        self.session.add(insert)
+        self.session.commit()
+
+        return ''
 
 class Select():
 

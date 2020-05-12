@@ -8,7 +8,7 @@ def insertData(session):
     loop = True
 
     # date = selectObj.LastDate("date", "Brasil_api_base_nacional")
-    date = "01-01-2020"
+    date = "20200131"
     url = urlGeneretor(3, date)
     res = getApi(url)
 
@@ -17,7 +17,8 @@ def insertData(session):
         result = res.get('data')
 
         for row in result:
-            uid = row.get('UF')
+            uid = row.get('uid')
+            uf = row.get('uf')
             state = row.get('state')
             cases = row.get('cases')
             deaths = row.get('deaths')
@@ -27,6 +28,7 @@ def insertData(session):
             
             listdate = [
                 uid,
+                uf,
                 state,
                 cases,
                 deaths,
