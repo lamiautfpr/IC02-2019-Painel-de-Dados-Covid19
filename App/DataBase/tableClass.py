@@ -75,7 +75,7 @@ class Brasilapi_nacional(Base):
     deaths = Column(String)
     suspects = Column(String)
     refuses = Column(String)
-    datetime = Column(String)
+    datetime = Column(Date)
     insert_date = Column(Date)
 
 
@@ -88,7 +88,7 @@ class Brasilapi_mundo(Base):
     confirmed = Column(String)
     deaths = Column(String)
     recovered = Column(String)
-    updated_at = Column(String)
+    updated_at = Column(Date)
     insert_date = Column(Date)
 
 

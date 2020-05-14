@@ -1,4 +1,4 @@
-from Scripts.functions import now
+from Scripts.functions import now, formatDate
 from sqlalchemy import update, text
 from . import tableClass
 
@@ -93,7 +93,7 @@ class Insert():
             deaths=data[4],
             suspects=data[5],
             refuses=data[6],
-            datetime=data[7],
+            datetime=formatDate(3, data[7]),
             insert_date=now
         )
 
@@ -112,7 +112,7 @@ class Insert():
             confirmed=data[2],
             deaths=data[3],
             recovered=data[4],
-            updated_at=data[5],
+            updated_at=formatDate(3, data[5]),
             insert_date=now
         )
 

@@ -7,16 +7,18 @@ def insertData(session):
     insertObj = sqlCreator.Insert(session)
     selectObj = sqlCreator.Select(session)
     
+    # date = datetime(2020, 1, 29, 19, 0, 0)
     initialDate = selectObj.LastDate('datetime', '"Brasil_api_base_nacional"')
-    date = formatDate(3, initialDate)
-    date = getNextDate(date)
 
+    date = getNextDate(initialDate)
+
+    # day = datetime(2020, 1, 31, 19, 0, 0)
     now = datetime.now()
     
+    # while formatDate(2, date) <= formatDate(2, day):
     while formatDate(2, date) <= formatDate(2, now):
         
-        formatedDate = formatDate(2, date)
-        url = urlGenerator(3, formatedDate)
+        url = urlGenerator(3, formatDate(2, date))
         print(url)
 
         res = getApi(url)
