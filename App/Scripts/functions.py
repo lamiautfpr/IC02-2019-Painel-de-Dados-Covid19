@@ -54,6 +54,9 @@ def formatDate(var, date):
     elif var == 2:
     #Brasil.api
         date = date.strftime('%Y%m%d')
+    elif var == 3:
+    #BD Brasil.api to datetime
+        date = datetime.strptime(date, "%Y-%m-%dT%H:%M:%S.%fZ")
     else:
         pass
     
@@ -61,6 +64,6 @@ def formatDate(var, date):
 
 def getNextDate(date):
 
-    date += timedelta(1)
+    date += timedelta(days=1)
     
     return date
