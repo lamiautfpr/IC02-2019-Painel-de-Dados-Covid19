@@ -6,7 +6,8 @@ from sqlalchemy.orm import sessionmaker
 Session = sessionmaker(bind=engineDb())
 session = Session()
 
-# Brasil.io Dados Nascionais
+# Brasil.io Dados Nacionais
 get_brasil.insertData(session)
+# Brasil.io Dados Cartório
 get_cartorio.insertData(session)
 

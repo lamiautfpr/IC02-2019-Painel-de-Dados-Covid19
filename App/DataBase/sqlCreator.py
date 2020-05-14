@@ -84,9 +84,25 @@ class Insert():
 
         return ''
 
-    # def Brasilapi_nacional(self, data):
-    
+    def Brasilapi_nacional(self, data):
+        
+        table=tableClass.Brasilapi_nacional
+        
+        insert=table(
+            uid=data[0],
+            uf=data[1],
+            state=data[2],
+            cases=data[3],
+            deaths=data[4],
+            suspects=data[5],
+            refuses=data[6],
+            datetime=data[7],
+        )
 
+        self.session.add(insert)
+        self.session.commit()
+
+        return ''
 
     #def Brasilapi_mundo(self, data):
 
@@ -97,7 +113,7 @@ class Select():
         self.session=session
 
     def LastDate(self, field, table):
-        query=text("SELECT {} FROM \"{}\" order by \"{}\" limit 1;".format(field, table, field))
+        query=text("SELECT {} FROM \"{}\" order by \"{}\" DESC limit 1;".format(field, table, field))
         result=self.session.execute(query)
 
         last=None

@@ -1,21 +1,28 @@
-from Scripts.functions import getData, urlGeneretor
+from Scripts.functions import getData, urlGenerator
 from DataBase import sqlCreator
 import json
+from datetime import datetime
 
 
 def insertData(session):
     insertObj = sqlCreator.Insert(session)
     selectObj = sqlCreator.Select(session)
 
-    date = selectObj.LastDate("date", "Brasil_io_base_cartorio")
-    url = urlGeneretor(2, date)
+    last_date = selectObj.LastDate("date", "Brasil_io_base_cartorio")
+    url = urlGenerator(2)
     response = getData(url)
+    updated = False
 
-    while url is not None:
+    while url is not None and not updated:
         listdate = []
         result = response.get('results')
         for row in result:
             date = row.get('date')
+            if last_date is None:
+                pass
+            elif datetime.strptime(date, '%Y-%m-%d').date() <= last_date:
+                updated = True
+                break
             deaths_covid19 = row.get('deaths_covid19')
             deaths_indeterminate_2019 = row.get('deaths_indeterminate_2019')
             deaths_indeterminate_2020 = row.get('deaths_indeterminate_2020')
@@ -87,7 +94,9 @@ def insertData(session):
             ]
             insertObj.Brasilio_cartorio(listdate)
 
-        url = response.get('next')
-        response = getData(url)
+        if not updated:
+            url = response.get('next')
+            if url:
+                response = getData(url)
 
     return ''

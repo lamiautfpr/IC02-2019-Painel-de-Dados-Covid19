@@ -92,3 +92,5 @@ class Brasilapi_mundo(Base):
     recovered = Column(Integer)
     updated_at = Column(Date)
     insert_date = Column(Date)
+
+Base.metadata.create_all(engine)
