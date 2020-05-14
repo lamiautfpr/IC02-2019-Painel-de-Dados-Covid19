@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 import json
 
 def now():
-    now = datetime.datetime.now()
+    now = datetime.now()
 
     return now
 
@@ -15,7 +15,7 @@ def now():
 #     return date
 
 
-def urlGeneretor(var, date):
+def urlGenerator(var, date):
     if var == 1:
         # Brasil.io --- Dados Brasil
         url = ('https://brasil.io/api/dataset/covid19/caso/data/?date<{}'
@@ -27,7 +27,7 @@ def urlGeneretor(var, date):
     elif var == 3:
         # Brasil.api
         url = ('https://covid19-brazil-api.now.sh/api/report/v1/brazil/{}'
-            .format(formatDate(date)))
+            .format(date))
     elif var == 4:
         url = ('https://covid19-brazil-api.now.sh/api/report/v1/countries')
     else:

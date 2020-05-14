@@ -1,6 +1,6 @@
 from Scripts.functions import urlGenerator, getApi, getNextDate, formatDate
 from datetime import datetime, timedelta
-from App.DataBase import sqlCreator
+from DataBase import sqlCreator
 
 def insertData(session):
     selectObj = sqlCreator.Select(session)
@@ -48,19 +48,19 @@ def insertData(session):
 
 def test(session):
 
+    insertObj = sqlCreator.Insert(session)
     selectObj = sqlCreator.Select(session)
-    initialDate = datetime(selectObj.LastDate('datetime', '"Brasil_api_base_nacional"'))
+    
+    initialDate = datetime(2020, 1, 30, 19, 0, 0)
     now = datetime.now()
     date = getNextDate(initialDate)
 
     while formatDate(2, date) <= formatDate(2, now):
-        print(urlGenerator(3, formatDate(2, date)))
         
+        url = urlGenerator(3, formatDate(2, date))
+
         res = getApi(url)
-
         result = res.get('data')
-
-        insertObj = sqlCreator.Insert(session)
 
         for row in result:
             uid = row.get('uid')

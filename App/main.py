@@ -8,7 +8,7 @@ Session = sessionmaker(bind=engineDb())
 session = Session()
 
 # Brasil.io Dados Nascionais
-get_brasil.test(session)
+get_brasilapi.test(session)
 # Brasil.io Dados Cartório
 #get_cartorio.insertData(session)
 

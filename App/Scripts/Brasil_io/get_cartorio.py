@@ -1,4 +1,4 @@
-from Scripts.functions import urlGeneretor, getApi
+from Scripts.functions import urlGenerator, getApi
 from DataBase import sqlCreator
 
 def insertData(session):
