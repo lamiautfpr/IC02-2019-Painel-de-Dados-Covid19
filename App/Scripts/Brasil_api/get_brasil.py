@@ -1,59 +1,53 @@
-import pandas as pd
-import requests
-import json
-
-url = ('https://covid19-brazil-api.now.sh/api/report/v1')
-listdate = []
+from Scripts.functions import urlGenerator, getApi, getNextDate, formatDate
+from datetime import datetime, timedelta
+from DataBase import sqlCreator
 
 
-def getData(url):
-    req = requests.get(url, timeout=3000)
-    response = req.json()
+def insertData(session):
 
-    return response
+    insertObj = sqlCreator.Insert(session)
+    selectObj = sqlCreator.Select(session)
 
+    # date = datetime(2020, 1, 29, 19, 0, 0)
+    initialDate = selectObj.LastDate('datetime', '"Brasil_api_base_nacional"')
 
-def datasetBuilder(listdate):
-    head = [
-        # 'ID',
-        # 'UF'
-        'Estado',
-        'Confirmados',
-        'Mortes',
-        'Suspeitos',
-        'Descartados',
-        'Data'
-    ]
+    date = getNextDate(initialDate)
 
-    dataset = pd.DataFrame(listdate, columns=head)
+    # day = datetime(2020, 1, 31, 19, 0, 0)
+    now = datetime.now()
 
-    return dataset
+    # while formatDate(2, date) <= formatDate(2, day):
+    while formatDate(2, date) <= formatDate(2, now):
 
+        url = urlGenerator(3, formatDate(2, date))
+        print(url)
 
-# while url is not None:
-response = getData(url)
-result = response.get('data')
-for row in result:
-    # cod = row.get('ID')
-    # uid = row.get('UF')
-    state = row.get('state')
-    cases = row.get('cases')
-    deaths = row.get('deaths')
-    suspects = row.get('suspects')
-    refuses = row.get('refuses')
-    date = row.get('datetime')
-    listdate.append([
-        # cod,
-        # uid,
-        state,
-        cases,
-        deaths,
-        suspects,
-        refuses,
-        date
-    ])
-# url = response.get('next')
+        res = getApi(url)
+        result = res.get('data')
 
-dataset = datasetBuilder(listdate)
+        for row in result:
+            uid = row.get('uid')
+            uf = row.get('uf')
+            state = row.get('state')
+            cases = row.get('cases')
+            deaths = row.get('deaths')
+            suspects = row.get('suspects')
+            refuses = row.get('refuses')
+            datet = row.get('datetime')
 
-print(dataset)
+            listdate = [
+                uid,
+                uf,
+                state,
+                cases,
+                deaths,
+                suspects,
+                refuses,
+                datet
+            ]
+
+            insertObj.Brasilapi_nacional(listdate)
+
+        date = getNextDate(date)
+
+    return ''
