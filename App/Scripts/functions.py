@@ -1,7 +1,6 @@
 import requests
-import datetime
+from datetime import datetime, timedelta
 import json
-
 
 def now():
     now = datetime.datetime.now()
@@ -46,3 +45,22 @@ def getApi(url):
         return False
 
     return res
+
+def formatDate(var, date):
+    
+    if var == 1:
+    #Brasil.io
+        pass
+    elif var == 2:
+    #Brasil.api
+        date = date.strftime('%Y%m%d')
+    else:
+        pass
+    
+    return date
+
+def getNextDate(date):
+
+    date += timedelta(1)
+    
+    return date
