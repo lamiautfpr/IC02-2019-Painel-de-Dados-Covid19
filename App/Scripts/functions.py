@@ -1,5 +1,5 @@
+from datetime import datetime, timedelta
 import requests
-import datetime
 import json
 
 
@@ -9,7 +9,7 @@ def now():
     return now
 
 
-def urlGeneretor(var, date):
+def urlGenerator(var, date):
     if var == 1:
         # Brasil.io --- Dados Brasil
         url = ('https://brasil.io/api/dataset/covid19/caso/data/?date<{}'
@@ -20,10 +20,10 @@ def urlGeneretor(var, date):
                .format(date))
     elif var == 3:
         # Brasil.api
-        pass
+        url = ('https://covid19-brazil-api.now.sh/api/report/v1/brazil/{}'
+               .format(date))
     elif var == 4:
-        # Brasil.api
-        pass
+        url = ('https://covid19-brazil-api.now.sh/api/report/v1/countries')
     else:
         # ERROR
         pass
@@ -39,3 +39,27 @@ def getApi(url):
         return False
 
     return res
+
+
+def formatDate(var, date):
+
+    if var == 1:
+        # Brasil.io
+        pass
+    elif var == 2:
+        # Brasil.api
+        date = date.strftime('%Y%m%d')
+    elif var == 3:
+        # BD Brasil.api to datetime
+        date = datetime.strptime(date, "%Y-%m-%dT%H:%M:%S.%fZ")
+    else:
+        pass
+
+    return date
+
+
+def getNextDate(date):
+
+    date += timedelta(days=1)
+
+    return date

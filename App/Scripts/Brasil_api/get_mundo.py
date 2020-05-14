@@ -1,36 +1,41 @@
-from Scripts.functions import urlGenerator, getApi
+from Scripts.functions import now, urlGenerator, getApi, formatDate
 from DataBase import sqlCreator
 
 
 def insertData(session):
 
-    insertObj = sqlCreator.Insert(session)
     selectObj = sqlCreator.Select(session)
+    date = selectObj.LastDate('updated_at', '"Brasil_api_base_mundo"')
 
-    date = ''
+    day = now()
 
-    url = urlGenerator(4, date)
-    res = getApi(url)
+    if formatDate(2, date) != formatDate(2, day):
+        url = urlGenerator(4, '')
+        res = getApi(url)
 
-    result = res.get('data')
+        result = res.get('data')
 
-    for row in result:
-        country = row.get('country')
-        cases = row.get('cases')
-        confirmed = row.get('confirmed')
-        deaths = row.get('deaths')
-        recovered = row.get('recovered')
-        updated_at = row.get('updated_at')
+        insertObj = sqlCreator.Insert(session)
 
-        listdate = [
-            country,
-            cases,
-            confirmed,
-            deaths,
-            recovered,
-            updated_at
-        ]
+        for row in result:
+            country = row.get('country')
+            cases = row.get('cases')
+            confirmed = row.get('confirmed')
+            deaths = row.get('deaths')
+            recovered = row.get('recovered')
+            updated_at = row.get('updated_at')
 
-        insertObj.Brasilapi_mundo(listdate)
+            listdate = [
+                country,
+                cases,
+                confirmed,
+                deaths,
+                recovered,
+                updated_at
+            ]
+
+            insertObj.Brasilapi_mundo(listdate)
+    else:
+        print("Updated data are up to date.")
 
     return ''
