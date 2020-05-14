@@ -92,4 +92,5 @@ class Select():
 
         for row in result:
             last = row[0]
+            
         return last
