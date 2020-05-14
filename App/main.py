@@ -7,9 +7,10 @@ from sqlalchemy.orm import sessionmaker
 Session = sessionmaker(bind=engineDb())
 session = Session()
 
-# Brasil.apiNacional
+##BR.api
+#Brasil.apiNacional
 get_brasilapi.insertData(session)
-# Brasil.ioMundial
+#Brasil.apiMundial
 get_mundo.insertData(session)
 
 session.Close()
