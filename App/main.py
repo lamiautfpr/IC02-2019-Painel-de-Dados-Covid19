@@ -12,6 +12,4 @@ get_brasilapi.insertData(session)
 # Brasil.ioMundial
 get_mundo.insertData(session)
 
-#Testando Som 1,2,3
-
 session.Close()
