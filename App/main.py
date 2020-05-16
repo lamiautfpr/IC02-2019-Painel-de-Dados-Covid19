@@ -1,4 +1,4 @@
-from Scripts.Brasil_io import get_brasil, get_cartorio
+# from Scripts.Brasil_io import get_brasilio, get_cartorio
 from Scripts.Brasil_api import get_brasilapi, get_mundo
 from DataBase.engineCreator import engineDb
 from sqlalchemy.orm import sessionmaker
@@ -9,9 +9,9 @@ session = Session()
 
 # BR.io
 # Brasil.io Dados Nacionais
-get_brasil.insertData(session)
+# get_brasil.insertData(session)
 # Brasil.io Dados Cartório
-get_cartorio.insertData(session)
+# get_cartorio.insertData(session)
 
 
 # BR.api

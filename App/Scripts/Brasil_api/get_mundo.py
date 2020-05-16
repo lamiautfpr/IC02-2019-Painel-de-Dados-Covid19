@@ -1,7 +1,6 @@
 from Scripts.functions import now, urlGenerator, getApi, formatDate
 from DataBase import sqlCreator
 
-
 def insertData(session):
 
     selectObj = sqlCreator.Select(session)

@@ -4,7 +4,7 @@ import json
 
 
 def now():
-    now = datetime.datetime.now()
+    now = datetime.now()
 
     return now
 

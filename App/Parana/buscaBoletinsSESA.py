@@ -1,55 +1,53 @@
-from datetime import timedelta, datetime, date
+from datetime import datetime, timedelta
 import pandas as pd
-import unicodedata
-import itertools
-import re
+import numpy as np
+import requests
 
-initial_date = 0
-dataset = 0
-date_control = True
+def getDate(i):
 
+    date = datetime.now() - timedelta(i)
+    date = date.strftime('%d/%m/%Y')
 
-def today():
-    today = datetime.now()
-    today = today.strftime('%d/%m/%Y')
+    return date
 
-    return today
+def formatDate(date):
 
+    datetimeobject = datetime.strptime(date,"%d/%m/%Y")
+    date = datetimeobject.strftime('%d_%m_%Y')
 
-def getData(date, url_data, date_control):
+    return date
 
-    if date_control is True:
-        url = ("http://www.saude.pr.gov.br/arquivos/File/CORONA_{}.csv"
-               ).format(url_data)
-    else:
-        url = ("http://www.saude.pr.gov.br/arquivos/File/INFORME_EPIDEMIOLOGICO_{}.csv"
-               ).format(url_data)
-    dataset = pd.read_csv(
-        url, sep=',|;', encoding='ISO-8859-1', error_bad_lines=False, engine='python')
-    dataset["Data"] = date
-    date = datetime.strptime(date, '%d/%m/%Y')
-    datevar = datetime(2020, 4, 27)
-    if date > datevar:
-        pass
-    else:
-        empty_cols = [
-            col for col in dataset.columns if dataset[col].isnull().all()]
+def cleaner(temp_data):
 
-        dataset.drop(empty_cols,
-                     axis=1,
-                     inplace=True)
+    #Remove over columns
+    if len(temp_data.columns) > 8:
+        over_columns = [temp_data.columns[8:len(temp_data.columns)]]
+        temp_data.drop(over_columns[0], inplace=True, axis=1)
+    
+    #Remove title
+    columns = [temp_data.columns[1:len(temp_data.columns)]]
+    if 'Unnamed' in str(columns):
+        newColumns = temp_data.loc[0].tolist()
+        temp_data.columns = newColumns
+    
+    #Remove IBGE column
+    columns = [temp_data.columns[1:len(temp_data.columns)]]
+    if 'IBGE' in str(columns):
+        temp_data = temp_data.drop(['IBGE'], axis=1)      
 
-    return(dataset)
+    #Insert missing columns
+    i=0
+    while len(temp_data.columns) < 8:
+        temp_data['NaN{}'.format(i)] = np.nan
+        i+=1
+    
+    #Drop all null rows
+    temp_data = temp_data.dropna(how='all')
+    
+    #Get the cell's values without labels
+    arr = temp_data[1:].values
 
-
-def datasetConstructor(dataset, date_control):
-
-    if date_control is True:
-        dataset = dataset[2:]
-    else:
-        dataset = dataset[1:]
-
-    dataset.columns = [
+    head = [
         "REGIONAL DE SAUDE",
         "MUNICIPIO",
         "CONFIRMADOS",
@@ -60,44 +58,47 @@ def datasetConstructor(dataset, date_control):
         "DATA"
     ]
 
+    #Insert values into dataset with new labels
+    dataset = pd.DataFrame(data=arr,
+                          columns=head)
+
+    #Fill NaN to 0 in Regional de Saude                          
+    dataset['REGIONAL DE SAUDE'] = dataset['REGIONAL DE SAUDE'].fillna(0)   
+    #Insert NaN to error values and drop row in Regional de Saude 
+    dataset['REGIONAL DE SAUDE'] = pd.to_numeric(dataset['REGIONAL DE SAUDE'], errors='coerce')
+    dataset.dropna(subset=['REGIONAL DE SAUDE'], inplace=True)
+
+    #Drop NaN values in Municipio
+    dataset.dropna(subset=['MUNICIPIO'], inplace=True)
+    
+    #Insert NaN to error values and drop row in Confirmados
+    dataset['CONFIRMADOS'] = pd.to_numeric(dataset['CONFIRMADOS'], errors='coerce')
+    dataset.dropna(subset=['CONFIRMADOS'], inplace=True)
+
+    #Fill /|Total|Fora and drop row in Municipio
+    dataset = dataset[~dataset.MUNICIPIO.str.contains("/|Total|Fora", na=False)]
+    
     return dataset
 
+def catcher():
+    
+    r = requests.get('http://www.saude.pr.gov.br/arquivos/File/INFORME_EPIDEMIOLOGICO_{}.csv'.format(formatDate(getDate(0))))
+    r.raise_for_status
 
-def getDate(d_date, date_control):
+    i=1
+    while not r.ok:
+        date = formatDate(getDate(i))
+        r = requests.get('http://www.saude.pr.gov.br/arquivos/File/INFORME_EPIDEMIOLOGICO_{}.csv'.format(date))
+        r.raise_for_status
+        i+=1
 
-    if d_date == 0:
-        d_date = datetime(2020, 4, 1)
-    else:
-        d_date = datetime.strptime(d_date, '%d/%m/%Y')
-        d_date = d_date + timedelta(days=1)
+    url = ("http://www.saude.pr.gov.br/arquivos/File/INFORME_EPIDEMIOLOGICO_{}.csv").format(date)
+    dataset = pd.read_csv(url, sep=',|;', encoding='ISO-8859-1', engine='python', error_bad_lines=False)
+    
+    dataset = cleaner(dataset)
 
-    d_date = d_date.strftime('%d/%m/%Y')
-    if date_control is True:
-        url_date = d_date.replace('/', '')
-    else:
-        url_date = d_date.replace('/', '_')
-    listdate = [d_date, url_date]
-
-    return(listdate)
-
-
-def main(date, date_control, dataset):
-
-    while date[0] != today():
-
-        temp_dataset = getData(date[0], date[1], date_control)
-        dataframe = datasetConstructor(temp_dataset, date_control)
-        if dataset is not 0:
-            dataset = pd.concat([dataset, dataframe])
-        else:
-            dataset = dataframe
-        if date[0] == '17/04/2020':
-            date_control = False
-
-        date = getDate(date[0], date_control)
-
+    dataset['DATA'] = getDate(0)
+    
     return dataset
 
-
-date = getDate(initial_date, date_control)
-dataset = main(date, date_control, dataset)
+catcher()
