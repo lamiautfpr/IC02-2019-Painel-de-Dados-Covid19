@@ -4,6 +4,7 @@ from . import tableClass
 
 now = now()
 
+
 class Insert():
 
     def __init__(self, session):

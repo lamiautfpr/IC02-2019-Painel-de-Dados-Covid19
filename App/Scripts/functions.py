@@ -1,12 +1,13 @@
 from datetime import datetime, timedelta
-
 import requests
 import json
+
 
 def now():
     now = datetime.now()
 
     return now
+
 
 def urlGenerator(var, date):
     if var == 1:
@@ -29,6 +30,7 @@ def urlGenerator(var, date):
 
     return url
 
+
 def getApi(url):
     res = requests.request("GET", url)
     if res.status_code == 200:
@@ -37,6 +39,7 @@ def getApi(url):
         return False
 
     return res
+
 
 def formatDate(var, date):
 
@@ -53,6 +56,7 @@ def formatDate(var, date):
         pass
 
     return date
+
 
 def getNextDate(date):
 
