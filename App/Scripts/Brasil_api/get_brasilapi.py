@@ -1,4 +1,4 @@
-from Scripts.functions import urlGenerator, getApi, getNextDate, formatDate
+from Scripts.functions import now, urlGenerator, getApi, getNextDate, formatDate
 from DataBase import sqlCreator
 
 def insertData(session):
@@ -12,10 +12,10 @@ def insertData(session):
     date = getNextDate(initialDate)
 
     # day = datetime(2020, 1, 31, 19, 0, 0)
-    now = datetime.now()
+    day = now()
 
     # while formatDate(2, date) <= formatDate(2, day):
-    while formatDate(2, date) <= formatDate(2, now):
+    while formatDate(2, date) <= formatDate(2, day):
 
         url = urlGenerator(3, formatDate(2, date))
         print(url)
