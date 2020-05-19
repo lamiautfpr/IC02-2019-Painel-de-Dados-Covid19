@@ -23,7 +23,11 @@ def insertData(session):
             deaths = row.get('deaths')
             recovered = row.get('recovered')
             updated_at = row.get('updated_at')
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> origin/Yoshida
             listdate = [
                 country,
                 cases,
@@ -32,9 +36,17 @@ def insertData(session):
                 recovered,
                 updated_at
             ]
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> origin/Yoshida
             insertObj.Brasilapi_mundo(listdate)
     else:
         print("Updated data are up to date.")
 
+<<<<<<< HEAD
     return ''
+=======
+    return ''
+>>>>>>> origin/Yoshida
