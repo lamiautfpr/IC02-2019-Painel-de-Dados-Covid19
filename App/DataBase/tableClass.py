@@ -75,7 +75,7 @@ class Brasilapi_nacional(Base):
     deaths = Column(String)
     suspects = Column(String)
     refuses = Column(String)
-    datetime = Column(String)
+    datetime = Column(Date)
     insert_date = Column(Date)
 
 
@@ -91,6 +91,16 @@ class Brasilapi_mundo(Base):
     updated_at = Column(String)
     insert_date = Column(Date)
 
+class Brasilhdx_mundo(Base):
+    __tablename__ = 'Brasil_hdx_base_mundo'
+
+    id = Column(Integer, primary_key=True)
+    country = Column(String)
+    date = Column(Date)
+    confirmed = Column(Integer)
+    deaths = Column(Integer)
+    recovered = Column(Integer)
+    
 
 def tableCreator():
 

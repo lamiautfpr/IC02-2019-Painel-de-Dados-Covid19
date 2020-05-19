@@ -1,4 +1,4 @@
-from Scripts.functions import now
+from Scripts.functions import now, formatDate
 from sqlalchemy import update, text
 from . import tableClass
 
@@ -93,7 +93,7 @@ class Insert():
             deaths=data[4],
             suspects=data[5],
             refuses=data[6],
-            datetime=data[7],
+            datetime=formatDate(3, data[7]),
             insert_date=now
         )
 
@@ -120,6 +120,20 @@ class Insert():
         self.session.commit()
 
         return ''
+
+    def Brasilhdx_mundo(self, data):
+        table = tableClass.Brasilhdx_mundo
+
+        insert = table(
+            country = data[0]
+            date = data[1]
+            confirmed = data[2]
+            deaths = data[3]
+            recovered = data[4]
+        )
+
+        self.session.add(insert)
+        self.session.commit()
 
 class Select():
 

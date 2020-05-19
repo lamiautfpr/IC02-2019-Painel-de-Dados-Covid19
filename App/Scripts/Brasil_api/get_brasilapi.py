@@ -8,8 +8,8 @@ def insertData(session):
     selectObj = sqlCreator.Select(session)
     
     initialDate = selectObj.LastDate('datetime', '"Brasil_api_base_nacional"')
-    date = formatDate(3, initialDate)
-    date = getNextDate(date)
+    
+    date = getNextDate(initialDate)
 
     now = datetime.now()
     
