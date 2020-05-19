@@ -94,6 +94,16 @@ class Brasilapi_mundo(Base):
     insert_date = Column(Date)
 
 
+class Brasilhdx_mundo(Base):
+    __tablename__ = 'Brasil_hdx_base_mundo'
+
+    id = Column(Integer, primary_key=True)
+    country = Column(String)
+    date = Column(Date)
+    confirmed = Column(Integer)
+    deaths = Column(Integer)
+    recovered = Column(Integer)
+
 def tableCreator():
 
     Base.metadata.create_all(engine)
