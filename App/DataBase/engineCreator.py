@@ -3,7 +3,6 @@ from sqlalchemy import create_engine
 
 conf = configFile.databaseConfig()
 
-
 def engineDb():
 
     engine = create_engine(

@@ -1,13 +1,13 @@
 from Scripts.functions import now, urlGenerator, getApi, getNextDate, formatDate
 from DataBase import sqlCreator
-
+from sqlalchemy.types import String, Date, Integer
 import pandas as pd
 import numpy as np
 
 def cleaner(dataset):
 
     dataset = dataset[1:]
-    
+
     dataset = dataset.sort_values(by='Date', ascending=False)
 
     return dataset
@@ -30,6 +30,19 @@ def catcher():
 
     dataset = cleaner(dataset)
 
-    return print(dataset)
+    return dataset
 
-catcher()
+def insertData(session):
+    
+    dataset = catcher()
+    
+    dataset.to_sql('Brasil_hdx_base_mundo', con=session.get_bind(), if_exists='replace', method='multi',
+          dtype={
+            "Country/Region": String(),
+            "Date": Date(),          
+            "Confirmed": Integer(),          
+            "Deaths": Integer(),          
+            "Recovered": Integer()
+            })
+
+    return ''

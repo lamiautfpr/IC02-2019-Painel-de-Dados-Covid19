@@ -22,6 +22,6 @@ session = Session()
 # get_mundo.insertData(session)
 
 # HDX 
-get_mundo_hdx
+get_mundo_hdx.insertData(session)
 
 session.Close()

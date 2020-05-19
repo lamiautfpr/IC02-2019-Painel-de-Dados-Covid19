@@ -122,6 +122,23 @@ class Insert():
 
         return ''
 
+# def Brasilhdx_mundo(self, data):
+
+#         table = tableClass.Brasilhdx_mundo
+
+#         insert = table(
+#             country = data[0]
+#             date = data[1]
+#             confirmed = data[2]
+#             deaths = data[3]
+#             recovered = data[4]
+#         )
+
+#         self.session.add(insert)
+#         self.session.commit()
+
+#     return ''
+
 
 class Select():
 
