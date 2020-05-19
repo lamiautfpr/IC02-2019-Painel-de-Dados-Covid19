@@ -88,7 +88,7 @@ class Brasilapi_mundo(Base):
     confirmed = Column(String)
     deaths = Column(String)
     recovered = Column(String)
-    updated_at = Column(String)
+    updated_at = Column(Date)
     insert_date = Column(Date)
 
 class Brasilhdx_mundo(Base):

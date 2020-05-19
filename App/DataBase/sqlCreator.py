@@ -4,7 +4,6 @@ from . import tableClass
 
 now = now()
 
-
 class Insert():
 
     def __init__(self, session):
@@ -112,7 +111,7 @@ class Insert():
             confirmed=data[2],
             deaths=data[3],
             recovered=data[4],
-            updated_at=data[5],
+            updated_at=formatDate(3, data[5]),
             insert_date=now
         )
 
