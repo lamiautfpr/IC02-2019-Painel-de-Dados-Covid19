@@ -1,4 +1,3 @@
-from Scripts.functions import now, urlGenerator, getApi, getNextDate, formatDate
 from DataBase import tableClass
 import pandas as pd
 
