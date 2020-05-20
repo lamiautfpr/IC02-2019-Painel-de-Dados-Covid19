@@ -93,7 +93,7 @@ class Brasilapi_mundo(Base):
     insert_date = Column(Date)
 
 
-def Brasilhdx_mundo():
+def Hdx_mundo():
 
     dbFormat = {
     "Country/Region": String(),
@@ -105,6 +105,17 @@ def Brasilhdx_mundo():
 
     return dbFormat
 
+def WCota_nacional():
+
+    dbFormat = {
+    "State": String(),
+    "City": String(),          
+    "Deaths": Integer(),          
+    "totalCases": Integer(),          
+    "Date": Date()
+    }
+
+    return dbFormat
 
 def tableCreator():
 

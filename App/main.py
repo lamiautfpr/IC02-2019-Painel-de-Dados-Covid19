@@ -1,6 +1,7 @@
 # from Scripts.Brasil_io import get_brasilio, get_cartorio
 from Scripts.Brasil_api import get_brasilapi, get_mundo
 from Scripts.HDX import get_mundo_hdx
+from Scripts.WCota import get_wcota_nacional
 from DataBase.engineCreator import engineDb
 from sqlalchemy.orm import sessionmaker
 
@@ -24,6 +25,11 @@ session = Session()
 
 # HDX
 # HDX.getMundo
-get_mundo_hdx.insertData(session)
+# get_mundo_hdx.insertData(session)
+
+
+# WCota
+# WCota.getNacional
+get_wcota_nacional.insertData(session)
 
 session.Close()
