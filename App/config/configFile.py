@@ -1,6 +1,6 @@
 def databaseConfig():
-    user = 'dashboardCovid'
-    password = 'root'
+    user = 'guilherme'
+    password = '&mlamia$f'
     port = '5432'
     database = 'dashcovid19'
     host = '200.134.21.220'

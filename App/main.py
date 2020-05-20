@@ -21,7 +21,9 @@ session = Session()
 # Brasil.apiMundial
 # get_mundo.insertData(session)
 
-# HDX 
+
+# HDX
+# HDX.getMundo
 get_mundo_hdx.insertData(session)
 
 session.Close()
