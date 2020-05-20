@@ -37,6 +37,6 @@ def insertData(session):
     
     dataset = catcher()
     
-    dataset.to_sql('Brasil_hdx_base_mundo', con=session.get_bind(), index_label='id', if_exists='replace', method='multi', dtype=dbFormat)
+    dataset.to_sql('HDX_base_mundo', con=session.get_bind(), index_label='id', if_exists='replace', method='multi', dtype=dbFormat)
 
     return ''
