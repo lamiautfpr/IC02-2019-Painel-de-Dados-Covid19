@@ -6,7 +6,6 @@ from .engineCreator import engineDb
 engine = engineDb()
 Base = declarative_base()
 
-
 class Brasilio_nacional(Base):
     __tablename__ = 'Brasil_io_base_nacional'
 
@@ -92,6 +91,19 @@ class Brasilapi_mundo(Base):
     recovered = Column(String)
     updated_at = Column(Date)
     insert_date = Column(Date)
+
+
+def Brasilhdx_mundo():
+
+    dbFormat = {
+    "Country/Region": String(),
+    "Date": Date(),          
+    "Confirmed": Integer(),          
+    "Deaths": Integer(),          
+    "Recovered": Integer()
+    }
+
+    return dbFormat
 
 
 def tableCreator():

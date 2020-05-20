@@ -1,14 +1,14 @@
 from Scripts.functions import now, urlGenerator, getApi, getNextDate, formatDate
-from DataBase import sqlCreator
-from sqlalchemy.types import String, Date, Integer
+from DataBase import tableClass
 import pandas as pd
-import numpy as np
 
 def cleaner(dataset):
 
     dataset = dataset[1:]
 
     dataset = dataset.sort_values(by='Date', ascending=False)
+
+    dataset.reset_index(drop=True, inplace=True)
 
     return dataset
 
@@ -33,16 +33,11 @@ def catcher():
     return dataset
 
 def insertData(session):
+
+    dbFormat = tableClass.Brasilhdx_mundo()
     
     dataset = catcher()
     
-    dataset.to_sql('Brasil_hdx_base_mundo', con=session.get_bind(), if_exists='replace', method='multi',
-          dtype={
-            "Country/Region": String(),
-            "Date": Date(),          
-            "Confirmed": Integer(),          
-            "Deaths": Integer(),          
-            "Recovered": Integer()
-            })
+    dataset.to_sql('Brasil_hdx_base_mundo', con=session.get_bind(), index_label='id', if_exists='replace', method='multi', dtype=dbFormat)
 
     return ''
