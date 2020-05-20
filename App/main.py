@@ -9,23 +9,24 @@ from sqlalchemy.orm import sessionmaker
 Session = sessionmaker(bind=engineDb())
 session = Session()
 
+
 # BR.io
 # Brasil.io Dados Nacionais
-# get_brasil.insertData(session)
+get_brasil.insertData(session)
 # Brasil.io Dados Cartório
-# get_cartorio.insertData(session)
+get_cartorio.insertData(session)
 
 
 # BR.api
 # Brasil.apiNacional
-# get_brasilapi.insertData(session)
+get_brasilapi.insertData(session)
 # Brasil.apiMundial
-# get_mundo.insertData(session)
+get_mundo.insertData(session)
 
 
 # HDX
 # HDX.getMundo
-# get_mundo_hdx.insertData(session)
+get_mundo_hdx.insertData(session)
 
 
 # WCota
