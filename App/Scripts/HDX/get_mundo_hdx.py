@@ -1,8 +1,10 @@
 from DataBase import tableClass
 import pandas as pd
 
-def cleaner(dataset):
+def cleaner(dataset, word):
     
+    dataset.rename(columns={'Value': '{}'.format(word.capitalize())}, inplace=True)
+
     dataset = dataset[1:]
 
     if len(dataset.columns) > 5:
@@ -23,10 +25,8 @@ def catcher():
             temp_dataset = pd.read_csv(url, encoding='ISO-8859-1', engine='python', error_bad_lines=False, usecols=["Country/Region", "Date", "Value"])    
         else:
             temp_dataset = pd.read_csv(url, encoding='ISO-8859-1', engine='python', error_bad_lines=False, usecols=["Value"])
-        
-        dataset.rename(columns={'Value': '{}'.format(word.capitalize())}, inplace=True)
 
-        temp_dataset = cleaner(temp_dataset)
+        temp_dataset = cleaner(temp_dataset, word)
         
         dataset = pd.concat([dataset, temp_dataset], axis=1)
 
