@@ -7,10 +7,6 @@ def cleaner(dataset, word):
 
     dataset = dataset[1:]
 
-    if len(dataset.columns) > 5:
-        dataset = dataset.sort_values(by='Date', ascending=False)
-        dataset.reset_index(drop=True, inplace=True)
-
     return dataset
 
 def catcher():
@@ -29,6 +25,10 @@ def catcher():
         temp_dataset = cleaner(temp_dataset, word)
         
         dataset = pd.concat([dataset, temp_dataset], axis=1)
+        
+        dataset = dataset.sort_values(by='Date', ascending=False)
+
+        dataset.reset_index(drop=True, inplace=True)
 
     return dataset
 
