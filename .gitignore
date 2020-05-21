@@ -12,5 +12,8 @@ ENV/
 env.bak/
 venv.bak/
 pip-selfcheck.json
+*.pyc
+
+
 
 # End for VirtualEnv

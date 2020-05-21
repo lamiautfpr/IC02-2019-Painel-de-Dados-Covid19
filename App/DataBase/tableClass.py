@@ -63,34 +63,63 @@ class Brasilio_cartorio(Base):
     new_deaths_total_2019 = Column(Integer)
     new_deaths_total_2020 = Column(Integer)
     state = Column(String(10))
-    # insert_date = Column(Date)
-
-
-class Brasilapi_nacional(Base):
-    __tablename__ = 'Brasil_api_base_nacional'
-
-    id = Column(Integer, primary_key=True)
-    uid = Column(String)
-    uf = Column(String)
-    state = Column(String)
-    cases = Column(Integer)
-    deaths = Column(Integer)
-    suspects = Column(Integer)
-    refuses = Column(Integer)
-    datetime = Column(String)
-    insert_date = Column(Date) #????????????
-
-
-class Brasilapi_mundo(Base):
-    __tablename__ = 'Brasil_api_base_mundo'
-
-    id = Column(Integer, primary_key=True)
-    country = Column(String)
-    cases = Column(Integer)
-    confirmed = Column(Integer)
-    deaths = Column(Integer)
-    recovered = Column(Integer)
-    updated_at = Column(Date)
     insert_date = Column(Date)
+
+
+# class Brasilapi_nacional(Base):
+#     __tablename__ = 'Brasil_api_base_nacional'
+
+#     id = Column(Integer, primary_key=True)
+#     uid = Column(String)
+#     uf = Column(String)
+#     state = Column(String)
+#     cases = Column(Integer)
+#     deaths = Column(Integer)
+#     suspects = Column(Integer)
+#     refuses = Column(Integer)
+#     datetime = Column(String)
+#     insert_date = Column(Date) 
+
+
+# class Brasilapi_mundo(Base):
+#     __tablename__ = 'Brasil_api_base_mundo'
+
+#     id = Column(Integer, primary_key=True)
+#     country = Column(String)
+#     cases = Column(Integer)
+#     confirmed = Column(Integer)
+#     deaths = Column(Integer)
+#     recovered = Column(Integer)
+#     updated_at = Column(Date)
+#     insert_date = Column(Date)
+
+
+class Painel_insumos(Base):
+    __tablename__ = 'Painel_insumos_gov'
+
+    id = Column(Integer, primary_key=True)
+    uf = Column(String)     
+    vacinas_distribuidas_influenza = Column(Integer)  
+    vacinas_aplicadas_influenza = Column(Integer)  
+    mascara_cirurgica = Column(Integer)  
+    mascara_n95 = Column(Integer) 
+    alcool_gel_L = Column(Integer) 
+    avental = Column(Integer) 
+    teste_rapido = Column(Integer) 
+    luvas = Column(Integer) 
+    oculos_e_protetor_facial = Column(Integer) 
+    touca_e_sapatilha = Column(Integer) 
+    cloroquina_comprimidos = Column(Integer) 
+    oseltamivir_capsulas = Column(Integer) 
+    teste_PCR = Column(Integer) 
+    leitos_locados = Column(Integer) 
+    leitos_uti_adulto = Column(Integer) 
+    respiradores_distribuidos = Column(Integer) 
+    uti_adulto_sus = Column(Integer) 
+    uti_adulto_nao_sus = Column(Integer) 
+    leitos_uti_habilitados = Column(Integer) 
+    mais_medicos = Column(Integer) 
+    insert_date = Column(Date)
+
 
 Base.metadata.create_all(engine)

@@ -9,7 +9,9 @@ def getData(url):
     req = requests.get(url, timeout=3000)
     response = req.json()
 
-    return response
+    return response     #json com os dados da url
+
+
 
 
 def datasetBuilder(listdate):

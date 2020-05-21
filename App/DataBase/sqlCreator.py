@@ -75,7 +75,7 @@ class Insert():
             new_deaths_total_2019=data[31],
             new_deaths_total_2020=data[32],
             state=data[33],
-            # insert_date=now,
+            insert_date=now,
 
         )
 
@@ -84,27 +84,62 @@ class Insert():
 
         return ''
 
-    def Brasilapi_nacional(self, data):
-        
-        table=tableClass.Brasilapi_nacional
-        
+    def Painel_insumos(self, data):
+
+        table=tableClass.Painel_insumos
+
         insert=table(
-            uid=data[0],
-            uf=data[1],
-            state=data[2],
-            cases=data[3],
-            deaths=data[4],
-            suspects=data[5],
-            refuses=data[6],
-            datetime=data[7],
+            uf=data['uf'],
+            vacinas_distribuidas_influenza=data['"Vacinas distribuidas - influenza"'],
+            vacinas_aplicadas_influenza=data['"Vacinas aplicadas - influenza "'],
+            mascara_cirurgica=data['"Mascara cirúrgica"'],
+            mascara_n95=data['"Mascara N95"'],
+            alcool_gel_L=data['"Alcool em gel - L"'],
+            avental=data['"Avental"'],
+            teste_rapido=data['"Teste rápido"'],
+            luvas=data['"Luvas"'],
+            oculos_e_protetor_facial=data['"Óculos e protetor facial"'],
+            touca_e_sapatilha=data['"Touca e sapatilha"'],
+            cloroquina_comprimidos=data['"Cloroquina - comprimidos"'],
+            oseltamivir_capsulas=data['"Oseltamivir - cápsulas"'],
+            teste_PCR=data['"Teste PCR"'],
+            leitos_locados=data['"Leitos locados"'],
+            leitos_uti_adulto=data['"Leitos UTI adulto"'],
+            respiradores_distribuidos=data['"Respiradores distribuidos"'],
+            uti_adulto_sus=data['"UTI adulto SUS"'],
+            uti_adulto_nao_sus=data['"Uti adulto não SUS"'],
+            leitos_uti_habilitados=data['"Leitos UTI habilitados"'],
+            mais_medicos=data['"Mais Médicos"'],
+            insert_date=now,
         )
-
+        
         self.session.add(insert)
         self.session.commit()
 
         return ''
 
-    #def Brasilapi_mundo(self, data):
+
+    # def Brasilapi_nacional(self, data):
+        
+    #     table=tableClass.Brasilapi_nacional
+        
+    #     insert=table(
+    #         uid=data[0],
+    #         uf=data[1],
+    #         state=data[2],
+    #         cases=data[3],
+    #         deaths=data[4],
+    #         suspects=data[5],
+    #         refuses=data[6],
+    #         datetime=data[7],
+    #     )
+
+    #     self.session.add(insert)
+    #     self.session.commit()
+
+    #     return ''
+
+
 
 
 class Select():

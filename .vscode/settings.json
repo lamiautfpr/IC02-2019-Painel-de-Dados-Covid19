@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "_env\\Scripts\\python.exe",
+    "python.pythonPath": "/home/nathalia/anaconda3/envs/paineldedados/bin/python",
     "python.linting.pycodestyleEnabled": true,
     "python.formatting.provider": "autopep8"
 }
