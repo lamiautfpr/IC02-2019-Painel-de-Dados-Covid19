@@ -26,11 +26,11 @@ session = Session()
 
 # HDX
 # HDX.getMundo
-#get_mundo_hdx.insertData(session)
+get_mundo_hdx.insertData(session)
 
 
 # WCota
 # WCota.getNacional
-get_wcota_nacional.insertData(session)
+#get_wcota_nacional.insertData(session)
 
 session.Close()

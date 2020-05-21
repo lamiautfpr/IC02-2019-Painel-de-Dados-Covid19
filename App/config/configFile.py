@@ -1,8 +1,24 @@
-def databaseConfig():
-    user = 'guilherme'
-    password = '&mlamia$f'
-    port = '5432'
-    database = 'dashcovid19'
-    host = '200.134.21.220'
-    return [user, password, host, port, database]
+import json
 
+def databaseConfig():
+
+    with open('C:/Users/guiyo/Desktop/IC02-2019-Painel-de-Dados-Covid19/Config.json', 'r') as json_file:
+        data = json.loads(json_file.read())
+
+    data = [
+        data.get('data').get('user'),
+        data.get('data').get('password'),
+        data.get('data').get('host'),
+        data.get('data').get('port'),
+        data.get('data').get('database')
+        ]
+
+    return data
+
+    # return ([
+    #         data.get('data').get('user'),
+    #         data.get('data').get('password'),
+    #         data.get('data').get('port'),
+    #         data.get('data').get('database'),
+    #         data.get('data').get('host'),
+    #         ])
