@@ -107,12 +107,8 @@ def Hdx_mundo():
 
 def WCota_nacional():
 
-    dbFormat = {
-    "State": String(),
-    "City": String(),          
-    "Deaths": Integer(),          
-    "totalCases": Integer(),          
-    "Date": Date()
+    dbFormat = {         
+    "date": Date()
     }
 
     return dbFormat
