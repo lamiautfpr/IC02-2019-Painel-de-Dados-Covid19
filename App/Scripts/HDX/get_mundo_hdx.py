@@ -1,3 +1,4 @@
+from Scripts.functions import now
 from DataBase import tableClass
 import pandas as pd
 
@@ -25,10 +26,12 @@ def catcher():
         temp_dataset = cleaner(temp_dataset, word)
         
         dataset = pd.concat([dataset, temp_dataset], axis=1)
-        
-        dataset = dataset.sort_values(by='Date', ascending=False)
+    
+    dataset = dataset.sort_values(by='Date', ascending=False)
 
-        dataset.reset_index(drop=True, inplace=True)
+    dataset.reset_index(drop=True, inplace=True)
+
+    dataset.insert(len(dataset.columns), "insert_date", now())
 
     return dataset
 

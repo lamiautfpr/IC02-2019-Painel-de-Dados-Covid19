@@ -96,11 +96,7 @@ class Brasilapi_mundo(Base):
 def Hdx_mundo():
 
     dbFormat = {
-    "Country/Region": String(),
-    "Date": Date(),          
-    "Confirmed": Integer(),          
-    "Deaths": Integer(),          
-    "Recovered": Integer()
+    "Date": Date()
     }
 
     return dbFormat

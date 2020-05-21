@@ -1,3 +1,4 @@
+from Scripts.functions import now
 from DataBase import tableClass
 import pandas as pd
 
@@ -17,6 +18,8 @@ def catcher():
     dataset = pd.read_csv(url, encoding='utf-8', engine='python', error_bad_lines=False)
     
     dataset = cleaner(dataset)
+    
+    dataset.insert(len(dataset.columns), "insert_date", now())
 
     return dataset
 
