@@ -25,10 +25,12 @@ def catcher():
 
 def insertData(session):
 
+    print("Coletando e inserindo dados para WCota-base-nacional...")
+
     dbFormat = tableClass.WCota_nacional()
 
     dataset = catcher()
     
-    dataset.to_sql('WCota_base_nacional', con=session.get_bind(), index_label='id', if_exists='replace', method='multi', dtype=dbFormat)
+    dataset.to_sql('WCota_base_nacional', con=session.get_bind(), index_label='id', if_exists='replace', method='multi', chunksize=50000, dtype=dbFormat)
     
     return ''

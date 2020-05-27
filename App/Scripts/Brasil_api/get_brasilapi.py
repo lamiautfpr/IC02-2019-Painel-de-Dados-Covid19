@@ -3,6 +3,8 @@ from DataBase import sqlCreator
 
 def insertData(session):
 
+    print("Coletando e inserindo dados para Brasil-api-base-nacional...")
+
     insertObj = sqlCreator.Insert(session)
     selectObj = sqlCreator.Select(session)
 
@@ -18,7 +20,6 @@ def insertData(session):
     while formatDate(2, date) <= formatDate(2, day):
 
         url = urlGenerator(3, formatDate(2, date))
-        print(url)
 
         res = getApi(url)
         result = res.get('data')

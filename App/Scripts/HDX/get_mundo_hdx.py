@@ -37,6 +37,8 @@ def catcher():
 
 def insertData(session):
 
+    print("Coletando e inserindo dados para HDX-base-mundo...")
+
     dbFormat = tableClass.Hdx_mundo()
 
     dataset = catcher()

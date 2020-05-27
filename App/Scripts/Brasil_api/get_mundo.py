@@ -2,6 +2,8 @@ from Scripts.functions import now, urlGenerator, getApi, formatDate
 from DataBase import sqlCreator
 
 def insertData(session):
+    
+    print("Coletando e inserindo dados para Brasil-api-base-mundo...")
 
     selectObj = sqlCreator.Select(session)
     date = selectObj.LastDate('updated_at', '"Brasil_api_base_mundo"')
@@ -35,6 +37,6 @@ def insertData(session):
 
             insertObj.Brasilapi_mundo(listdate)
     else:
-        print("Updated data are up to date.")
+        print("Os dados da Brasil-api-base-mundo já estão atualizados.")
 
     return ''
