@@ -23,7 +23,7 @@ def catcher():
 
 def insertData(session):
 
-    print("Coletando e inserindo dados para SRAG Covid Brazil...")
+    print("Coletando e inserindo dados para SRAG-Covid-Brazil...")
 
     dataset = catcher()
     
