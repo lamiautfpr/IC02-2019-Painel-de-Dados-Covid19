@@ -109,6 +109,14 @@ def WCota_nacional():
 
     return dbFormat
 
+def SESA_parana():
+
+    dbFormat = {         
+    "DATA": Date()
+    }
+
+    return dbFormat
+
 def tableCreator():
 
     Base.metadata.create_all(engine)

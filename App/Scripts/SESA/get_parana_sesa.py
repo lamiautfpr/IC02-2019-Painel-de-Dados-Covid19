@@ -1,4 +1,6 @@
+from Scripts.functions import now
 from datetime import datetime, timedelta
+from DataBase import tableClass
 import pandas as pd
 import numpy as np
 import requests
@@ -6,13 +8,13 @@ import requests
 def getDate(i):
 
     date = datetime.now() - timedelta(i)
-    date = date.strftime('%d/%m/%Y')
+    date = date.strftime('%Y/%m/%d')
 
     return date
 
 def formatDate(date):
 
-    datetimeobject = datetime.strptime(date,"%d/%m/%Y")
+    datetimeobject = datetime.strptime(date,"%Y/%m/%d")
     date = datetimeobject.strftime('%d_%m_%Y')
 
     return date
@@ -97,7 +99,9 @@ def catcher():
     
     dataset = cleaner(dataset)
 
-    dataset['DATA'] = getDate(0)
+    dataset['DATA'] = getDate(i-1)
+    
+    dataset.insert(len(dataset.columns), "insert_date", now())
     
     return dataset
 
@@ -107,6 +111,8 @@ def insertData(session):
 
     dataset = catcher()
     
-    dataset.to_sql('SESA-base-Paraná', con=session.get_bind(), index_label='id', if_exists='replace', method='multi', chunksize=50000)
+    dbFormat = tableClass.SESA_parana()
+
+    dataset.to_sql('SESA_base_Paraná', con=session.get_bind(), index_label='id', if_exists='replace', method='multi', chunksize=50000, dtype=dbFormat)
 
     return ''
