@@ -101,4 +101,12 @@ def catcher():
     
     return dataset
 
-catcher()
+def insertData(session):
+
+    print("Coletando e inserindo dados para SESA-base-Paraná...")
+
+    dataset = catcher()
+    
+    dataset.to_sql('SESA-base-Paraná', con=session.get_bind(), index_label='id', if_exists='replace', method='multi', chunksize=50000)
+
+    return ''
