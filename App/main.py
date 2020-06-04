@@ -20,22 +20,24 @@ session = Session()
 
 # BR.api
 # Brasil.apiNacional
-# get_brasilapi.insertData(session)
+get_brasilapi.insertData(session)
 # Brasil.apiMundial
-# get_mundo.insertData(session)
+get_mundo.insertData(session)
 
 # HDX
 # HDX.getMundo
-# get_mundo_hdx.insertData(session)
+get_mundo_hdx.insertData(session)
 
 # WCota
 # WCota.getNacional
-# get_wcota_nacional.insertData(session)
+get_wcota_nacional.insertData(session)
 
 # Covid Brazil
 # SRAG
-# get_srag.insertData(session)
+get_srag.insertData(session)
 
+# SESA Paraná
+# PR
 get_parana_sesa.insertData(session)
 
 session.Close()
