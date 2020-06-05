@@ -108,6 +108,17 @@ def WCota_nacional():
 
     return dbFormat
 
+def WCota_leitos():
+
+    dbFormat = {
+    "leitosOcupados": Integer(),
+    "quantidadeLeitos": Integer(),
+    "totalOcupacao": Float(),
+    "ultimaAtualizacao": Date()
+    }
+
+    return dbFormat
+
 def SESA_parana():
 
     dbFormat = {
@@ -119,6 +130,7 @@ def SESA_parana():
     }
 
     return dbFormat
+
 
 def tableCreator():
 

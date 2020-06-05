@@ -1,12 +1,35 @@
 from Scripts.functions import now
+from datetime import datetime
 from DataBase import tableClass
 import pandas as pd
 
-def cleaner(dataset):
+def cleaner(temp_dataset):
     
-    dataset = dataset.drop(columns=['Unnamed: 0', 'Unnamed: 2', 'Fonte'], axis=1)
+    temp_dataset = temp_dataset.drop(columns=['Unnamed: 0', 'Unnamed: 2', 'Fonte'], axis=1)
     
-    dataset = dataset[~dataset.UF.str.contains("LEITOS", na=False)]
+    temp_dataset = temp_dataset[~temp_dataset.UF.str.contains("LEITOS", na=False)]
+
+    arr = temp_dataset[0:].values
+
+    head = [
+        "UF",
+        "leitosOcupados",
+        "quantidadeLeitos",
+        "totalOcupacao",
+        "ultimaAtualizacao"
+    ]
+
+    dataset = pd.DataFrame(data=arr,
+                          columns=head)
+
+    dataset['leitosOcupados'] = pd.to_numeric(dataset['leitosOcupados'], errors='coerce')
+    dataset['quantidadeLeitos'] = pd.to_numeric(dataset['quantidadeLeitos'], errors='coerce')
+
+    dataset['totalOcupacao'] = (dataset['leitosOcupados']/dataset['quantidadeLeitos'])*100
+
+    dataset['ultimaAtualizacao'] = pd.to_datetime(dataset.ultimaAtualizacao, format='%d/%m')
+    dataset['ultimaAtualizacao'] = dataset['ultimaAtualizacao'].mask(dataset['ultimaAtualizacao'].dt.year == 1900, 
+                             dataset['ultimaAtualizacao'] + pd.offsets.DateOffset(year=2020))
 
     dataset = dataset.dropna(how='all')
 
@@ -27,8 +50,10 @@ def insertData(session):
 
     print("Coletando e inserindo dados para WCota-base-leitos...")
 
+    dbFormat = tableClass.WCota_leitos()
+
     dataset = catcher()
     
-    dataset.to_sql('WCota_base_leitos', con=session.get_bind(), index_label='id', if_exists='replace', method='multi', chunksize=50000)
+    dataset.to_sql('WCota_base_leitos', con=session.get_bind(), index_label='id', if_exists='replace', method='multi', chunksize=50000, dtype=dbFormat)
     
     return ''
