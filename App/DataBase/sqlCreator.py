@@ -2,8 +2,6 @@ from Scripts.functions import now, formatDate
 from sqlalchemy import update, text
 from . import tableClass
 
-now = now()
-
 class Insert():
 
     def __init__(self, session):
@@ -25,7 +23,7 @@ class Insert():
             is_last=data[8],
             place_type=data[9],
             state=data[10],
-            insert_date=now
+            insert_date=now()
         )
 
         self.session.add(insert)
@@ -93,7 +91,7 @@ class Insert():
             deaths=data[3],
             recovered=data[4],
             updated_at=formatDate(3, data[5]),
-            insert_date=now
+            insert_date=now()
         )
 
         self.session.add(insert)
@@ -114,7 +112,7 @@ class Insert():
             suspects=data[5],
             refuses=data[6],
             datetime=formatDate(3, data[7]),
-            insert_date=now
+            insert_date=now()
         )
 
         self.session.add(insert)

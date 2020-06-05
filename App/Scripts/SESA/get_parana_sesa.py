@@ -50,12 +50,12 @@ def cleaner(temp_data):
     arr = temp_data[1:].values
 
     head = [
-        "REGIONAL DE SAUDE",
+        "REGIONAL",
         "MUNICIPIO",
         "CONFIRMADOS",
         "OBITOS",
         "DESCARTADOS",
-        "EM INVESTIGACAO",
+        "INVESTIGACAO",
         "TOTAL",
         "DATA"
     ]
@@ -65,10 +65,10 @@ def cleaner(temp_data):
                           columns=head)
 
     #Fill NaN to 0 in Regional de Saude                          
-    dataset['REGIONAL DE SAUDE'] = dataset['REGIONAL DE SAUDE'].fillna(0)   
+    dataset['REGIONAL'] = dataset['REGIONAL'].fillna(0)   
     #Insert NaN to error values and drop row in Regional de Saude 
-    dataset['REGIONAL DE SAUDE'] = pd.to_numeric(dataset['REGIONAL DE SAUDE'], errors='coerce')
-    dataset.dropna(subset=['REGIONAL DE SAUDE'], inplace=True)
+    dataset['REGIONAL'] = pd.to_numeric(dataset['REGIONAL'], errors='coerce')
+    dataset.dropna(subset=['REGIONAL'], inplace=True)
 
     #Drop NaN values in Municipio
     dataset.dropna(subset=['MUNICIPIO'], inplace=True)
@@ -84,7 +84,8 @@ def cleaner(temp_data):
 
 def catcher():
     
-    r = requests.get('http://www.saude.pr.gov.br/arquivos/File/INFORME_EPIDEMIOLOGICO_{}.csv'.format(formatDate(getDate(0))))
+    date = formatDate(getDate(0))
+    r = requests.get('http://www.saude.pr.gov.br/arquivos/File/INFORME_EPIDEMIOLOGICO_{}.csv'.format(date))
     r.raise_for_status
 
     i=1
@@ -113,6 +114,6 @@ def insertData(session):
     
     dbFormat = tableClass.SESA_parana()
 
-    dataset.to_sql('SESA_base_Paraná', con=session.get_bind(), index_label='id', if_exists='replace', method='multi', chunksize=50000, dtype=dbFormat)
+    dataset.to_sql('SESA_base_PR', con=session.get_bind(), index_label='id', if_exists='replace', method='multi', chunksize=50000, dtype=dbFormat)
 
     return ''

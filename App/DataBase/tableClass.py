@@ -92,7 +92,6 @@ class Brasilapi_mundo(Base):
     updated_at = Column(Date)
     insert_date = Column(Date)
 
-
 def Hdx_mundo():
 
     dbFormat = {
@@ -111,7 +110,11 @@ def WCota_nacional():
 
 def SESA_parana():
 
-    dbFormat = {         
+    dbFormat = {
+    "CONFIRMADOS": Integer(),
+    "OBITOS": Integer(),
+    "EM INVESTIGACAO": Integer(),
+    "TOTAL": Integer(),
     "DATA": Date()
     }
 

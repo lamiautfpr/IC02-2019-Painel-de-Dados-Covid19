@@ -1,7 +1,7 @@
 # from Scripts.Brasil_io import get_brasilio, get_cartorio
 from Scripts.Brasil_api import get_brasilapi, get_mundo
 from Scripts.HDX import get_mundo_hdx
-from Scripts.WCota import get_wcota_nacional
+from Scripts.WCota import get_wcota_nacional, get_wcota_leitos
 from Scripts.SRAG_Covid_Brasil import get_srag
 from Scripts.SESA import get_parana_sesa
 from DataBase.engineCreator import engineDb
@@ -31,13 +31,15 @@ get_mundo_hdx.insertData(session)
 # WCota
 # WCota.getNacional
 get_wcota_nacional.insertData(session)
+# WCota.getLeitos
+get_wcota_leitos.insertData(session)
 
 # Covid Brazil
 # SRAG
 get_srag.insertData(session)
 
 # SESA Paraná
-# PR
 get_parana_sesa.insertData(session)
+
 
 session.Close()
