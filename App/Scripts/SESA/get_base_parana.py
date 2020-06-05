@@ -79,10 +79,16 @@ def catcher():
 
     i=1
     while not r.ok:
+        
         date = formatDate(getDate(i))
         r = requests.get('http://www.saude.pr.gov.br/arquivos/File/INFORME_EPIDEMIOLOGICO_{}.csv'.format(date))
         r.raise_for_status
+        
         i+=1
+    
+    else:
+
+
 
     url = ("http://www.saude.pr.gov.br/arquivos/File/INFORME_EPIDEMIOLOGICO_{}.csv").format(date)
     dataset = pd.read_csv(url, sep=',|;', encoding='ISO-8859-1', engine='python', error_bad_lines=False)
@@ -108,4 +114,5 @@ def insertData(session):
     return ''
 
 def plottingData():
+
 
