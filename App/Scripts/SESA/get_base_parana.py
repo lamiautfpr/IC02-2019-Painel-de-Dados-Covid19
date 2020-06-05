@@ -49,12 +49,16 @@ def cleaner(temp_data):
     dataset.dropna(subset=['REGIONAL'], inplace=True)
 
     dataset.dropna(subset=['MUNICIPIO'], inplace=True)
+    dataset['MUNICIPIO'] = dataset['MUNICIPIO'].str.title()
+    dataset = dataset[~dataset.MUNICIPIO.str.contains("/|Total|Fora", na=False)]
     
     dataset['CONFIRMADOS'] = pd.to_numeric(dataset['CONFIRMADOS'], errors='coerce')
     dataset.dropna(subset=['CONFIRMADOS'], inplace=True)
-
-    dataset = dataset[~dataset.MUNICIPIO.str.contains("/|Total|Fora", na=False)]
     
+    dataset['DESCARTADOS'] = pd.to_numeric(dataset['DESCARTADOS'], errors='coerce')
+
+    dataset['INVESTIGACAO'] = pd.to_numeric(dataset['INVESTIGACAO'], errors='coerce')
+
     return dataset
 
 def catcher():
@@ -69,26 +73,29 @@ def catcher():
         r = requests.get('http://www.saude.pr.gov.br/arquivos/File/INFORME_EPIDEMIOLOGICO_{}.csv'.format(formatDate(4, date)))
         r.raise_for_status
 
-        if not r.ok:
+        while not r.ok:
             date = getPreviousDate(date)
+
+            r = requests.get('http://www.saude.pr.gov.br/arquivos/File/INFORME_EPIDEMIOLOGICO_{}.csv'.format(formatDate(4, date)))
+            r.raise_for_status
         
         else: 
-            url = ("http://www.saude.pr.gov.br/arquivos/File/INFORME_EPIDEMIOLOGICO_{}.csv").format(date)
-            temp_dataset = pd.read_csv(url, sep=',|;', encoding='ISO-8859-1', engine='python', error_bad_lines=False)
+            url = ("http://www.saude.pr.gov.br/arquivos/File/INFORME_EPIDEMIOLOGICO_{}.csv").format(formatDate(4, date))
+            temp_dataset = pd.read_csv(url, sep=',|;', engine='python', error_bad_lines=False, encoding='ISO-8859-1')
             
             temp_dataset = cleaner(temp_dataset)
            
             temp_dataset['DATA'] = date
 
-            print(dataset)
-
-        # dataset = pd.concat([dataset, temp_dataset])
+        dataset = pd.concat([dataset, temp_dataset])
         
         date = getPreviousDate(date)
 
+    dataset.reset_index(drop=True, inplace=True)
+
     dataset.insert(len(dataset.columns), "insert_date", now())
     
-    return print(dataset)
+    return dataset
 
 def insertData(session):
 
