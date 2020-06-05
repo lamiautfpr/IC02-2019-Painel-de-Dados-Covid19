@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from DataBase import tableClass
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 import requests
 
 def getDate(i):
@@ -105,4 +106,6 @@ def insertData(session):
     dataset.to_sql('SESA_base_PR', con=session.get_bind(), index_label='id', if_exists='replace', method='multi', chunksize=50000, dtype=dbFormat)
 
     return ''
+
+def plottingData():
 
