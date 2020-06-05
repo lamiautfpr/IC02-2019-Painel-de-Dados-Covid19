@@ -119,6 +119,20 @@ def WCota_leitos():
 
     return dbFormat
 
+def WCota_suspeitos():
+
+    dbFormat = {
+    "Casos": Integer(),
+    "Suspeitos": Integer(),
+    "Recuperados": Integer(),
+    "Obitos": Integer(),
+    "Testes": Integer(),
+    "novosCasos": Integer(),
+    "novosObitos": Integer()
+    }
+
+    return dbFormat
+
 def SESA_parana():
 
     dbFormat = {

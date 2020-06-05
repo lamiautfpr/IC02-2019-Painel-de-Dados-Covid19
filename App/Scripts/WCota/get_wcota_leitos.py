@@ -23,6 +23,7 @@ def cleaner(temp_dataset):
                           columns=head)
 
     dataset['leitosOcupados'] = pd.to_numeric(dataset['leitosOcupados'], errors='coerce')
+    
     dataset['quantidadeLeitos'] = pd.to_numeric(dataset['quantidadeLeitos'], errors='coerce')
 
     dataset['totalOcupacao'] = (dataset['leitosOcupados']/dataset['quantidadeLeitos'])*100
