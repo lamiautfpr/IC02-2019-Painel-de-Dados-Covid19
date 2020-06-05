@@ -1,24 +1,10 @@
-from Scripts.functions import now
-from datetime import datetime, timedelta
+from datetime import datetime
+from Scripts.functions import now, urlGenerator, getApi, getPreviousDate, formatDate
 from DataBase import tableClass
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import requests
-
-def getDate(i):
-
-    date = datetime.now() - timedelta(i)
-    date = date.strftime('%Y/%m/%d')
-
-    return date
-
-def formatDate(date):
-
-    datetimeobject = datetime.strptime(date,"%Y/%m/%d")
-    date = datetimeobject.strftime('%d_%m_%Y')
-
-    return date
 
 def cleaner(temp_data):
 
@@ -73,33 +59,36 @@ def cleaner(temp_data):
 
 def catcher():
     
-    date = formatDate(getDate(0))
-    r = requests.get('http://www.saude.pr.gov.br/arquivos/File/INFORME_EPIDEMIOLOGICO_{}.csv'.format(date))
-    r.raise_for_status
+    dataset = pd.DataFrame()
+    temp_dataset = pd.DataFrame()
+    
+    date = datetime.now().date()
+    firstCase = datetime(2020, 4, 16).date()
 
-    i=1
-    while not r.ok:
-        
-        date = formatDate(getDate(i))
-        r = requests.get('http://www.saude.pr.gov.br/arquivos/File/INFORME_EPIDEMIOLOGICO_{}.csv'.format(date))
+    while formatDate(2, date) != formatDate(2, firstCase):
+        r = requests.get('http://www.saude.pr.gov.br/arquivos/File/INFORME_EPIDEMIOLOGICO_{}.csv'.format(formatDate(4, date)))
         r.raise_for_status
+
+        if not r.ok:
+            date = getPreviousDate(date)
         
-        i+=1
-    
-    else:
+        else: 
+            url = ("http://www.saude.pr.gov.br/arquivos/File/INFORME_EPIDEMIOLOGICO_{}.csv").format(date)
+            temp_dataset = pd.read_csv(url, sep=',|;', encoding='ISO-8859-1', engine='python', error_bad_lines=False)
+            
+            temp_dataset = cleaner(temp_dataset)
+           
+            temp_dataset['DATA'] = date
 
+            print(dataset)
 
+        # dataset = pd.concat([dataset, temp_dataset])
+        
+        date = getPreviousDate(date)
 
-    url = ("http://www.saude.pr.gov.br/arquivos/File/INFORME_EPIDEMIOLOGICO_{}.csv").format(date)
-    dataset = pd.read_csv(url, sep=',|;', encoding='ISO-8859-1', engine='python', error_bad_lines=False)
-    
-    dataset = cleaner(dataset)
-
-    dataset['DATA'] = getDate(i-1)
-    
     dataset.insert(len(dataset.columns), "insert_date", now())
     
-    return dataset
+    return print(dataset)
 
 def insertData(session):
 
@@ -113,6 +102,5 @@ def insertData(session):
 
     return ''
 
-def plottingData():
 
 

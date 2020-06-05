@@ -40,7 +40,7 @@ session = Session()
 # get_srag.insertData(session)
 
 # SESA Paraná
-get_base_parana.insertData(session)
+get_base_parana.catcher()
 
 
 session.Close()
