@@ -22,7 +22,7 @@ def catcher():
 
 def insertData(session):
 
-    print("Coletando e inserindo dados para SESA-base-PDF..")
+    print("Coletando e inserindo dados para SESA-base-PDF...")
 
     listDatasets = catcher()
     listTitles = ['dadosGerais', 'faixaEtaria', 'evoluConfirmados', 'examesRT', 'leitosMacrorregiao', 'casosSRAG', 'comorbidadesObitos', 'obitosCor']
