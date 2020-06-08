@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 import requests
 import datetime
 import pandas as pd
@@ -8,20 +9,6 @@ def now():
     n = datetime.datetime.now()
 
     return n
-
-
-def getData(url, format='json'):     #json = formato padrão
-    if format == 'json':
-        req = requests.get(url, timeout=3000)
-        if req.status_code == 200:
-            response = req.json()
-            return response
-        else:
-            return False
-    elif format == 'csv':
-        df = pd.read_csv(url, engine='python', sep=',|;')
-        return df
-  
 
 
 def urlGenerator(var, date=now()):
@@ -40,43 +27,40 @@ def urlGenerator(var, date=now()):
     elif var == 5:
         # Painel_insumos
         url = ('https://covid-insumos.saude.gov.br/paineis/insumos/lista_csv_painel.php?output=csv')
+
+
+def getApi(url, format='json'):     #json = formato padrão
+    if format == 'json':
+        req = requests.get(url, timeout=3000)
+        if req.status_code == 200:
+            response = req.json()
+            return response
+        else:
+            return False
+    elif format == 'csv':
+        df = pd.read_csv(url, engine='python', sep=',|;')
+        return df
+
+
+def formatDate(var, date):
+
+    if var == 1:
+        # Brasil.io
+        pass
+    elif var == 2:
+        # Brasil.api
+        date = date.strftime('%Y%m%d')
+    elif var == 3:
+        # BD Brasil.api to datetime
+        date = datetime.strptime(date, "%Y-%m-%dT%H:%M:%S.%fZ")        
     else:
-        # ERROR
         pass
 
-    return url
+    return date
 
 
+def getNextDate(date):
 
-# def getApi(url):
-#     res = requests.request("GET", url)
-#     if res.status_code == 200:
-#         res = json.loads(res.content)
-#     else:
-#         return False
+    date += timedelta(days=1)
 
-#     return res
-
-
-# def formatDate(var, date):
-
-#     if var == 1:
-#         # Brasil.io
-#         pass
-#     elif var == 2:
-#         # Brasil.api
-#         date = date.strftime('%Y%m%d')
-#     elif var == 3:
-#         # BD Brasil.api to datetime
-#         date = datetime.strptime(date, "%Y-%m-%dT%H:%M:%S.%fZ")
-#     else:
-#         pass
-
-#     return date
-
-
-# def getNextDate(date):
-
-#     date += timedelta(days=1)
-
-#     return date
+    return date

@@ -1,7 +1,10 @@
-from DataBase.engineCreator import engineDb
 from Scripts.Brasil_io import get_brasil, get_cartorio
-from Scripts import get_insumos 
+from Scripts.Brasil_api import get_brasil as get_brasilapi, get_mundo
+from Scripts.Saude_gov import get_insumos
+from DataBase.engineCreator import engineDb
 from sqlalchemy.orm import sessionmaker
+
+
 
 # Criando a Sessão com o Banco de Dados
 Session = sessionmaker(bind=engineDb())
@@ -22,3 +25,5 @@ get_brasil.insertData(session)
 
 #saude.gov.br -------------------
 #get_insumos.insertData(session)
+
+# session.Close()

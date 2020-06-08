@@ -1,8 +1,8 @@
 from config.configFile import databaseConfig
 from sqlalchemy import create_engine
 
-conf = databaseConfig()
 
+conf = configFile.databaseConfig()
 
 def engineDb():
 

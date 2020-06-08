@@ -1,6 +1,6 @@
-from DataBase import tableClass
-from Scripts.functions import now
+from Scripts.functions import now, formatDate
 from sqlalchemy import update, text
+from . import tableClass
 import inspect
 
 now=now()
@@ -10,6 +10,7 @@ class Insert():
 
     def __init__(self, session):
         self.session=session
+
 
     def Brasilio_nacional(self, data):
 
@@ -35,11 +36,11 @@ class Insert():
 
         return ''
 
+
     def Brasilio_cartorio(self, data):
 
         table=tableClass.Brasilio_cartorio
 
-        # data.append(now)
         insert=table(
             date=data[0],
             deaths_covid19=data[1],
@@ -76,13 +77,55 @@ class Insert():
             new_deaths_total_2020=data[32],
             state=data[33],
             insert_date=now,
-
         )
 
         self.session.add(insert)
         self.session.commit()
 
         return ''
+
+
+    def Brasilapi_mundo(self, data):
+
+        table = tableClass.Brasilapi_mundo
+
+        insert = table(
+            country=data[0],
+            cases=data[1],
+            confirmed=data[2],
+            deaths=data[3],
+            recovered=data[4],
+            updated_at=formatDate(3, data[5]),
+            insert_date=now
+        )
+
+        self.session.add(insert)
+        self.session.commit()
+
+        return ''
+
+
+    def Brasilapi_nacional(self, data):
+
+        table = tableClass.Brasilapi_nacional
+
+        insert = table(
+            uid=data[0],
+            uf=data[1],
+            state=data[2],
+            cases=data[3],
+            deaths=data[4],
+            suspects=data[5],
+            refuses=data[6],
+            datetime=formatDate(3, data[7]),
+            insert_date=now
+        )
+
+        self.session.add(insert)
+        self.session.commit()
+
+        return ''
+
 
     def Painel_insumos(self, data):
 
@@ -119,29 +162,6 @@ class Insert():
         return ''
 
 
-    # def Brasilapi_nacional(self, data):
-        
-    #     table=tableClass.Brasilapi_nacional
-        
-    #     insert=table(
-    #         uid=data[0],
-    #         uf=data[1],
-    #         state=data[2],
-    #         cases=data[3],
-    #         deaths=data[4],
-    #         suspects=data[5],
-    #         refuses=data[6],
-    #         datetime=data[7],
-    #     )
-
-    #     self.session.add(insert)
-    #     self.session.commit()
-
-    #     return ''
-
-
-
-
 class Select():
 
     def __init__(self, session):
@@ -155,3 +175,14 @@ class Select():
         for row in result:
             last=row[0]
         return last
+
+class Delete():
+
+    def __init__(self, session):
+        self.session=session
+
+    def DeletePeriod(self, table, field, date1, date2):
+        query=text("delete from \"{}\" where {} between '{}' and '{}'".format(table, field, date2, date1))
+        result=self.session.execute(query)
+        self.session.commit()
+        pass

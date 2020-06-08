@@ -1,17 +1,24 @@
-from Scripts.functions import getData, urlGenerator
+from Scripts.functions import getApi, urlGenerator
 from DataBase import sqlCreator
 import json
-from datetime import datetime
-
+from datetime import datetime, timedelta
+DROPDAYS = 10
 
 def insertData(session):
     insertObj = sqlCreator.Insert(session)
     selectObj = sqlCreator.Select(session)
+    deleteObj = sqlCreator.Delete(session)
 
-    last_date = selectObj.LastDate("date", "Brasil_io_base_nacional")
+    last_date = selectObj.LastDate("date", "Brasil_io_base_nacional")   #última data de inserção
     url = urlGenerator(1)
-    response = getData(url)
+    response = getApi(url)
     updated = False
+    date_start_str = last_date.strftime("%Y-%m-%d")     #preenche da data mais atual (last_date) para a mais antiga (apagada)
+    date_end = (last_date - timedelta(days=DROPDAYS))   #datetime
+    date_end_str = date_end.strftime("%Y-%m-%d")        #string
+
+    #Deleta DROPDAYS dias para trás e reinsere no banco
+    deleteObj.DeletePeriod("Brasil_io_base_nacional","date", date_start_str, date_end_str) #falta datetime2
 
     while url is not None and not updated:      #updated = quando dados estiverem atualizados
         listdate = []
@@ -20,7 +27,7 @@ def insertData(session):
             date = row.get('date')
             if last_date is None:
                 pass
-            elif datetime.strptime(date, '%Y-%m-%d').date() <= last_date:
+            elif datetime.strptime(date, '%Y-%m-%d').date() <= date_end:
                 updated = True
                 break
             city = row.get('city')
@@ -51,6 +58,6 @@ def insertData(session):
         if not updated:
             url = response.get('next')
             if url:
-                response = getData(url)
+                response = getApi(url)
 
     return ''

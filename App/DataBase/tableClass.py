@@ -1,7 +1,7 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, Boolean, UniqueConstraint
 from sqlalchemy import ForeignKey, Date, Time, BigInteger, Float
-from DataBase.engineCreator import engineDb
+from .engineCreator import engineDb
 
 engine = engineDb()
 Base = declarative_base()
@@ -66,32 +66,32 @@ class Brasilio_cartorio(Base):
     insert_date = Column(Date)
 
 
-# class Brasilapi_nacional(Base):
-#     __tablename__ = 'Brasil_api_base_nacional'
+class Brasilapi_nacional(Base):
+    __tablename__ = 'Brasil_api_base_nacional'
 
-#     id = Column(Integer, primary_key=True)
-#     uid = Column(String)
-#     uf = Column(String)
-#     state = Column(String)
-#     cases = Column(Integer)
-#     deaths = Column(Integer)
-#     suspects = Column(Integer)
-#     refuses = Column(Integer)
-#     datetime = Column(String)
-#     insert_date = Column(Date) 
+    id = Column(Integer, primary_key=True)
+    uid = Column(String)
+    uf = Column(String)
+    state = Column(String)
+    cases = Column(Integer)
+    deaths = Column(Integer)
+    suspects = Column(Integer)
+    refuses = Column(Integer)
+    datetime = Column(String)
+    insert_date = Column(Date) 
 
 
-# class Brasilapi_mundo(Base):
-#     __tablename__ = 'Brasil_api_base_mundo'
+class Brasilapi_mundo(Base):
+    __tablename__ = 'Brasil_api_base_mundo'
 
-#     id = Column(Integer, primary_key=True)
-#     country = Column(String)
-#     cases = Column(Integer)
-#     confirmed = Column(Integer)
-#     deaths = Column(Integer)
-#     recovered = Column(Integer)
-#     updated_at = Column(Date)
-#     insert_date = Column(Date)
+    id = Column(Integer, primary_key=True)
+    country = Column(String)
+    cases = Column(Integer)
+    confirmed = Column(Integer)
+    deaths = Column(Integer)
+    recovered = Column(Integer)
+    updated_at = Column(Date)
+    insert_date = Column(Date)
 
 
 class Painel_insumos(Base):
@@ -122,4 +122,8 @@ class Painel_insumos(Base):
     insert_date = Column(Date)
 
 
-Base.metadata.create_all(engine)
+def tableCreator():
+
+    Base.metadata.create_all(engine)
+
+    return ''
