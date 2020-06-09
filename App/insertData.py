@@ -41,8 +41,8 @@ session = Session()
 
 # SESA Paraná
 # CSV
-get_base_parana.insertData(session)
+# get_base_parana.insertData(session)
 # PDF
-# get_base_pdf.insertData(session)
+get_base_pdf.insertData(session)
 
 session.Close()
