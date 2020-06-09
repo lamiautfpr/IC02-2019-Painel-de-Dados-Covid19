@@ -7,7 +7,7 @@ def cleaner(temp_dataset):
     
     temp_dataset = temp_dataset.drop(temp_dataset.index[30:])
 
-    temp_dataset = temp_dataset.drop(columns=['Unnamed: 0', 'Unnamed: 9', 'Unnamed: 10'], axis=1)
+    temp_dataset = temp_dataset.drop(columns=[',', 'Unnamed: 9', 'Unnamed: 10'], axis=1)
     
     arr = temp_dataset[3:].values
 
