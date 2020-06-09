@@ -19,30 +19,30 @@ session = Session()
 
 # BR.api
 # Brasil.apiNacional
-get_brasilapi.insertData(session)
+# get_brasilapi.insertData(session)
 # Brasil.apiMundial
-get_mundo.insertData(session)
+# get_mundo.insertData(session)
 
 # HDX
 # HDX.getMundo
-get_mundo_hdx.insertData(session)
+# get_mundo_hdx.insertData(session)
 
 # WCota
 # WCota.getNacional
-get_wcota_nacional.insertData(session)
+# get_wcota_nacional.insertData(session)
 # WCota.getLeitos
-get_wcota_leitos.insertData(session)
+# get_wcota_leitos.insertData(session)
 # WCota.getSuspects
-get_wcota_suspects.insertData(session)
+# get_wcota_suspects.insertData(session)
 
 # Covid Brazil
 # SRAG
-get_srag.insertData(session)
+# get_srag.insertData(session)
 
 # SESA Paraná
 # CSV
 get_base_parana.insertData(session)
 # PDF
-get_base_pdf.insertData(session)
+# get_base_pdf.insertData(session)
 
 session.Close()
