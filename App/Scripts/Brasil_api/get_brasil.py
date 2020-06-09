@@ -1,6 +1,6 @@
 from Scripts.functions import urlGenerator, getApi, getNextDate, formatDate
 from datetime import datetime, timedelta
-from DataBase import sqlCreator
+from DataBase import sqlCreator, tableClass
 
 
 def insertData(session):
@@ -9,7 +9,7 @@ def insertData(session):
     selectObj = sqlCreator.Select(session)
 
     # date = datetime(2020, 1, 29, 19, 0, 0)
-    initialDate = selectObj.LastDate('datetime', '"Brasil_api_base_nacional"')
+    initialDate = selectObj.LastDate('datetime', 'Brasil_api_base_nacional')
 
     date = getNextDate(initialDate)
 
