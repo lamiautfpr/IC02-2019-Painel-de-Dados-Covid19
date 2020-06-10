@@ -51,7 +51,7 @@ def cleaner(temp_data):
     dataset.dropna(subset=['MUNICIPIO'], inplace=True)
     dataset['MUNICIPIO'] = dataset['MUNICIPIO'].str.title()
     dataset = dataset[~dataset.MUNICIPIO.str.contains("/|Total|Fora", na=False)]
-    
+
     dataset['CONFIRMADOS'] = pd.to_numeric(dataset['CONFIRMADOS'], errors='coerce')
     dataset.dropna(subset=['CONFIRMADOS'], inplace=True)
     

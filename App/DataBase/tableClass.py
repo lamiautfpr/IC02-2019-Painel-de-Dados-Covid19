@@ -130,6 +130,24 @@ def SESA_parana():
 
     return dbFormat
 
+def Insumos():
+    
+    dbFormat = {
+    "Vacinas_Distribuidas_Influenza": Integer(),
+    "Vacinas_Aplicadas_Influenza": Integer(),
+    "Cloroquina_Comprimido": Integer(),
+    "Oseltamivir_Capsulas": Integer(),
+    "Teste_PCR": Integer(),
+    "Leitos_Locados": Integer(),
+    "Leitos_UTI_Adulto": Integer(),
+    "Respiradores_Distribuidos": Integer(),
+    "UTI_Adulto_SUS": Integer(),
+    "UTI_Adulto_nSUS": Integer(),
+    "Leitos_UTI_Habilitado": Integer(),
+    "MaisMedicos": Integer()
+    }
+
+    return dbFormat
 
 def tableCreator():
 

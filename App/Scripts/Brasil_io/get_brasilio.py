@@ -1,4 +1,4 @@
-from Scripts.functions import urlGenerator, now        
+from Scripts.functions import now        
 from urllib.request import Request, urlopen
 from DataBase import tableClass
 import pandas as pd
