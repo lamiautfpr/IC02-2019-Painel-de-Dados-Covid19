@@ -1,50 +1,9 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, Boolean, UniqueConstraint
+from sqlalchemy import Column, Integer, String, Date
 from .engineCreator import engineDb
 
 engine = engineDb()
 Base = declarative_base()
-
-class Brasilio_cartorio(Base):
-    __tablename__ = 'Brasil_io_base_cartorio'
-
-    id = Column(Integer, primary_key=True)
-    date = Column(Date)
-    deaths_covid19 = Column(Integer)
-    deaths_indeterminate_2019 = Column(Integer)
-    deaths_indeterminate_2020 = Column(Integer)
-    deaths_others_2019 = Column(Integer)
-    deaths_others_2020 = Column(Integer)
-    deaths_pneumonia_2019 = Column(Integer)
-    deaths_pneumonia_2020 = Column(Integer)
-    deaths_respiratory_failure_2019 = Column(Integer)
-    deaths_respiratory_failure_2020 = Column(Integer)
-    deaths_sars_2019 = Column(Integer)
-    deaths_sars_2020 = Column(Integer)
-    deaths_septicemia_2019 = Column(Integer)
-    deaths_septicemia_2020 = Column(Integer)
-    deaths_total_2019 = Column(Integer)
-    deaths_total_2020 = Column(Integer)
-    epidemiological_week_2019 = Column(Integer)
-    epidemiological_week_2020 = Column(Integer)
-    new_deaths_covid19 = Column(Integer)
-    new_deaths_indeterminate_2019 = Column(Integer)
-    new_deaths_indeterminate_2020 = Column(Integer)
-    new_deaths_others_2019 = Column(Integer)
-    new_deaths_others_2020 = Column(Integer)
-    new_deaths_pneumonia_2019 = Column(Integer)
-    new_deaths_pneumonia_2020 = Column(Integer)
-    new_deaths_respiratory_failure_2019 = Column(Integer)
-    new_deaths_respiratory_failure_2020 = Column(Integer)
-    new_deaths_sars_2019 = Column(Integer)
-    new_deaths_sars_2020 = Column(Integer)
-    new_deaths_septicemia_2019 = Column(Integer)
-    new_deaths_septicemia_2020 = Column(Integer)
-    new_deaths_total_2019 = Column(Integer)
-    new_deaths_total_2020 = Column(Integer)
-    state = Column(String(10))
-    # insert_date = Column(Date)
-
 
 class Brasilapi_nacional(Base):
     __tablename__ = 'Brasil_api_base_nacional'
@@ -79,6 +38,41 @@ def Brasil_io_nacional():
     "date": Date(),
     "city_ibge_code": Integer(),
     "estimated_population_2019": Integer()
+    }
+
+    return dbFormat
+
+def Brasil_io_cartorio():
+
+    dbFormat = {
+    "date": Date(),
+    "deaths_covid19": Integer(),
+    "deaths_indeterminate_2019": Integer(),
+    "deaths_indeterminate_2020": Integer(),
+    "estimated_population_2019": Integer(),
+    "deaths_others_2019": Integer(),
+    "deaths_others_2020": Integer(),
+    "deaths_pneumonia_2019": Integer(),
+    "deaths_pneumonia_2020": Integer(),
+    "deaths_respiratory_failure_2019": Integer(),
+    "deaths_respiratory_failure_2020": Integer(),
+    "deaths_sars_2019": Integer(),
+    "deaths_sars_2020": Integer(),
+    "deaths_septicemia_2019": Integer(),
+    "deaths_septicemia_2020": Integer(),
+    "new_deaths_covid19": Integer(),
+    "new_deaths_indeterminate_2019": Integer(),
+    "new_deaths_indeterminate_2020": Integer(),
+    "new_deaths_others_2019": Integer(),
+    "new_deaths_others_2020": Integer(),
+    "new_deaths_pneumonia_2019": Integer(),
+    "new_deaths_pneumonia_2020": Integer(),
+    "new_deaths_respiratory_failure_2019": Integer(),
+    "new_deaths_respiratory_failure_2020": Integer(),
+    "new_deaths_sars_2019": Integer(),
+    "new_deaths_sars_2020": Integer(),
+    "new_deaths_septicemia_2019": Integer(),
+    "new_deaths_septicemia_2020": Integer()
     }
 
     return dbFormat
