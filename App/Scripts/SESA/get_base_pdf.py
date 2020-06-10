@@ -44,7 +44,7 @@ def insertData(session):
 
     i=0
     while i < len(listDatasets):
-        listDatasets[i].to_sql('SESA_base_{}'.format(listTitles[i]), con=session.get_bind(), index_label='id', if_exists='append', method='multi', chunksize=50000)
+        listDatasets[i].to_sql('SESA_base_{}'.format(listTitles[i]), con=session.get_bind(), index_label='id', if_exists='replace', method='multi', chunksize=50000)
         
         i+=1
 

@@ -54,6 +54,6 @@ def insertData(session):
 
     dataset = catcher()
     
-    dataset.to_sql('WCota_base_leitos', con=session.get_bind(), index_label='id', if_exists='append', method='multi', chunksize=50000, dtype=dbFormat)
+    dataset.to_sql('WCota_base_leitos', con=session.get_bind(), index_label='id', if_exists='replace', method='multi', chunksize=50000, dtype=dbFormat)
     
     return ''
