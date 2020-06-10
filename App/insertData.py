@@ -5,6 +5,7 @@ from Scripts.WCota import get_wcota_nacional, get_wcota_leitos, get_wcota_suspec
 from Scripts.SRAG_Covid_Brasil import get_srag
 from Scripts.SESA import get_base_parana, get_base_pdf
 from Scripts.Insumos import get_base_insumos
+from Scripts.Mesorregiao import get_regioes
 from DataBase.engineCreator import engineDb
 from sqlalchemy.orm import sessionmaker
 
