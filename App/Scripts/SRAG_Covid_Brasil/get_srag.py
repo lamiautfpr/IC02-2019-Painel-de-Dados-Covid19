@@ -27,6 +27,6 @@ def insertData(session):
 
     dataset = catcher()
     
-    dataset.to_sql('SRAG_base_nacional', con=session.get_bind(), index_label='id', if_exists='replace', method='multi', chunksize=50000)
+    dataset.to_sql('SRAG_base_nacional', con=session.get_bind(), index_label='id', if_exists='append', method='multi', chunksize=50000)
     
     return ''
