@@ -1,4 +1,4 @@
-# from Scripts.Brasil_io import get_brasilio, get_cartorio
+from Scripts.Brasil_io import get_brasilio, get_cartorio
 from Scripts.Brasil_api import get_brasilapi, get_mundo
 from Scripts.HDX import get_mundo_hdx
 from Scripts.WCota import get_wcota_nacional, get_wcota_leitos, get_wcota_suspects
@@ -13,9 +13,9 @@ session = Session()
 
 # BR.io
 # Brasil.io Dados Nacionais
-# get_brasil.insertData(session)
+get_brasil.insertData(session)
 # Brasil.io Dados Cartório
-# get_cartorio.insertData(session)
+get_cartorio.insertData(session)
 
 # BR.api
 # Brasil.apiNacional
@@ -43,6 +43,6 @@ session = Session()
 # CSV
 # get_base_parana.insertData(session)
 # PDF
-get_base_pdf.insertData(session)
+# get_base_pdf.insertData(session)
 
 session.Close()

@@ -1,5 +1,6 @@
 from Scripts.functions import now, urlGenerator, getApi, formatDate
 from DataBase import sqlCreator
+from datetime import datetime
 
 def insertData(session):
     
@@ -7,7 +8,8 @@ def insertData(session):
 
     selectObj = sqlCreator.Select(session)
     date = selectObj.LastDate('updated_at', '"Brasil_api_base_mundo"')
-
+    # date = datetime(2020, 1, 29, 19, 0, 0) 
+    
     day = now()
 
     if formatDate(2, date) != formatDate(2, day):

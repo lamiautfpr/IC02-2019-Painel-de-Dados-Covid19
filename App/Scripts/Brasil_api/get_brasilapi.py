@@ -1,5 +1,6 @@
 from Scripts.functions import now, urlGenerator, getApi, getNextDate, formatDate
 from DataBase import sqlCreator
+from datetime import datetime
 
 def insertData(session):
 
