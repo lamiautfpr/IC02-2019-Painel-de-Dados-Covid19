@@ -1,56 +1,28 @@
-from Scripts.functions import getData, urlGenerator
-from DataBase import sqlCreator
-import json
-from datetime import datetime
+from Scripts.functions import urlGenerator, now        
+from urllib.request import Request, urlopen
+from DataBase import tableClass
+import pandas as pd
 
+def catcher():
+
+    req = Request('https://brasil.io/dataset/covid19/caso_full/?format=csv')
+    req.add_header('User-Agent', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:77.0) Gecko/20100101 Firefox/77.0')
+    content = urlopen(req)
+
+    dataset = pd.read_csv(content)
+
+    dataset.insert(len(dataset.columns), "insert_date", now())
+
+    return dataset
 
 def insertData(session):
-    insertObj = sqlCreator.Insert(session)
-    selectObj = sqlCreator.Select(session)
 
-    last_date = selectObj.LastDate("date", "Brasil_io_base_nacional")
-    url = urlGenerator(1)
-    response = getData(url)
-    updated = False
+    print("Coletando e inserindo dados para Brasil-io-base-nacional...")
 
-    while url is not None and not updated:  # updated = quando dados estiverem atualizados
-        listdate = []
-        result = response.get('results')
-        for row in result:
-            date = row.get('date')
-            if last_date is None:
-                pass
-            elif datetime.strptime(date, '%Y-%m-%d').date() <= last_date:
-                updated = True
-                break
-            city = row.get('city')
-            ibge_code = row.get('city_ibge_code')
-            confirmed = row.get('confirmed')
-            confirmed_100k = row.get('confirmed_per_100k_inhabitants')
-            death_rate = row.get('death_rate')
-            deaths = row.get('deaths')
-            population = row.get('estimated_population_2019')
-            is_last = row.get('is_last')
-            place_type = row.get('place_type')
-            state = row.get('state')
-            listdate = [
-                city,
-                ibge_code,
-                confirmed,
-                confirmed_100k,
-                date,
-                death_rate,
-                deaths,
-                population,
-                is_last,
-                place_type,
-                state
-            ]
-            insertObj.Brasilio_nacional(listdate)
+    dbFormat = tableClass.Brasil_io_nacional()
 
-        if not updated:
-            url = response.get('next')
-            if url:
-                response = getData(url)
-
+    dataset = catcher()
+    
+    dataset.to_sql('Brasil_io_base_nacional', con=session.get_bind(), index_label='id', if_exists='replace', method='multi', chunksize=50000, dtype=dbFormat)
+    
     return ''

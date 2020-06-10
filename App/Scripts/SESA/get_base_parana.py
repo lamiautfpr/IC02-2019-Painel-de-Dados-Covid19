@@ -81,7 +81,7 @@ def catcher():
         
         else: 
             url = ("http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/2020-0{}/informe_epidemiologico_{}.csv").format(date.month, formatDate(4, date))
-            temp_dataset = pd.read_csv(url, sep=',|;', engine='python', error_bad_lines=False, encoding='ISO-8859-1')
+            temp_dataset = pd.read_csv(url, sep=',|;', engine='python', error_bad_lines=False)
             
             temp_dataset = cleaner(temp_dataset)
            

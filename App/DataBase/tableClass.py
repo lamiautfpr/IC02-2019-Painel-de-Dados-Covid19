@@ -1,28 +1,9 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, Boolean, UniqueConstraint
-from sqlalchemy import ForeignKey, Date, Time, BigInteger, Float
 from .engineCreator import engineDb
 
 engine = engineDb()
 Base = declarative_base()
-
-class Brasilio_nacional(Base):
-    __tablename__ = 'Brasil_io_base_nacional'
-
-    id = Column(Integer, primary_key=True)
-    city = Column(String(64))
-    city_ibge = Column(String(127))
-    confirmed = Column(Integer)
-    confirmed_100k = Column(Float)
-    date = Column(Date)
-    death_rate = Column(Float)
-    deaths = Column(Integer)
-    population_2019 = Column(Integer)
-    is_last = Column(Boolean)
-    place_type = Column(String(5))
-    state = Column(String(2))
-    insert_date = Column(Date)
-
 
 class Brasilio_cartorio(Base):
     __tablename__ = 'Brasil_io_base_cartorio'
@@ -91,6 +72,16 @@ class Brasilapi_mundo(Base):
     recovered = Column(String)
     updated_at = Column(Date)
     insert_date = Column(Date)
+
+def Brasil_io_nacional():
+    
+    dbFormat = {
+    "date": Date(),
+    "city_ibge_code": Integer(),
+    "estimated_population_2019": Integer()
+    }
+
+    return dbFormat
 
 def Hdx_mundo():
 
