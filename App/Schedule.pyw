@@ -14,7 +14,6 @@ schedule.every().day.at("11:00").do(job)
 schedule.every().day.at("23:00").do(job)
 
 while True:
-
     schedule.run_pending()
 
-    time.sleep(1)
+    time.sleep(10)
