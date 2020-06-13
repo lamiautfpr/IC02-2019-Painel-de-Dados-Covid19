@@ -54,7 +54,5 @@ def insertAll():
 
     # PR Regioes
     get_regioes.insertData(session)
-
-    session.Close()
     
     return
