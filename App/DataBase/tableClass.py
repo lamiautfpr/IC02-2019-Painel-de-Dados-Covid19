@@ -123,8 +123,6 @@ def SESA_parana():
     dbFormat = {
     "CONFIRMADOS": Integer(),
     "OBITOS": Integer(),
-    "DESCARTADOS": Integer(),
-    "INVESTIGACAO": Integer(),
     "DATA": Date()
     }
 

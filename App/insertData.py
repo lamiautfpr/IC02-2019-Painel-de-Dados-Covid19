@@ -11,48 +11,81 @@ from sqlalchemy.orm import sessionmaker
 
 def insertAll():
     
-    # Criando a Sessão com o Banco de Dados
     Session = sessionmaker(bind=engineDb())
     session = Session()
 
-    # BR.io
-    # Brasil.io Dados Nacionais
-    get_brasilio.insertData(session)
-    # Brasil.io Dados Cartório
-    get_cartorio.insertData(session)
+    try:
+        get_brasilio.insertData(session)
+        print("Os dados da Brasil.io Base Nacional foram inseridos corretamente.")
+    except ValueError:
+        print("Os dados da Brasil.io Base Nacional não foram inseridos.")
 
-    # BR.api
-    # Brasil.apiNacional
-    get_brasilapi.insertData(session)
-    # Brasil.apiMundial
-    get_mundo.insertData(session)
+    try:
+        get_cartorio.insertData(session)
+        print("Os dados Brasil.io Base Cartório inseridos corretamente.")
+    except ValueError:
+        print("Os dados da Brasil.io Base Cartório não foram inseridos.")
 
-    # HDX
-    # HDX.getMundo
-    get_mundo_hdx.insertData(session)
+    try:
+        get_brasilapi.insertData(session)
+        print("Os dados Brasil.api Base Nacional foram inseridos corretamente.")
+    except ValueError:
+        print("Os dados da Brasil.api Base Nacional não foram inseridos.")
 
-    # WCota
-    # WCota.getNacional
-    get_wcota_nacional.insertData(session)
-    # WCota.getLeitos
-    get_wcota_leitos.insertData(session)
-    # WCota.getSuspects
-    get_wcota_suspects.insertData(session)
+    try:
+        get_mundo.insertData(session)
+        print("Os dados Brasil.api Base Mundo foram inseridos corretamente.")
+    except ValueError:
+        print("Os dados da Brasil.api Base Mundo não foram inseridos.")
 
-    # Covid Brazil
-    # SRAG
-    get_srag.insertData(session)
+    try:
+        get_mundo_hdx.insertData(session)
+        print("Os dados da HDX Base Mundo foram inseridos corretamente.")
+    except ValueError:
+        print("Os dados da HDX Base Mundo não foram inseridos.")
 
-    # SESA Paraná
-    # CSV
-    get_base_parana.insertData(session)
-    # PDF
-    get_base_pdf.insertData(session)
+    try:
+        get_wcota_nacional.insertData(session)
+        print("Os dados da WCota Base Nacionais foram inseridos corretamente.")
+    except ValueError:
+        print("Os dados da WCota Base Nacionais não foram inseridos.")
 
-    # Insumos
-    get_base_insumos.insertData(session)
+    try:
+        get_wcota_leitos.insertData(session)
+        print("Os dados da WCota Base Leitos foram inseridos corretamente.")
+    except ValueError:
+        print("Os dados da WCota Base Leitos não foram inseridos.")
 
-    # PR Regioes
-    get_regioes.insertData(session)
-    
+    try:
+        get_wcota_suspects.insertData(session)
+        print("Os dados da WCota Base Suspeitos foram inseridos corretamente.")
+    except ValueError:
+        print("Os dados da WCota Base Suspeitos não foram inseridos.")
+
+    try:
+        get_srag.insertData(session)
+        print("Os dados da SRAG Base Nacionais foram inseridos corretamente.")
+    except ValueError:
+        print("Os dados da SRAG Base Nacionais não foram inseridos.")
+
+    try:
+        get_base_parana.insertData(session)
+        print("Os dados da SESA Base Paraná foram inseridos corretamente.")
+    except ValueError:
+        print("Os dados da SESA Base Paraná não foram inseridos.")
+
+    try:
+        get_base_pdf.insertData(session)
+        print("Os dados da SESA Base PDF foram inseridos corretamente.")
+    except ValueError:
+        print("Os dados da SESA Base PDF não foram inseridos.")
+
+    try:
+        get_base_insumos.insertData(session)
+        print("Os dados da Insumos Base Nacional foram inseridos corretamente.")
+    except ValueError:
+        print("Os dados da Insumos Base Nacional não foram inseridos.")
+
     return
+
+insertAll()

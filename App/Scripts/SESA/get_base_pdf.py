@@ -6,7 +6,7 @@ import requests
 
 def catcher():
 
-    gid = ['1593460334', '618041857', '1431072159', '1317012264', '1297484146', '354728218', '355601818', '1342035615']
+    gid = ['1593460334', '618041857', '1431072159', '1317012264', '1222957039', '1297484146', '354728218', '355601818', '1342035615']
 
     listDatasets = []
 
@@ -40,7 +40,7 @@ def insertData(session):
     print("Coletando e inserindo dados para SESA-base-PDF...")
 
     listDatasets = catcher()
-    listTitles = ['dadosGerais', 'faixaEtaria', 'evoluConfirmados', 'examesRT', 'leitosMacrorregiao', 'casosSRAG', 'comorbidadesObitos', 'obitosCor']
+    listTitles = ['dadosGerais', 'faixaEtaria', 'evoluConfirmados', 'examesRT', 'ocupacaoLeitos', 'leitosMacrorregiao', 'casosSRAG', 'comorbidadesObitos', 'obitosCor']
 
     i=0
     while i < len(listDatasets):
