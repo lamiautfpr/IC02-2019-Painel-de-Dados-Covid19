@@ -10,7 +10,8 @@ def job():
 
     return
 
-schedule.every().day.at("00:18").do(job)
+schedule.every().day.at("11:30").do(job)
+schedule.every().day.at("23:30").do(job)
 
 while True:
     schedule.run_pending()
