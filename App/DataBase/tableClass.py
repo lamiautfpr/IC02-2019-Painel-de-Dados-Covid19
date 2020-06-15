@@ -19,7 +19,6 @@ class Brasilapi_nacional(Base):
     datetime = Column(Date)
     insert_date = Column(Date)
 
-
 class Brasilapi_mundo(Base):
     __tablename__ = 'Brasil_api_base_mundo'
 
