@@ -8,8 +8,6 @@ def job():
     insertData.insertAll()
     print("Dados inseridos com sucesso. Datetime {}".format(datetime.now()))
 
-    return
-
 schedule.every().day.at("11:30").do(job)
 schedule.every().day.at("23:30").do(job)
 
