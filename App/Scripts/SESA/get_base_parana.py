@@ -40,16 +40,16 @@ def catcher():
     
     date = datetime.now().date()
 
-    r = requests.get('http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/2020-0{}/INFORME_EPIDEMIOLOGICO_{}.csv'.format(date.month, formatDate(4, date)))
+    r = requests.get('http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/2020-0{}/informe_epidemiologico_{}.csv'.format(date.month, formatDate(4, date)))
     r.raise_for_status
 
     while not r.ok:
         date = getPreviousDate(date)
-        r = requests.get('http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/2020-0{}/INFORME_EPIDEMIOLOGICO_{}.csv'.format(date.month, formatDate(4, date)))
+        r = requests.get('http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/2020-0{}/informe_epidemiologico_{}.csv'.format(date.month, formatDate(4, date)))
         r.raise_for_status
     
     else: 
-        url = ("http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/2020-0{}/INFORME_EPIDEMIOLOGICO_{}.csv").format(date.month, formatDate(4, date))
+        url = ("http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/2020-0{}/informe_epidemiologico_{}.csv").format(date.month, formatDate(4, date))
         temp_dataset = pd.read_csv(url, sep='\t', header=1, engine='python', error_bad_lines=False)
         
         temp_dataset = cleaner(temp_dataset)
