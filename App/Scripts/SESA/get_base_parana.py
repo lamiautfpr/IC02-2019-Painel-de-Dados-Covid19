@@ -13,8 +13,13 @@ def cleaner(temp_data):
         temp_data.drop(over_columns[0], inplace=True, axis=1)
     
     columns = [temp_data.columns[1:len(temp_data.columns)]]
+    if 'Unnamed' in str(columns):
+        newColumns = temp_data.loc[0].tolist()
+        temp_data.columns = newColumns
+    
+    columns = [temp_data.columns[1:len(temp_data.columns)]]
     if 'IBGE' in str(columns):
-        temp_data = temp_data.drop(['IBGE'], axis=1)      
+        temp_data = temp_data.drop(['IBGE'], axis=1)  
     
     temp_data = temp_data.dropna(how='all')
     
@@ -50,7 +55,7 @@ def catcher():
     
     else: 
         url = ("http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/2020-0{}/informe_epidemiologico_{}.csv").format(date.month, formatDate(4, date))
-        temp_dataset = pd.read_csv(url, sep=';|\t', header=1, engine='python', error_bad_lines=False)
+        temp_dataset = pd.read_csv(url, sep=';|\t', engine='python', error_bad_lines=False)
         
         temp_dataset = cleaner(temp_dataset)
         temp_dataset['DATA'] = date
