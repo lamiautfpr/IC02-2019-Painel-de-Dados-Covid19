@@ -1,8 +1,12 @@
+import os
 import json
+
+dirname = os.path.dirname(__file__)
+filename = os.path.join(dirname, '..\..\Config.json')
 
 def databaseConfig():
 
-    with open('C:/Users/guiyo/Desktop/IC02-2019-Painel-de-Dados-Covid19/Config.json', 'r') as json_file:
+    with open(filename, 'r') as json_file:
         data = json.loads(json_file.read())
 
     data = [
