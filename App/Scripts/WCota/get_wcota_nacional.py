@@ -1,6 +1,8 @@
 from Scripts.functions import now
 from DataBase import tableClass
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 def cleaner(dataset):
 
@@ -33,10 +35,4 @@ def insertData(session):
     
     dataset.to_sql('WCota_base_nacional', con=session.get_bind(), index_label='id', if_exists='replace', method='multi', chunksize=50000, dtype=dbFormat)
     
-    return ''
-
-def plot():
-
-    
-
     return ''
