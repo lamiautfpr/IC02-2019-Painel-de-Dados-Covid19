@@ -14,11 +14,3 @@ def databaseConfig():
         ]
 
     return data
-
-    # return ([
-    #         data.get('data').get('user'),
-    #         data.get('data').get('password'),
-    #         data.get('data').get('port'),
-    #         data.get('data').get('database'),
-    #         data.get('data').get('host'),
-    #         ])
