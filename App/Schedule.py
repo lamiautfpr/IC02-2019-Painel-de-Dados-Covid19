@@ -1,5 +1,4 @@
 import schedule
-import time
 import insertData
 from datetime import datetime
 
