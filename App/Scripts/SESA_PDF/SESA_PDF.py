@@ -4,6 +4,7 @@ from sqlalchemy.types import String, Date, Integer, Float
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
+import requests
 import tabula
 
 list_sheets = [
@@ -31,10 +32,10 @@ data_types = {
         'enf adulto tx ocup': Float(),
         'uti infantil exist': Integer(),
         'uti infantil ocup': Integer(),
-        'uti infantil tx ocup': Integer(),
+        'uti infantil tx ocup': Float(),
         'enf infantil exist': Float(),
         'enf infantil ocup': Integer(),
-        'enf infantil tx ocup': Integer()
+        'enf infantil tx ocup': Float()
     },
     'casosSRAG':{
         'srag': String(),
@@ -107,7 +108,7 @@ def transform(dfs):
 def cleanner(dfs):
 
     # Tratando ocupacoes
-    ocupacao = dfs[list_sheets[0]] # A coluna 4 tem valores de 3 colunas
+    ocupacao = dfs[list_sheets[0]]
     ocupacao = pd.concat([ocupacao[4:6], ocupacao[7:8]]).astype(str).values.tolist()
     new_ocupacao = [] # stack de new lines
     
@@ -125,98 +126,123 @@ def cleanner(dfs):
     ocupacao = pd.DataFrame(new_ocupacao)
     ocupacao.columns = ocupacao_columns
     ocupacao.iloc[-1][0] = "UTI E CLINICO"
-    
-   
+    ocupacao.drop(columns=['sus total', 'priv total', 'total susp', 'total conf', 'total total'], inplace=True)
+
     
     #TRATANDO DF LEITOS
-    leitos = dfs[list_sheets[1]][5:].astype(str).values.tolist()
-    new_leitos = [] # stack de new_line
+    leitos = dfs[list_sheets[1]].dropna().astype(str).values.tolist()
+    new_leitos = []
     # print(type(leitos))
     for lei in leitos:
-        new_line = [] # stack de palavras
+        new_line = [] 
         for ll in lei:
             #QUEBRA
             if len(ll) > 8: # MINIMO PARA QUEBRA len(0% 0 0 0%) = 9 ou > que (len("NOROESTE"))
                 ll = ll.split(' ')
                 for l in ll:
-                    new_line.append(l) # stack 1 por 1
+                    new_line.append(l) 
             else: 
-                new_line.append(ll) # stack na linha toda
-        new_leitos.append(new_line) # stack final pro DF
+                new_line.append(ll) 
+        new_leitos.append(new_line) 
 
-    leitos = pd.DataFrame(new_leitos) # DF Criado
-    leitos.columns = leitos_columns # Columas arrumadas
+    leitos = pd.DataFrame(new_leitos) 
+    leitos.columns = leitos_columns 
 
-
-
-    #Calculo das porcentagens LEITOS
     porcentagem = lambda x,y: ((x/y)*100)
     leitos['uti adulto tx ocup'] = porcentagem(leitos['uti adulto ocup'].str.replace(".", "").astype(int), leitos['uti adulto exist'].str.replace(".", "").astype(int))
     leitos['enf adulto tx ocup'] = porcentagem(leitos['enf adulto ocup'].str.replace(".", "").astype(int), leitos['enf adulto exist'].str.replace(".", "").astype(int))
     leitos['uti infantil tx ocup'] = porcentagem(leitos['uti infantil ocup'].str.replace(".", "").astype(int), leitos['uti infantil exist'].str.replace(".", "").astype(int))
     leitos['enf infantil tx ocup'] = porcentagem(leitos['enf infantil ocup'].str.replace(".", "").astype(int), leitos['enf infantil exist'].str.replace(".", "").astype(int))
 
-
     #TRATANDO DF CASOS
     casos = dfs[list_sheets[2]]
-    casos = casos[3:].drop(columns=[2, 5])
+    if len(casos) == 6:
+        casos = casos[3:].drop(columns=[2, 5])
+    else: #len = 4
+        casos.dropna(inplace=True)
+
     casos.columns = casos_columns
-    
-    #Calculo das porcentagens CASOS
+
     total_cases = casos.iloc[-1, 1].replace(".", "")
     total_obitos = casos.iloc[-1, -2].replace(".", "")
     casos['casos porcentagem'] = porcentagem(casos['casos'].str.replace(".", "").astype(int), int(total_cases))
     casos['obitos porcentagem'] = porcentagem(casos['obitos'].str.replace(".", "").astype(int), int(total_obitos))
     
+    
     #TRATANDO DF COMORBIDADES
     comorb = dfs[list_sheets[3]][2:].astype(str).values.tolist()
+    print(comorb)
     
     new_comorb = []
-    for cc in comorb:
-        for c in cc:
-            c = c.rsplit(' ', 2) # Quebra a lista separando os ultimos 2 elementos
-            new_comorb.append(c)    
-    
-    new_comorb = pd.DataFrame(new_comorb)
+    if len(comorb) == 1:
+        for cc in comorb:
+            for c in cc:
+                c = c.rsplit(' ', 2)
+                new_comorb.append(c)    
+                new_comorb = pd.DataFrame(new_comorb)
+    else:# len = 3
+        new_comorb = pd.DataFrame(comorb)
+
+   
     new_comorb.columns = comorb_columns
-    # print(new_comorb)
 
     # print(total)
     total_num = new_comorb.iloc[-1, -2]
     new_comorb['porcentagem'] = porcentagem(new_comorb['numero'].str.replace(".", "").astype(int), int(total_num))
 
-
     # reset dfs
-
-    ocupacao.drop(columns=['sus total', 'priv total', 'total susp', 'total conf', 'total total'], inplace=True)
-
     dfs[list_sheets[0]] = ocupacao
     dfs[list_sheets[1]] = leitos
     dfs[list_sheets[2]] = casos
     dfs[list_sheets[3]] = new_comorb
     
-    #to numeric
     dfs = transform(dfs)
 
     return dfs
 
 def get_data(session):
 
-    url = 'http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/2020-06/informe_epidemiologico_16_06_2020.pdf'
+    texto = 'informe_epidemiologico'
+    base_url = 'http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/{}/{}_{}.pdf'
 
-    df = tabula.read_pdf(url, pages=['5', '12'], pandas_options={'header': None, 'dtype': str})
-
-    dfs = {}
+    hoje = now()
+    # hoje = datetime(2020, 6, 17, 19, 0, 0)
+    url = base_url.format(hoje.strftime('%Y-%m'), texto, hoje.strftime('%d_%m_%Y'))
+    response = requests.get(url)
     
-    i = 0
-    for sheet in data_types:
-        print(sheet)
-        dfs[sheet] = df[i]
-        i+=1
+    df = pd.DataFrame()
 
-    dfs = cleanner(dfs)
+    if not response.ok:
+        url = base_url.format(hoje.strftime('%Y-%m'), texto.upper(), hoje.strftime('%d_%m_%Y'))
+        response = requests.get(url)
 
-    for sheet in data_types:
-        dfs[sheet].to_sql('SESA_PDF_{}'.format(sheet), con=session.get_bind(), if_exists='replace', method='multi',
-        dtype=data_types[sheet])
+    if not response.ok:
+        print("erro link")
+    else:
+
+        df = tabula.read_pdf(url, pages=['5', '12'], pandas_options={'header': None, 'dtype': str})
+
+        dfs = {}
+        i = 0
+        for d in df:
+            if len(d) >= 9:
+                dfs[list_sheets[i]] = d
+                print(d)
+                i+=1
+
+        # with pd.ExcelWriter('SESA_{}.xlsx'.format(hoje.strftime('%d'))) as writer:
+        #     for sheet in data_types:
+        #         dfs[sheet].to_excel(writer, index=False, engine='xlsxwriter', encoding=' UTF-8', sheet_name='SESA_{}'.format(sheet))
+       
+        dfs = cleanner(dfs)
+
+        # with pd.ExcelWriter('SESA_{}-Clean.xlsx'.format(hoje.strftime('%d'))) as writer:
+        #     for sheet in data_types:
+        #         print("Inserindo ", sheet, "no documento")
+        #         dfs[sheet].to_excel(writer, index=False, engine='xlsxwriter', encoding=' UTF-8', sheet_name='SESA_TIME_{}'.format(sheet))
+
+        for sheet in data_types:
+            dfs[sheet].to_sql('SESA_PDF_{}'.format(sheet), con=session.get_bind(), if_exists='replace', method='multi',
+            dtype=data_types[sheet])
+
     return 'Fim Da Extracao Dos Dados'
