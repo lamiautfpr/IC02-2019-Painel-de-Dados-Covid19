@@ -11,7 +11,6 @@ from sqlalchemy.orm import sessionmaker
 from contextlib import suppress
 
 def insertAll():
-    
     Session = sessionmaker(bind=engineDb())
     session = Session()
 
@@ -62,9 +61,8 @@ def insertAll():
     with suppress(Exception):
         get_base_insumos.insertData(session)
         print("-> Dados inseridos com sucesso!")
-        
-    session.close()
 
+    session.close()
     return
 
 insertAll()

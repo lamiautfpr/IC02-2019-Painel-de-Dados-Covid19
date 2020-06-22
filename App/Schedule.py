@@ -1,9 +1,9 @@
 import schedule
 import insertData
+import time
 from datetime import datetime
 
 def job():
-    
     insertData.insertAll()
     return print("Dados inseridos com sucesso. Datetime {}".format(datetime.now()))
 
