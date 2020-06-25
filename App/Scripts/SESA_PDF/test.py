@@ -160,16 +160,16 @@ def cleanner(dfs):
     return dfs
 
 def get_data(session):
+
     complements = ['_atualizado', '_1', '_0', '']
-
-
     texto = 'informe_epidemiologico'
     base_url = 'http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/{}/{}_{}{}.pdf'
 
-    start_date = datetime(2020, 6, 23, 14, 0, 0)
-    # start_date = datetime(2020, 6, 17, 14, 0, 0)
+    start_date = datetime(2020, 5, 6, 14, 0, 0) # START DATE
+    # start_date = datetime(2020, 6, 23, 14, 0, 0) # TEST DATE
 
-    hoje = datetime(2020, 6, 24, 19, 0, 0)
+    # hoje = datetime(2020, 6, 24, 19, 0, 0)
+    hoje = now()
 
     links = []
     ocupacaoLeitos = pd.DataFrame()
@@ -193,6 +193,9 @@ def get_data(session):
                     print(url)
                     links.append(url)
                     break
+        
+        if not response.ok: # end of the days
+            break
 
         page = 5 if start_date > datetime(2020, 5, 18, 14, 0, 0) else 4 # set page
         
@@ -206,7 +209,7 @@ def get_data(session):
             ocupacaoLeitos = pd.concat([ocupacaoLeitos, df[0]])
             leitosExclusivos = pd.concat([leitosExclusivos, df[1]])
         else:
-            df[0]['data_boletim']
+            df[0]['data_boletim'] = start_date
             leitosExclusivos = pd.concat([leitosExclusivos, df[0]])
         
 
@@ -240,11 +243,7 @@ def get_data(session):
         'data_boletim': Date()
     })
 
-# printei tudo, falta só arrumar maiúsculo e mineirar
-
-
-# print(links)
-
+    print(a, now())
 # /2020-05/informe_epidemiologico_06_05_2020_0.pdf start pg 4 - 1Table
 # /2020-05/informe_epidemiologico_19_05_2020_0.pdf start pg 5 - 1Table
 # /2020-06/informe_epidemiologico_10_06_2020_1.pdf start pg 5 - 2 Table
