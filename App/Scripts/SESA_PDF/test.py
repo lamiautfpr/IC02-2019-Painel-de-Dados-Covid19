@@ -8,12 +8,12 @@ import requests
 import tabula
 
 ocupacao_columns = [
-    'tipo de leito',
-    'sus susp',
-    'sus conf',
+    'tipo_de_leito',
+    'sus_suspeitos',
+    'sus_confirmados',
     'sus total',
-    'priv susp',
-    'priv conf',
+    'particular_suspeitos',
+    'particular_confirmados',
     'priv total',
     'total susp',
     'total conf',
@@ -56,10 +56,10 @@ def cleanner(dfs):
             ocupacao.dropna(inplace=True)
             ocupacao[0] = ''
             ocupacao = ocupacao.astype(str).values.tolist()
-            new_ocupacao = [] # stack de new lines
+            new_ocupacao = []
 
             for ocup in ocupacao:
-                new_line = [] # stack line
+                new_line = []
                 for oo in ocup:
                     if len(oo) > 5:
                         oo = oo.split(' ')
@@ -77,10 +77,10 @@ def cleanner(dfs):
             # ocupacao.drop(columns=['sus total', 'priv total', 'total susp', 'total conf', 'total total'], inplace=True)
         else:
             ocupacao = pd.concat([ocupacao[4:6], ocupacao[7:8]]).astype(str).values.tolist()
-            new_ocupacao = [] # stack de new lines
+            new_ocupacao = []
 
             for ocup in ocupacao:
-                new_line = [] # stack line
+                new_line = []
                 for oo in ocup:
                     if len(oo) > 5:
                         oo = oo.split(' ')
@@ -95,15 +95,14 @@ def cleanner(dfs):
 
         ocupacao.columns = ocupacao_columns
         ocupacao.drop(columns=['sus total', 'priv total', 'total susp', 'total conf', 'total total'], inplace=True)
+        
         #TRATANDO DF LEITOS
         leitos = dfs[1].dropna().astype(str).values.tolist()
         new_leitos = []
-        # print(type(leitos))
         for lei in leitos:
             new_line = [] 
             for ll in lei:
-                #QUEBRA
-                if len(ll.split(' ')) > 1: # MINIMO PARA QUEBRA len(0% 0 0 0%) = 9 ou > que (len("NOROESTE"))
+                if len(ll.split(' ')) > 1:
                     ll = ll.split(' ')
                     for l in ll:
                         new_line.append(l) 
@@ -113,8 +112,11 @@ def cleanner(dfs):
 
         leitos = pd.DataFrame(new_leitos)
 
-        if len(leitos.columns) > 13:
+        if len(leitos.columns) == 17: # >13
             leitos.drop(columns=[4, 8, 12, 16], inplace=True)
+        elif len(leitos.columns) == 16:
+            leitos.insert(0, 'asda', ['LESTE', 'OESTE', 'NOROESTE', 'NORTE', 'TOTAL']) # pos, name, [values]
+            leitos.drop(columns=[2, 6, 10, 14], inplace=True)
 
         leitos.columns = leitos_columns 
         porcentagem = lambda x,y: ((x/y)*100)
@@ -128,16 +130,14 @@ def cleanner(dfs):
         dfs[1] = leitos
 
     else:
+        # print(dfs)
         leitos = dfs[0].dropna().astype(str).values.tolist()
         new_leitos = []
 
-        # print(type(leitos))
         for lei in leitos:
             new_line = [] 
             for ll in lei:
-    
-                #QUEBRA
-                if len(ll.split(' ')) > 1: # MINIMO PARA QUEBRA len(0% 0 0 0%) = 9 ou > que (len("NOROESTE"))
+                if len(ll.split(' ')) > 1:
                     ll = ll.split(' ')
                     for l in ll:
                         new_line.append(l) 
@@ -152,7 +152,8 @@ def cleanner(dfs):
         leitos['enf adulto tx ocup'] = porcentagem(leitos['enf adulto ocup'].str.replace(".", "").str.replace("%", "").astype(int), leitos['enf adulto exist'].str.replace(".", "").str.replace("%", "").astype(int))
         leitos['uti infantil tx ocup'] = porcentagem(leitos['uti infantil ocup'].str.replace(".", "").str.replace("%", "").astype(int), leitos['uti infantil exist'].str.replace(".", "").str.replace("%", "").astype(int))
         leitos['enf infantil tx ocup'] = porcentagem(leitos['enf infantil ocup'].str.replace(".", "").str.replace("%", "").astype(int), leitos['enf infantil exist'].str.replace(".", "").str.replace("%", "").astype(int))
-    
+
+        # reset dfs
         dfs[0] = leitos
         
     dfs = transform(dfs)
@@ -161,47 +162,53 @@ def cleanner(dfs):
 
 def get_data(session):
 
+    selectObj = sqlCreator.Select(session)
+
     complements = ['_atualizado', '_1', '_0', '']
     texto = 'informe_epidemiologico'
     base_url = 'http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/{}/{}_{}{}.pdf'
 
-    start_date = datetime(2020, 5, 6, 14, 0, 0) # START DATE
-    # start_date = datetime(2020, 6, 23, 14, 0, 0) # TEST DATE
+    # start_date = datetime(2020, 5, 6, 12, 0, 1).date() # START DATE
+    # start_date = datetime(2020, 6, 23, 14, 0, 0).date() # TEST DATE
+    # hoje = datetime(2020, 6, 15, 12, 0, 1).date() # TEST HOJE
+    
+    start_date = selectObj.LastDate('data_boletim', '"SESA_time_leitosExclusivos"') # DATABASE DATE
+    start_date += timedelta(days=1)
+    hoje = now().date() # HOJE 
 
-    # hoje = datetime(2020, 6, 24, 19, 0, 0)
-    hoje = now()
-
-    links = []
     ocupacaoLeitos = pd.DataFrame()
     leitosExclusivos = pd.DataFrame()
+
     while start_date <= hoje:
-        
         for com in complements:
             url = base_url.format(start_date.strftime('%Y-%m'), texto, start_date.strftime('%d_%m_%Y'), com)
             response = requests.get(url)        
             if response.ok:
                 print("COMPLEMENTO = ", com)
                 print("link do dia ", start_date.strftime("%d-%m"))
-                links.append(url)
                 print(url)
                 break
             else:
                 url =  url = base_url.format(start_date.strftime('%Y-%m'), texto.upper(), start_date.strftime('%d_%m_%Y'), com)
                 response = requests.get(url)
                 if response.ok:
+                    print("COMPLEMENTO = ", com)
                     print("link do dia ", start_date.strftime("%d-%m"))
                     print(url)
-                    links.append(url)
                     break
         
         if not response.ok: # end of the days
             break
 
-        page = 5 if start_date > datetime(2020, 5, 18, 14, 0, 0) else 4 # set page
-        
+        page = 5 if start_date > datetime(2020, 5, 18, 14, 0, 0).date() else 4 # set page
+
+        print("PAGE = ", page)
         df = tabula.read_pdf(url, pages=[page], pandas_options={'header': None, 'dtype': str})
         
         df = cleanner(df)
+        
+        for d in df:
+            print(d)
         
         if len(df) == 2:
             df[0]['data_boletim'] = start_date
@@ -215,8 +222,7 @@ def get_data(session):
 
         start_date += timedelta(days=1)
 
-    
-    ocupacaoLeitos.to_sql("SESA_PDF_ocupacaoLeitos", con=session.get_bind(), if_exists='replace', method='multi',
+    ocupacaoLeitos.to_sql("SESA_time_ocupacaoLeitos", con=session.get_bind(), if_exists='append', method='multi',
     dtype={
         'tipo_de_leito': String(),
         'sus_suspeitos': Integer(),
@@ -225,7 +231,7 @@ def get_data(session):
         'particular_confirmados': Integer(),
         'data_boletim': Date()
     })
-    leitosExclusivos.to_sql("SESA_PDF_leitosExclusivos", con=session.get_bind(), if_exists='replace', method='multi',
+    leitosExclusivos.to_sql("SESA_time_leitosExclusivos", con=session.get_bind(), if_exists='append', method='multi',
     dtype={
         'leitos': String(),
         'uti adulto exist': Integer(),
@@ -243,7 +249,6 @@ def get_data(session):
         'data_boletim': Date()
     })
 
-    print(a, now())
 # /2020-05/informe_epidemiologico_06_05_2020_0.pdf start pg 4 - 1Table
 # /2020-05/informe_epidemiologico_19_05_2020_0.pdf start pg 5 - 1Table
 # /2020-06/informe_epidemiologico_10_06_2020_1.pdf start pg 5 - 2 Table
