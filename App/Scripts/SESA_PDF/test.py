@@ -168,12 +168,12 @@ def get_data(session):
     texto = 'informe_epidemiologico'
     base_url = 'http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/{}/{}_{}{}.pdf'
 
-    # start_date = datetime(2020, 5, 6, 12, 0, 1).date() # START DATE
+    start_date = datetime(2020, 5, 6, 12, 0, 1).date() # START DATE
     # start_date = datetime(2020, 6, 23, 14, 0, 0).date() # TEST DATE
     # hoje = datetime(2020, 6, 15, 12, 0, 1).date() # TEST HOJE
     
-    start_date = selectObj.LastDate('data_boletim', '"SESA_time_leitosExclusivos"') # DATABASE DATE
-    start_date += timedelta(days=1)
+    # start_date = selectObj.LastDate('data_boletim', '"SESA_time_leitosExclusivos"') # DATABASE DATE
+    # start_date += timedelta(days=1)
     hoje = now().date() # HOJE 
 
     ocupacaoLeitos = pd.DataFrame()
@@ -205,24 +205,32 @@ def get_data(session):
         print("PAGE = ", page)
         df = tabula.read_pdf(url, pages=[page], pandas_options={'header': None, 'dtype': str})
         
-        df = cleanner(df)
-        
+        dfs = []
         for d in df:
-            print(d)
+            if len(d) >= 5:
+                dfs.append(d)
+
+        dfs = cleanner(dfs)
         
-        if len(df) == 2:
-            df[0]['data_boletim'] = start_date
-            df[1]['data_boletim'] = start_date
-            ocupacaoLeitos = pd.concat([ocupacaoLeitos, df[0]])
-            leitosExclusivos = pd.concat([leitosExclusivos, df[1]])
+        for df in dfs:
+            print(df)
+        
+        if len(dfs) == 2:
+            dfs[0]['data_boletim'] = start_date
+            dfs[1]['data_boletim'] = start_date
+            ocupacaoLeitos = pd.concat([ocupacaoLeitos, dfs[0]])
+            leitosExclusivos = pd.concat([leitosExclusivos, dfs[1]])
         else:
-            df[0]['data_boletim'] = start_date
-            leitosExclusivos = pd.concat([leitosExclusivos, df[0]])
+            dfs[0]['data_boletim'] = start_date
+            leitosExclusivos = pd.concat([leitosExclusivos, dfs[0]])
         
 
         start_date += timedelta(days=1)
 
-    ocupacaoLeitos.to_sql("SESA_time_ocupacaoLeitos", con=session.get_bind(), if_exists='append', method='multi',
+    # print(ocupacaoLeitos)
+    # print(leitosExclusivos)
+
+    ocupacaoLeitos.to_sql("SESA_time_ocupacaoLeitos", con=session.get_bind(), if_exists='replace', method='multi',
     dtype={
         'tipo_de_leito': String(),
         'sus_suspeitos': Integer(),
@@ -231,7 +239,7 @@ def get_data(session):
         'particular_confirmados': Integer(),
         'data_boletim': Date()
     })
-    leitosExclusivos.to_sql("SESA_time_leitosExclusivos", con=session.get_bind(), if_exists='append', method='multi',
+    leitosExclusivos.to_sql("SESA_time_leitosExclusivos", con=session.get_bind(), if_exists='replace', method='multi',
     dtype={
         'leitos': String(),
         'uti adulto exist': Integer(),
