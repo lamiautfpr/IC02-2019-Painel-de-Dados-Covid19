@@ -212,8 +212,8 @@ def get_data(session):
 
         dfs = cleanner(dfs)
         
-        for df in dfs:
-            print(df)
+        # for df in dfs:
+        #     print(df)
         
         if len(dfs) == 2:
             dfs[0]['data_boletim'] = start_date
