@@ -24,19 +24,19 @@
 <p align="center">
 <b>Equipe:</b>  
 <br>
-Thiago Naves (Naves, T. F.) - Coordenador  
-Arlete Beuren (Beuren, A. T.) - Orientadora  
-Anderson Brilhador (Brilhador, A.) - Orientador  
-Nathalia de Oliveira (Oliveira, N. V. M.) - discente líder  
-Guilherme Teixeira (Teixeira, G. Y.) - 	discente  
-Jece Neto (Neto, J. X. P.) - discente  
-Hugo de Freitas (Freitas, H. J. T) - discente  
+Thiago Naves (Naves, T. F.) - Coordenador  <br>
+Arlete Beuren (Beuren, A. T.) - Orientadora  <br>
+Anderson Brilhador (Brilhador, A.) - Orientador  <br>
+Nathalia de Oliveira (Oliveira, N. V. M.) - discente líder  <br>
+Guilherme Teixeira (Teixeira, G. Y.) - 	discente  <br>
+Jece Neto (Neto, J. X. P.) - discente  <br>
+Hugo de Freitas (Freitas, H. J. T) - discente  <br>
 </p>
 
 <p align="center">  
-<b>Grupo</b>: <a href="https://lamia.sh.utfpr.edu.br" target="_blank">LAMIA - Laboratório de Aprendizado de Máquina e Imagens Aplicados à Indústria </a> 
-<b>Email</b>: <a href="mailto:lamia-sh@utfpr.edu.br" target="_blank">lamia-sh@utfpr.edu.br</a> 
-<b>Organização</b>: <a href="http://portal.utfpr.edu.br" target="_blank">Universidade Tecnológica Federal do Paraná</a> <a href="http://www.utfpr.edu.br/campus/santahelena" target="_blank"> - Campus Santa Helena</a> 
+<b>Grupo</b>: <a href="https://lamia.sh.utfpr.edu.br" target="_blank">LAMIA - Laboratório de Aprendizado de Máquina e Imagens Aplicados à Indústria </a> <br>
+<b>Email</b>: <a href="mailto:lamia-sh@utfpr.edu.br" target="_blank">lamia-sh@utfpr.edu.br</a> <br>
+<b>Organização</b>: <a href="http://portal.utfpr.edu.br" target="_blank">Universidade Tecnológica Federal do Paraná</a> <a href="http://www.utfpr.edu.br/campus/santahelena" target="_blank"> - Campus Santa Helena</a> <br>
 </p>
 
 <p align="center">
@@ -44,16 +44,20 @@ Hugo de Freitas (Freitas, H. J. T) - discente
 Status do Projeto: Em desenvolvimento :warning:
 </p>
 
+<p align="center">
+  <a href="https://www.loom.com/share/078eb1ade510400ea0826053973d385e">
+    <img src="https://user-images.githubusercontent.com/26206052/86050495-51ae6d80-ba2a-11ea-8c10-06b2daa8ce61.gif">
+  </a>
+</p>
+  
 ## Resumo
 O projeto utiliza das tecnologias de ciência dos dados para desenvolver uma plataforma de monitoramento e análise inteligente dos dados do Covid-19 em relação a confirmados, óbitos, tipos de óbitos, suspeitos, recuperados, leitos, dentre outros dados. A plataforma possui foco maior no estado do Paraná e faz monitoramento dos demais estados do Brasil e dos países do restante do mundo. O painel também possui a finalidade de manter as pessoas informadas acerca dos avanços do coronavírus e pode ser acessado https://bit.ly/paineldadoscovid19.
 
 O código disponível no github são dos scripts necessários para obter os dados e cadastrá-los no banco de dados, as visualizações da plataforma são desenvolvidas utilizando Microsoft Power BI.
 
 
-![Painel 1](https://user-images.githubusercontent.com/26206052/85969982-8de8bc00-b99f-11ea-9306-e299e9e4dd2c.png)
-![Painel 2](https://user-images.githubusercontent.com/26206052/85969981-8d502580-b99f-11ea-97c1-3e7da5350e86.png)
 ![Painel 3](https://user-images.githubusercontent.com/26206052/85969976-89bc9e80-b99f-11ea-8c16-d830c2d583da.png)
-![Painel 4](https://user-images.githubusercontent.com/26206052/85969984-8f19e900-b99f-11ea-86d3-baf99ae0e927.png)
+
 
 Estado para auxílio a predição e tomada de decisão pelos órgãos governamentais. A plataforma contará com diversas funções que irão mapear quantidade de recursos, possibilidade de remanejamento destes e estimativa de necessidade futura, com análise de dados e impactos econômicos relacionados com a curva de casos em nível municipal, regional, estadual, nacional.
 
