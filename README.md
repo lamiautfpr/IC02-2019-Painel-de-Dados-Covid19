@@ -24,13 +24,13 @@
 <p align="center">
 <b>Equipe:</b>  
 <br>
-Thiago Naves (Naves, T. F.) - Coordenador  <br>
-Arlete Beuren (Beuren, A. T.) - Orientadora  <br>
-Anderson Brilhador (Brilhador, A.) - Orientador  <br>
-Nathalia de Oliveira (Oliveira, N. V. M.) - discente líder  <br>
-Guilherme Teixeira (Teixeira, G. Y.) - 	discente  <br>
-Jece Neto (Neto, J. X. P.) - discente  <br>
-Hugo de Freitas (Freitas, H. J. T) - discente  <br>
+Thiago Naves <a href="https://github.com/tfnaves" target="_blank"> (Naves, T. F.)</a> - Coordenador  <br>
+Arlete Beuren <a href="https://github.com/arleteb" target="_blank"> (Beuren, A. T.)</a> - Orientadora  <br>
+Anderson Brilhador <a href="https://github.com/Brilhador" target="_blank">(Brilhador, A.)</a> - Orientador  <br>
+Nathalia de Oliveira <a href="https://github.com/nathmota" target="_blank">(Oliveira, N. V. M.)</a> - discente líder  <br>
+Guilherme Teixeira <a href="https://github.com/guiyshd" target="_blank">(Teixeira, G. Y.)</a> - 	discente  <br>
+Jece Neto <a href="https://github.com/XavierJece" target="_blank">(Neto, J. X. P.)</a> - discente  <br>
+Hugo de Freitas <a href="https://github.com/HugoJFreitas" target="_blank">(Freitas, H. J. T</a>) - discente  <br>
 </p>
 
 <p align="center">  
@@ -46,7 +46,7 @@ Status do Projeto: Em desenvolvimento :warning:
 
 <p align="center">
   <a href="https://www.loom.com/share/078eb1ade510400ea0826053973d385e">
-    <img src="https://user-images.githubusercontent.com/26206052/86050495-51ae6d80-ba2a-11ea-8c10-06b2daa8ce61.gif">
+    <img src="https://user-images.githubusercontent.com/26206052/86052555-8c65d500-ba2d-11ea-8265-0e1acd1d521c.gif" width="600">
   </a>
 </p>
   
@@ -55,11 +55,7 @@ O projeto utiliza das tecnologias de ciência dos dados para desenvolver uma pla
 
 O código disponível no github são dos scripts necessários para obter os dados e cadastrá-los no banco de dados, as visualizações da plataforma são desenvolvidas utilizando Microsoft Power BI.
 
-
-![Painel 3](https://user-images.githubusercontent.com/26206052/85969976-89bc9e80-b99f-11ea-8c16-d830c2d583da.png)
-
-
-Estado para auxílio a predição e tomada de decisão pelos órgãos governamentais. A plataforma contará com diversas funções que irão mapear quantidade de recursos, possibilidade de remanejamento destes e estimativa de necessidade futura, com análise de dados e impactos econômicos relacionados com a curva de casos em nível municipal, regional, estadual, nacional.
+![Painel 3](https://user-images.githubusercontent.com/26206052/86053813-7a853180-ba2f-11ea-8d74-0962b3e7b3a0.png)
 
 ## Objetivos
 O objetivo principal do projeto Painel Paraná Covid-19 é monitorar de forma inteligente os dados do coronavírus prioritariamente no estado do Paraná e no restante do Brasil, com dados atualizados em tempo real e com uso de algoritmos de inteligência artificial para executar predições e construir relatórios para tomadas de decisão por parte dos órgãos públicos e privados que atuam no combate do covid19.
@@ -74,13 +70,13 @@ Dentre alguns dos objetivos gerais do projeto estão.
 
 Painel Paraná Inteligente Covid-19 usa os seguintes algoritmos e tecnologias:
 
-* [Regressão Logística] - executar predições
-* [Regressão Linear] - executar predições
-* [Mínimos Quadrados] - comparar predições geradas e efetuar ajustes
-* [Árvores de Decisão] - gerar tomadas de decisão com base em condições pré-estabelecidas
-* [Numpy] - plotagens de dados e gráficos
-* [Pandas] - execução de algoritmos de predição
-* [beautiful soap] - extração automática de dados
+* [Regressão Logística](https://medium.com/turing-talks/turing-talks-14-modelo-de-predi%C3%A7%C3%A3o-regress%C3%A3o-log%C3%ADstica-7b70a9098e43) - executar predições
+* [Regressão Linear] (https://medium.com/@lucasoliveiras/regress%C3%A3o-linear-do-zero-com-python-ef74a81c4b84) - executar predições
+* [Mínimos Quadrados](https://www.scielo.br/scielo.php?pid=S0100-40422007000200020&script=sci_arttext) - comparar predições geradas e efetuar ajustes
+* [Árvores de Decisão](https://www.vooo.pro/insights/um-tutorial-completo-sobre-a-modelagem-baseada-em-tree-arvore-do-zero-em-r-python/) - gerar tomadas de decisão com base em condições pré-estabelecidas
+* [Numpy] (https://numpy.org/) - plotagens de dados e gráficos
+* [Pandas](https://pandas.pydata.org/) - execução de algoritmos de predição
+* [beautiful soap](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) - extração automática de dados
 
 
   
