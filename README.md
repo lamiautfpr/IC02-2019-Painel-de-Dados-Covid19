@@ -71,10 +71,10 @@ Dentre alguns dos objetivos gerais do projeto estão.
 Painel Paraná Inteligente Covid-19 usa os seguintes algoritmos e tecnologias:
 
 * [Regressão Logística](https://medium.com/turing-talks/turing-talks-14-modelo-de-predi%C3%A7%C3%A3o-regress%C3%A3o-log%C3%ADstica-7b70a9098e43) - executar predições
-* [Regressão Linear] (https://medium.com/@lucasoliveiras/regress%C3%A3o-linear-do-zero-com-python-ef74a81c4b84) - executar predições
+* [Regressão Linear](https://medium.com/@lucasoliveiras/regress%C3%A3o-linear-do-zero-com-python-ef74a81c4b84) - executar predições
 * [Mínimos Quadrados](https://www.scielo.br/scielo.php?pid=S0100-40422007000200020&script=sci_arttext) - comparar predições geradas e efetuar ajustes
 * [Árvores de Decisão](https://www.vooo.pro/insights/um-tutorial-completo-sobre-a-modelagem-baseada-em-tree-arvore-do-zero-em-r-python/) - gerar tomadas de decisão com base em condições pré-estabelecidas
-* [Numpy] (https://numpy.org/) - plotagens de dados e gráficos
+* [Numpy](https://numpy.org/) - plotagens de dados e gráficos
 * [Pandas](https://pandas.pydata.org/) - execução de algoritmos de predição
 * [beautiful soap](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) - extração automática de dados
 
