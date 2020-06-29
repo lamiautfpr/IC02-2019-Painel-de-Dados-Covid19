@@ -3,7 +3,7 @@
 
 [![Web Page](https://img.shields.io/badge/Follow-Lab%20Page-blue)](https://lamia.sh.utfpr.edu.br) [![Application](https://img.shields.io/badge/Application-PowerBI-black)](https://bit.ly/paineldadoscovid19) [![License Status](https://img.shields.io/github/license/lamia-utfpr/IC02-2019-Painel-de-Dados-Covid19)](https://github.com/lamia-utfpr/IC02-2019-Painel-de-Dados-Covid19/blob/Produ%C3%A7%C3%A3o/LICENSE) [![BuildStatus](https://img.shields.io/badge/Build-2.0-green)](https://github.com/lamia-utfpr/IC02-2019-Painel-de-Dados-Covid19)
 
-**Equipe**:
+**Equipe**:  
 Thiago Naves (Naves, T. F.) - Coordenador  
 Arlete Beuren (Beuren, A. T.) - Orientadora  
 Anderson Brilhador (Brilhador, A.) - Orientador  
