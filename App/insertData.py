@@ -4,6 +4,7 @@ from Scripts.HDX import get_mundo_hdx
 from Scripts.WCota import get_wcota_nacional, get_wcota_leitos, get_wcota_suspects
 from Scripts.SRAG_Covid_Brasil import get_srag
 from Scripts.SESA import get_base_parana, get_base_pdf
+from Scripts.SESA_PDF import get_sesa_pdf_leitos
 from Scripts.Insumos import get_base_insumos
 from Scripts.PR_Regioes import get_regioes
 from DataBase.engineCreator import engineDb
@@ -60,6 +61,10 @@ def insertAll():
 
     with suppress(Exception):
         get_base_insumos.insertData(session)
+        print("-> Dados inseridos com sucesso!")
+
+    with suppress(Exception):
+        get_sesa_pdf_leitos.insertData(session)
         print("-> Dados inseridos com sucesso!")
 
     session.close()
