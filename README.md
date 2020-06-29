@@ -46,7 +46,7 @@ Status do Projeto: Em desenvolvimento :warning:
 
 <p align="center">
   <a href="https://www.loom.com/share/078eb1ade510400ea0826053973d385e">
-    <img src="https://user-images.githubusercontent.com/26206052/86052555-8c65d500-ba2d-11ea-8265-0e1acd1d521c.gif" width="600">
+    <img src="https://user-images.githubusercontent.com/26206052/86052555-8c65d500-ba2d-11ea-8265-0e1acd1d521c.gif" width="900">
   </a>
 </p>
   
@@ -55,7 +55,7 @@ O projeto utiliza das tecnologias de ciência dos dados para desenvolver uma pla
 
 O código disponível no github são dos scripts necessários para obter os dados e cadastrá-los no banco de dados, as visualizações da plataforma são desenvolvidas utilizando Microsoft Power BI.
 
-![Painel 3](https://user-images.githubusercontent.com/26206052/86054050-d3ed6080-ba2f-11ea-96b7-90f42cb0afe6.png)
+![Painel 3](https://user-images.githubusercontent.com/26206052/86056446-d94caa00-ba33-11ea-9738-f8f5713fd5dd.png)
 
 ## Objetivos
 O objetivo principal do projeto Painel Paraná Covid-19 é monitorar de forma inteligente os dados do coronavírus prioritariamente no estado do Paraná e no restante do Brasil, com dados atualizados em tempo real e com uso de algoritmos de inteligência artificial para executar predições e construir relatórios para tomadas de decisão por parte dos órgãos públicos e privados que atuam no combate do covid19.
