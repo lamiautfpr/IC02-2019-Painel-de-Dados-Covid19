@@ -4,17 +4,17 @@
 [![Web Page](https://img.shields.io/badge/Follow-Lab%20Page-blue)](https://lamia.sh.utfpr.edu.br) [![Application](https://img.shields.io/badge/Application-PowerBI-black)](https://bit.ly/paineldadoscovid19) [![License Status](https://img.shields.io/github/license/lamia-utfpr/IC02-2019-Painel-de-Dados-Covid19)](https://github.com/lamia-utfpr/IC02-2019-Painel-de-Dados-Covid19/blob/Produ%C3%A7%C3%A3o/LICENSE) [![BuildStatus](https://img.shields.io/badge/Build-2.0-green)](https://github.com/lamia-utfpr/IC02-2019-Painel-de-Dados-Covid19)
 
 **Equipe**:
-Thiago Naves (Naves, T. F.) - Coordenador
-Arlete Beuren (Beuren, A. T.) - Orientadora
-Anderson Brilhador (Brilhador, A.) - Orientador
-Nathalia de Oliveira (Oliveira, N. V. M.) - discente líder
-Guilherme Teixeira (Teixeira, G. Y.) - 	discente
-Jece Neto (Neto, J. X. P.) - discente
-Hugo de Freitas (Freitas, H. J. T) - discente
+Thiago Naves (Naves, T. F.) - Coordenador  
+Arlete Beuren (Beuren, A. T.) - Orientadora  
+Anderson Brilhador (Brilhador, A.) - Orientador  
+Nathalia de Oliveira (Oliveira, N. V. M.) - discente líder  
+Guilherme Teixeira (Teixeira, G. Y.) - 	discente  
+Jece Neto (Neto, J. X. P.) - discente  
+Hugo de Freitas (Freitas, H. J. T) - discente  
 
-Grupo: [Lamia - Laboratório de Aprendizado de Máquina e Imagens Aplicados à Indústria](https://lamia.sh.utfpr.edu.br)
-Email: lamia-sh@utfpr.edu.br
-Organização: [Universidade Tecnológica Federal do Paraná](http://portal.utfpr.edu.br/)  - [Campus Santa Helena](http://www.utfpr.edu.br/campus/santahelena)
+Grupo: [Lamia - Laboratório de Aprendizado de Máquina e Imagens Aplicados à Indústria](https://lamia.sh.utfpr.edu.br)  
+Email: lamia-sh@utfpr.edu.br  
+Organização: [Universidade Tecnológica Federal do Paraná](http://portal.utfpr.edu.br/)  - [Campus Santa Helena](http://www.utfpr.edu.br/campus/santahelena)  
 
 > Status do Projeto: Em desenvolvimento :warning:
 
