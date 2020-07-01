@@ -19,9 +19,9 @@ def insertAll():
     #     get_brasilio.insertData(session)
     #     print("-> Dados inseridos com sucesso!")
     
-    with suppress(Exception):
-        get_cartorio.insertData(session)
-        print("-> Dados inseridos com sucesso!")
+    # with suppress(Exception):
+    #     get_cartorio.insertData(session)
+    #     print("-> Dados inseridos com sucesso!")
     
     with suppress(Exception):
         get_brasilapi.insertData(session)
