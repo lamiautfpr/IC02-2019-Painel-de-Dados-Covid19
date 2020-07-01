@@ -162,6 +162,8 @@ def cleanner(dfs):
 
 def insertData(session):
 
+    print("Coletando e inserindo dados para SESA-leitos-PDF...")
+
     selectObj = sqlCreator.Select(session)
 
     complements = ['_atualizado', '_1', '_0', '']
