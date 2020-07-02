@@ -3,11 +3,9 @@
   <a href="http://www.lamia-sh.utfpr.edu.br">
     <img src="https://user-images.githubusercontent.com/26206052/86039037-3dfa0b80-ba18-11ea-9ab3-7e0696b505af.png" alt="LAMIA - Laboratório de                  Aprendizagem de Máquina e Imagens Aplicados à Indústria" width="400"></a>
 <br> <br>
-  Painel Paraná Inteligente Covid-19
-  <br>
+Painel de Dados Coronavírus (COVID-19) - Paraná
+<h4 align="center"><a href="https://bit.ly/paineldadoscovid19" target="_blank">Informe Epidemiológico Inteligente</a></h4>
 </h1>
-
-<h4 align="center">Informe Epidemiológico Inteligente.</h4>
 
 <p align="center">
   <a href="https://lamia.sh.utfpr.edu.br">
@@ -27,10 +25,10 @@
 Thiago Naves <a href="https://github.com/tfnaves" target="_blank"> (Naves, T. F.)</a> - Coordenador  <br>
 Arlete Beuren <a href="https://github.com/arleteb" target="_blank"> (Beuren, A. T.)</a> - Orientadora  <br>
 Anderson Brilhador <a href="https://github.com/Brilhador" target="_blank">(Brilhador, A.)</a> - Orientador  <br>
-Nathalia de Oliveira <a href="https://github.com/nathmota" target="_blank">(Oliveira, N. V. M.)</a> - discente líder  <br>
-Guilherme Teixeira <a href="https://github.com/guiyshd" target="_blank">(Teixeira, G. Y.)</a> - 	discente  <br>
-Jece Neto <a href="https://github.com/XavierJece" target="_blank">(Neto, J. X. P.)</a> - discente  <br>
-Hugo de Freitas <a href="https://github.com/HugoJFreitas" target="_blank">(Freitas, H. J. T</a>) - discente  <br>
+Nathalia de Oliveira <a href="https://github.com/nathmota" target="_blank">(Oliveira, N. V. M.)</a> - Membro Líder  <br>
+Jece Neto <a href="https://github.com/XavierJece" target="_blank">(Neto, J. X. P.)</a> - Membro  <br>
+Guilherme Yoshida <a href="https://github.com/guiyshd" target="_blank">(Yoshida, G.)</a> - 	Novato  <br>
+Hugo de Freitas <a href="https://github.com/HugoJFreitas" target="_blank">(Freitas, H. J. T</a>) - Novato  <br>
 </p>
 
 <p align="center">  
@@ -66,17 +64,42 @@ Dentre alguns dos objetivos gerais do projeto estão.
   - Monitorar a situação do coronavírus utilizando de algoritmos de inteligência artificial para executar predições acerca da quantidade de pessoas e recursos médicos que serão afetados nos dias subsquentes formando conhecimento relevante
   - Gerar relatórios técnicos com tomadas de decisão para auxiliar as os órgãos públicos e privados no combate ao covid-19
 
-## Tecnologias
+## Como Utilizar
+Para clonar e rodar está aplicação será necessário o [Git](https://git-scm.com) e o [Python3](https://www.python.org/downloads/) instalados em sua máquina. A partir da linha de comando descrita abaixo será possível clonar este repositório.
 
-Painel Paraná Inteligente Covid-19 usa os seguintes algoritmos e tecnologias:
+```bash
+# Clone this repository
+$ git clone https://github.com/lamia-utfpr/IC02-2019-Painel-de-Dados-Covid19.git
 
-* [Regressão Logística](https://medium.com/turing-talks/turing-talks-14-modelo-de-predi%C3%A7%C3%A3o-regress%C3%A3o-log%C3%ADstica-7b70a9098e43) - executar predições
-* [Regressão Linear](https://medium.com/@lucasoliveiras/regress%C3%A3o-linear-do-zero-com-python-ef74a81c4b84) - executar predições
-* [Mínimos Quadrados](https://www.scielo.br/scielo.php?pid=S0100-40422007000200020&script=sci_arttext) - comparar predições geradas e efetuar ajustes
-* [Árvores de Decisão](https://www.vooo.pro/insights/um-tutorial-completo-sobre-a-modelagem-baseada-em-tree-arvore-do-zero-em-r-python/) - gerar tomadas de decisão com base em condições pré-estabelecidas
-* [Numpy](https://numpy.org/) - plotagens de dados e gráficos
-* [Pandas](https://pandas.pydata.org/) - execução de algoritmos de predição
-* [beautiful soap](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) - extração automática de dados
+# Go into the repository
+$ cd IC02-2019-Painel-de-Dados-Covid19
+```
+Note: If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use the command prompt from your IDE.
 
+Agora que você já está com o repositório clonado será necessário baixar e executar as bibliotecas. Para isso utiliza-se o ambiente virtual virtualenv. No diretório do projeto utilize as linhas de comando abaixo:
 
-  
+```bash
+# Create virtualenv folder
+$ python -m venv _env
+
+# Execute virtualenv
+$ _env\Scripts\Activate.bat
+```
+
+Feito isso o ambiente já estará pronto para receber as bibliotecas necessárias para rodar os algoritmos. Copie as bibliotecas presentes no arquivo requeriments.txt e baixe-as utilizando o pip install.
+
+```bash
+# Download all libs
+$ pip install ...
+```
+
+Com a criação do ambiente finalizada, configure o arquivo Config.json com as credenciais de seu banco de dados e voalá!
+
+## Créditos
+Este software utilizar as seguintes bibliotecas para criação dos bancos de dados:
+
+* [pandas](https://pandas.pydata.org/)
+* [NumPy](https://numpy.org/)
+* [tabula-py](https://tabula-py.readthedocs.io/en/latest/tabula.html/)
+* [SQLAlchemy](https://docs.sqlalchemy.org/en/13/)
+* [Requests](https://requests.readthedocs.io/en/master/)
