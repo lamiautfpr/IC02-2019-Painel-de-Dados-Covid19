@@ -80,7 +80,7 @@ Agora que você já está com o repositório clonado será necessário executar 
 
 ```bash
 # Execute virtualenv
-$ env\Scripts\Activate.bat
+$ venv\Scripts\Activate.bat
 ```
 
 As bibliotecas utilizadas no projeto estão presentes no arquivo requeriments.txt. São elas:
