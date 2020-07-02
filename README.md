@@ -27,8 +27,8 @@ Arlete Beuren <a href="https://github.com/arleteb" target="_blank"> (Beuren, A. 
 Anderson Brilhador <a href="https://github.com/Brilhador" target="_blank">(Brilhador, A.)</a> - Orientador  <br>
 Nathalia de Oliveira <a href="https://github.com/nathmota" target="_blank">(Oliveira, N. V. M.)</a> - Membro Líder  <br>
 Jece Neto <a href="https://github.com/XavierJece" target="_blank">(Neto, J. X. P.)</a> - Membro  <br>
-Guilherme Yoshida <a href="https://github.com/guiyshd" target="_blank">(Yoshida, G.)</a> - 	Novato  <br>
-Hugo de Freitas <a href="https://github.com/HugoJFreitas" target="_blank">(Freitas, H. J. T</a>) - Novato  <br>
+Guilherme Yoshida <a href="https://github.com/guiyshd" target="_blank">(Yoshida, G.)</a> - 	Membro  <br>
+Hugo de Freitas <a href="https://github.com/HugoJFreitas" target="_blank">(Freitas, H. J. T</a>) - Membro  <br>
 </p>
 
 <p align="center">  
