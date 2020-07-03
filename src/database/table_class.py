@@ -1,4 +1,6 @@
-from sqlalchemy import Integer, Date, Float
+from .engine_creator import engine_db
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, Date, Float
 
 
 def Hdx_mundo():
@@ -77,3 +79,36 @@ def Brasil_io_cartorio():
     "new_deaths_septicemia_2020": Integer()
     }
     return db_format
+
+engine = engine_db()
+Base = declarative_base()
+
+class Brasilapi_nacional(Base):
+    __tablename__ = 'Brasil_api_base_nacional'
+
+    id = Column(Integer, primary_key=True)
+    uid = Column(String)
+    uf = Column(String)
+    state = Column(String)
+    cases = Column(String)
+    deaths = Column(String)
+    suspects = Column(String)
+    refuses = Column(String)
+    datetime = Column(Date)
+    insert_date = Column(Date)
+
+class Brasilapi_mundo(Base):
+    __tablename__ = 'Brasil_api_base_mundo'
+
+    id = Column(Integer, primary_key=True)
+    country = Column(String)
+    cases = Column(String)
+    confirmed = Column(String)
+    deaths = Column(String)
+    recovered = Column(String)
+    updated_at = Column(Date)
+    insert_date = Column(Date)
+
+def table_creator():
+    Base.metadata.create_all(engine)
+    return
