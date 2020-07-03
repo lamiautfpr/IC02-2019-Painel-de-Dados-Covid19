@@ -36,7 +36,6 @@ leitos_columns = [
     'enf infantil tx ocup'
 ]
 
-
 def transform(dfs):
 
     for df in dfs:
@@ -71,10 +70,9 @@ def cleanner(dfs):
 
             ocupacao = pd.DataFrame(new_ocupacao)
             ocupacao.iloc[0][0] = "UTI"
-            ocupacao.iloc[1][0] = "CLINICO"
-            ocupacao.iloc[-1][0] = "UTI E CLINICO"
-            # ocupacao.columns = ocupacao_columns
-            # ocupacao.drop(columns=['sus total', 'priv total', 'total susp', 'total conf', 'total total'], inplace=True)
+            ocupacao.iloc[1][0] = "CLÍNICO"
+            ocupacao.iloc[-1][0] = "UTI E CLÍNICO"
+
         else:
             ocupacao = pd.concat([ocupacao[4:6], ocupacao[7:8]]).astype(str).values.tolist()
             new_ocupacao = []
@@ -91,13 +89,13 @@ def cleanner(dfs):
                 new_ocupacao.append(new_line)
 
             ocupacao = pd.DataFrame(new_ocupacao)
-            ocupacao.iloc[-1][0] = "UTI E CLINICO"
+            ocupacao.iloc[-1][0] = "UTI E CLÍNICO"
 
         ocupacao.columns = ocupacao_columns
         ocupacao.drop(columns=['sus total', 'priv total', 'total susp', 'total conf', 'total total'], inplace=True)
         
         #TRATANDO DF LEITOS
-        leitos = dfs[1].dropna().astype(str).values.tolist()
+        leitos = dfs[1].dropna().astype(str).values.tolist() 
         new_leitos = []
         for lei in leitos:
             new_line = [] 
@@ -162,19 +160,20 @@ def cleanner(dfs):
 
 def insertData(session):
 
-    selectObj = sqlCreator.Select(session)
-
+    data_check = False
     complements = ['_atualizado', '_1', '_0', '']
     texto = 'informe_epidemiologico'
     base_url = 'http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/{}/{}_{}{}.pdf'
-
-    # start_date = datetime(2020, 5, 6, 12, 0, 1).date() # START DATE
-    # start_date = datetime(2020, 6, 23, 14, 0, 0).date() # TEST DATE
-    # hoje = datetime(2020, 6, 15, 12, 0, 1).date() # TEST HOJE
     
+    selectObj = sqlCreator.Select(session)
     start_date = selectObj.LastDate('data_boletim', '"SESA_time_leitosExclusivos"') # DATABASE DATE
     start_date += timedelta(days=1)
     hoje = now().date() # HOJE 
+    
+    # TEST DATE
+    # start_date = datetime(2020, 5, 6, 14, 0, 0).date()
+    # hoje = datetime(2020, 6, 16, 14, 0, 0).date()
+
 
     ocupacaoLeitos = pd.DataFrame()
     leitosExclusivos = pd.DataFrame()
@@ -182,11 +181,12 @@ def insertData(session):
     while start_date <= hoje:
         for com in complements:
             url = base_url.format(start_date.strftime('%Y-%m'), texto, start_date.strftime('%d_%m_%Y'), com)
-            response = requests.get(url)        
+            response = requests.get(url)
             if response.ok:
                 print("COMPLEMENTO = ", com)
                 print("link do dia ", start_date.strftime("%d-%m"))
                 print(url)
+                data_check = True
                 break
             else:
                 url =  url = base_url.format(start_date.strftime('%Y-%m'), texto.upper(), start_date.strftime('%d_%m_%Y'), com)
@@ -195,14 +195,17 @@ def insertData(session):
                     print("COMPLEMENTO = ", com)
                     print("link do dia ", start_date.strftime("%d-%m"))
                     print(url)
+                    data_check = True
                     break
         
         if not response.ok: # end of the days
+            if not data_check:
+                print("Sem Dados")
             break
-
+        
+        print(data_check)
         page = 5 if start_date > datetime(2020, 5, 18, 14, 0, 0).date() else 4 # set page
 
-        print("PAGE = ", page)
         df = tabula.read_pdf(url, pages=[page], pandas_options={'header': None, 'dtype': str})
         
         dfs = []
@@ -212,8 +215,8 @@ def insertData(session):
 
         dfs = cleanner(dfs)
         
-        # for df in dfs:
-        #     print(df)
+        for df in dfs:
+            print(df)
         
         if len(dfs) == 2:
             dfs[0]['data_boletim'] = start_date
@@ -227,35 +230,34 @@ def insertData(session):
 
         start_date += timedelta(days=1)
 
-    # print(ocupacaoLeitos)
-    # print(leitosExclusivos)
+    if data_check:
+        ocupacaoLeitos.to_sql("SESA_time_ocupacaoLeitos", con=session.get_bind(), if_exists='append', method='multi',
+        dtype={
+            'tipo_de_leito': String(),
+            'sus_suspeitos': Integer(),
+            'sus_confirmados': Integer(),
+            'particular_suspeitos': Integer(),
+            'particular_confirmados': Integer(),
+            'data_boletim': Date()
+        })
 
-    ocupacaoLeitos.to_sql("SESA_time_ocupacaoLeitos", con=session.get_bind(), if_exists='replace', method='multi',
-    dtype={
-        'tipo_de_leito': String(),
-        'sus_suspeitos': Integer(),
-        'sus_confirmados': Integer(),
-        'particular_suspeitos': Integer(),
-        'particular_confirmados': Integer(),
-        'data_boletim': Date()
-    })
-    leitosExclusivos.to_sql("SESA_time_leitosExclusivos", con=session.get_bind(), if_exists='replace', method='multi',
-    dtype={
-        'leitos': String(),
-        'uti adulto exist': Integer(),
-        'uti adulto ocup': Integer(),
-        'uti adulto tx ocup': Float(),
-        'enf adulto exist': Integer(),
-        'enf adulto ocup': Integer(),
-        'enf adulto tx ocup': Float(),
-        'uti infantil exist': Integer(),
-        'uti infantil ocup': Integer(),
-        'uti infantil tx ocup': Float(),
-        'enf infantil exist': Float(),
-        'enf infantil ocup': Integer(),
-        'enf infantil tx ocup': Float(),
-        'data_boletim': Date()
-    })
+        leitosExclusivos.to_sql("SESA_time_leitosExclusivos", con=session.get_bind(), if_exists='append', method='multi',
+        dtype={
+            'leitos': String(),
+            'uti adulto exist': Integer(),
+            'uti adulto ocup': Integer(),
+            'uti adulto tx ocup': Float(),
+            'enf adulto exist': Integer(),
+            'enf adulto ocup': Integer(),
+            'enf adulto tx ocup': Float(),
+            'uti infantil exist': Integer(),
+            'uti infantil ocup': Integer(),
+            'uti infantil tx ocup': Float(),
+            'enf infantil exist': Float(),
+            'enf infantil ocup': Integer(),
+            'enf infantil tx ocup': Float(),
+            'data_boletim': Date()
+        })
 
 # /2020-05/informe_epidemiologico_06_05_2020_0.pdf start pg 4 - 1Table
 # /2020-05/informe_epidemiologico_19_05_2020_0.pdf start pg 5 - 1Table
