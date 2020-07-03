@@ -40,13 +40,13 @@ def catcher():
 def insert(session):
     print("Inserindo get_sesa_sheets.")
 
-    listDatasets = catcher()
-    listTitles = [
+    datasets = catcher()
+    titles = [
                 'dadosGerais', 'faixaEtaria', 'evoluConfirmados', 
                 'examesRT', 'ocupacaoLeitos', 'leitosMacrorregiao', 
                 'casosSRAG', 'comorbidadesObitos', 'obitosCor'
                 ]
-    for idx, title in enumerate(listTitles):
-        listDatasets[idx].to_sql('SESA_base_{}'.format(title), con=session.get_bind(), 
+    for idx, title in enumerate(titles):
+        datasets[idx].to_sql('SESA_base_{}'.format(title), con=session.get_bind(), 
                                     index_label='id', if_exists='replace', method='multi', chunksize=50000)
     return print("sesa_sheets inserido com sucesso!")
