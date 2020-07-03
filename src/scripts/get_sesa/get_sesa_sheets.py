@@ -15,7 +15,7 @@ def catcher():
 
     r = requests.get('http://www.saude.pr.gov.br/sites/default/'
                     'arquivos_restritos/files/documento/2020-0{}/INFORME_EPIDEMIOLOGICO_{}.pdf'
-                    .format(date.month, format_date(date)))
+                    .format(date.month, format_date(0, date)))
     r.raise_for_status
 
     while not r.ok:
@@ -23,7 +23,7 @@ def catcher():
 
         r = requests.get('http://www.saude.pr.gov.br/sites/default/'
                         'arquivos_restritos/files/documento/2020-0{}/INFORME_EPIDEMIOLOGICO_{}.pdf'
-                        .format(date.month, format_date(date)))
+                        .format(date.month, format_date(0, date)))
         r.raise_for_status
 
     for gids in gid:
