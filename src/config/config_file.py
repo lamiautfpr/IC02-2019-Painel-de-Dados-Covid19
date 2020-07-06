@@ -2,7 +2,7 @@ import os
 import json
 
 dirname = os.path.dirname(__file__)
-filename = os.path.join(dirname, r'../../Config.json')
+filename = os.path.join(dirname, r'../../orig_config.json')
 
 
 def database_config():
