@@ -76,14 +76,25 @@ $ cd IC02-2019-Painel-de-Dados-Covid19
 ```
 Note: If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use the command prompt from your IDE.
 
-Agora que você já está com o repositório clonado será necessário executar o virtual environment e. Para isso utiliza-se o ambiente virtual virtualenv. No diretório do projeto utilize as linhas de comando abaixo:
+Agora que você já está com o repositório clonado será necessário criar um virtual environment para armazenamento das bibliotecas presentes no requeriments. No diretório do projeto utilize as linhas de comando abaixo:
 
 ```bash
-# Execute virtualenv
-$ venv\Scripts\Activate.bat
+# Create virtualenv
+$ virtualenv venv
+
+# Execute virtual env
+$ source venv/bin/activate
 ```
 
-As bibliotecas utilizadas no projeto estão presentes no arquivo requeriments.txt. São elas:
+Com o virtual enviroment criado e sendo executa será necessário baixar as bibliotecas presentes no requeriments.txt. Para isso basta utilizar o pip3 para fazer a instalação recursiva de todas as bibliotecas presentes no arquivo de texto. Certifique-se que o shell está no diretório do requeriments. Recomenda-se a utilização da execução em super usuário utilizando sudo.
+
+```bash
+# Install all requeriments
+$ sudo pip3 install -r requeriments.txt
+```
+Com a criação do ambiente finalizada, configure o arquivo Config.json com as credenciais de seu banco de dados e voalá! É só rodar o arquivo main.py para inserir todas as bases em seu banco de dados. É importante lembrar que não se utilize nenhum lint do Python na compilação dos algoritmos, pois o mesmo demonstra alguns bugs para importação de packages.
+
+As bibliotecas utilizadas no projeto estão presentes no arquivo requeriments.txt.
 
 ```bash
 astroid==2.4.2
@@ -117,10 +128,7 @@ urllib3==1.25.9
 wrapt==1.12.1
 ```
 
-Com a criação do ambiente finalizada, configure o arquivo Config.json com as credenciais de seu banco de dados e voalá! É só rodar o arquivo main.py para inserir todas as bases em seu banco de dados. É importante lembrar que não se utilize nenhum lint do Python na verificação dos arquivos, pois o mesmo demonstra alguns bugs para importação de módulos nos algoritmos.
-
 ## Créditos
-Este software utilizar as seguintes bibliotecas para criação dos bancos de dados:
 
 * [pandas](https://pandas.pydata.org/) - pandas is a fast, powerful, flexible and easy to use open source data analysis and manipulation tool,
 built on top of the Python programming language.
