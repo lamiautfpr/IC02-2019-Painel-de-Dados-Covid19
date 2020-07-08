@@ -8,6 +8,7 @@ def job():
     return print("Dados inseridos com sucesso. Datetime {}".format(now()))
 
 schedule.every().day.at("19:30").do(job)
+schedule.every().day.at("00:00").do(job)
 
 while True:
     schedule.run_pending()
