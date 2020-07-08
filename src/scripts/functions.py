@@ -34,13 +34,10 @@ def url_generator(var, date):
     return url
 
 
-def get_req(url):
-    res = requests.request("GET", url)
-    if res.status_code == 200:
-        res = json.loads(res.content)
-    else:
-        return False
-    return res
+def get_api(url):
+    content = requests.get(url).json()
+    data = content.get('data')
+    return data
 
 
 def format_date(var, date):

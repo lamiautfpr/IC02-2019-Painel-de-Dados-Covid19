@@ -1,47 +1,33 @@
-from scripts.functions import url_generator, get_req, next_date, format_date, now
+import pandas as pd
+from scripts.functions import url_generator, get_api, next_date, format_date, now
 from database import sql_creator
 from datetime import datetime
 
 
+def catcher(date):
+    df = pd.DataFrame()
+
+    today = now()
+
+    while date < today:
+        url = 'https://covid19-brazil-api.now.sh/api/report/v1/brazil/{}'.format(format_date(1, date))
+        content = get_api(url)
+        df = df.append(content, ignore_index=True)
+        date = next_date(date)
+    return df
+
+
 def insert(session):
     print("Inserindo get_brapi_nacional.")
+    
+    select_date = sql_creator.Select(session)
+    try:
+        date = format_date(2, select_date.Date('datetime', '"Brasil_api_base_nacional"'))
+    except:
+        date = datetime(2020, 3, 18)
 
-    insertObj = sql_creator.Insert(session)
-    # selectObj = sql_creator.Select(session)
-    
-    date = datetime(2020, 1, 29, 19, 0, 0)
-    # initialDate = selectObj.Date('datetime', '"Brasil_api_base_nacional"')
-    date = next_date(date)
-    # day = datetime(2020, 1, 31, 19, 0, 0)
-    now = datetime.now()
-    
-    # while format_date(2, date) <= format_date(1, day):
-    while format_date(1, date) <= format_date(1, now):
-        url = url_generator(3, format_date(1, date))
-        res = get_req(url)
-        result = res.get('data')
-        print(date)
-        for row in result:
-            uid = row.get('uid')
-            uf = row.get('uf')
-            state = row.get('state')
-            cases = row.get('cases')
-            deaths = row.get('deaths')
-            suspects = row.get('suspects')
-            refuses = row.get('refuses')
-            datet = row.get('datetime')
-            
-            listdate = [
-                uid,
-                uf,
-                state,
-                cases,
-                deaths,
-                suspects,
-                refuses,
-                datet
-            ]
-        
-            insertObj.Brasilapi_nacional(listdate)    
-        date = next_date(date)
+    dataset = catcher(date)
+    dataset.to_sql('Brasil_api_base_nacional', con=session.get_bind(),
+                   index_label='id', if_exists='append', method='multi',
+                   chunksize=50000)
     return print("brapi_nacional inserido com sucesso!")
