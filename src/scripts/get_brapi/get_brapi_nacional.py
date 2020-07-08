@@ -1,7 +1,7 @@
 import pandas as pd
-from scripts.functions import url_generator, get_api, next_date, format_date, now
-from database import sql_creator
 from datetime import datetime
+from database import sql_creator
+from scripts.functions import get_api, next_date, format_date, now
 
 
 def catcher(date):
@@ -9,11 +9,13 @@ def catcher(date):
 
     today = now()
 
-    while date < today:
+    while date <= today:
+        print(date)
         url = 'https://covid19-brazil-api.now.sh/api/report/v1/brazil/{}'.format(format_date(1, date))
         content = get_api(url)
         df = df.append(content, ignore_index=True)
         date = next_date(date)
+    df.insert(len(df.columns), "insert_date", now())
     return df
 
 
@@ -26,8 +28,8 @@ def insert(session):
     except:
         date = datetime(2020, 3, 18)
 
-    dataset = catcher(date)
-    dataset.to_sql('Brasil_api_base_nacional', con=session.get_bind(),
+    df = catcher(date)
+    df.to_sql('Brasil_api_base_nacional', con=session.get_bind(),
                    index_label='id', if_exists='append', method='multi',
-                   chunksize=50000)
+                   chunksize=10000)
     return print("brapi_nacional inserido com sucesso!")

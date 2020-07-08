@@ -5,8 +5,7 @@ from scripts.get_hdx import get_hdx_mundial
 from scripts.get_sesa import get_sesa_sheets
 from scripts.get_wcota import get_wcota_leitos, get_wcota_nacional, get_wcota_suspeitos
 from scripts.get_brio import get_brio_nacional, get_brio_cartorio
-from scripts.get_brapi import get_brapi_mundial, get_brapi_nacional
-
+from scripts.get_brapi import get_brapi_nacional, get_brapi_mundial
 
 def insert_all():
     Session = sessionmaker(bind=engine_db())
@@ -43,6 +42,8 @@ def insert_all():
     # Get_BRApi_Nacional
     with suppress(Exception):
         get_brapi_nacional.insert(session)
+
+    # get_brapi_mundial.catcher()
 
     session.close()
     return
