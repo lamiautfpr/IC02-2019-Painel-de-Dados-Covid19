@@ -10,7 +10,6 @@ def catcher(date):
     today = now()
 
     while date <= today:
-        print(date)
         url = 'https://covid19-brazil-api.now.sh/api/report/v1/brazil/{}'.format(format_date(1, date))
         content = get_api(url)
         df = df.append(content, ignore_index=True)
