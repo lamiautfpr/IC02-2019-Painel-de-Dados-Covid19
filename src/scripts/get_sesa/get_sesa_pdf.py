@@ -196,8 +196,6 @@ def insert(session):
                     break
         
         if not response.ok:
-            if not data_check:
-                print("Sem Dados")
             break
         
         print(data_check)
