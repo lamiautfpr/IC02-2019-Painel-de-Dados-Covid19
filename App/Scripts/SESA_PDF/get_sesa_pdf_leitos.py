@@ -94,7 +94,6 @@ def cleanner(dfs):
         ocupacao.columns = ocupacao_columns
         ocupacao.drop(columns=['sus total', 'priv total', 'total susp', 'total conf', 'total total'], inplace=True)
         
-        #TRATANDO DF LEITOS
         leitos = dfs[1].dropna().astype(str).values.tolist() 
         new_leitos = []
         for lei in leitos:
@@ -110,7 +109,7 @@ def cleanner(dfs):
 
         leitos = pd.DataFrame(new_leitos)
 
-        if len(leitos.columns) == 17: # >13
+        if len(leitos.columns) == 17:
             leitos.drop(columns=[4, 8, 12, 16], inplace=True)
         elif len(leitos.columns) == 16:
             leitos.insert(0, 'asda', ['LESTE', 'OESTE', 'NOROESTE', 'NORTE', 'TOTAL']) # pos, name, [values]
@@ -123,12 +122,10 @@ def cleanner(dfs):
         leitos['uti infantil tx ocup'] = porcentagem(leitos['uti infantil ocup'].str.replace(".", "").astype(int), leitos['uti infantil exist'].str.replace(".", "").astype(int))
         leitos['enf infantil tx ocup'] = porcentagem(leitos['enf infantil ocup'].str.replace(".", "").astype(int), leitos['enf infantil exist'].str.replace(".", "").astype(int))
 
-        # reset dfs
         dfs[0] = ocupacao
         dfs[1] = leitos
 
     else:
-        # print(dfs)
         leitos = dfs[0].dropna().astype(str).values.tolist()
         new_leitos = []
 
@@ -151,7 +148,6 @@ def cleanner(dfs):
         leitos['uti infantil tx ocup'] = porcentagem(leitos['uti infantil ocup'].str.replace(".", "").str.replace("%", "").astype(int), leitos['uti infantil exist'].str.replace(".", "").str.replace("%", "").astype(int))
         leitos['enf infantil tx ocup'] = porcentagem(leitos['enf infantil ocup'].str.replace(".", "").str.replace("%", "").astype(int), leitos['enf infantil exist'].str.replace(".", "").str.replace("%", "").astype(int))
 
-        # reset dfs
         dfs[0] = leitos
         
     dfs = transform(dfs)
@@ -171,8 +167,8 @@ def insertData(session):
     hoje = now().date() # HOJE 
     
     # TEST DATE
-    # start_date = datetime(2020, 5, 6, 14, 0, 0).date()
-    # hoje = datetime(2020, 6, 16, 14, 0, 0).date()
+    # start_date = datetime(2020, 7, 7, 14, 0, 0).date()
+    # hoje = datetime(2020, 7, 7, 14, 0, 0).date()
 
 
     ocupacaoLeitos = pd.DataFrame()
@@ -198,16 +194,16 @@ def insertData(session):
                     data_check = True
                     break
         
-        if not response.ok: # end of the days
+        if not response.ok:
             if not data_check:
                 print("Sem Dados")
             break
         
         print(data_check)
-        page = 5 if start_date > datetime(2020, 5, 18, 14, 0, 0).date() else 4 # set page
+        page = 5 if start_date > datetime(2020, 5, 18, 14, 0, 0).date() else 4
 
         df = tabula.read_pdf(url, pages=[page], pandas_options={'header': None, 'dtype': str})
-        
+         
         dfs = []
         for d in df:
             if len(d) >= 5:
@@ -231,6 +227,7 @@ def insertData(session):
         start_date += timedelta(days=1)
 
     if data_check:
+        # TIME TABLES
         ocupacaoLeitos.to_sql("SESA_time_ocupacaoLeitos", con=session.get_bind(), if_exists='append', method='multi',
         dtype={
             'tipo_de_leito': String(),
@@ -259,7 +256,31 @@ def insertData(session):
             'data_boletim': Date()
         })
 
-# /2020-05/informe_epidemiologico_06_05_2020_0.pdf start pg 4 - 1Table
-# /2020-05/informe_epidemiologico_19_05_2020_0.pdf start pg 5 - 1Table
-# /2020-06/informe_epidemiologico_10_06_2020_1.pdf start pg 5 - 2 Table
-# /2020-06/INFORME_EPIDEMIOLOGICO_23_06_2020.pdf start pg 5 - 2Table
+        # STATIC TABLES
+        ocupacaoLeitos.to_sql("SESA_base_ocupacaoLeitos", con=session.get_bind(), if_exists='replace', method='multi',
+        dtype={
+            'tipo_de_leito': String(),
+            'sus_suspeitos': Integer(),
+            'sus_confirmados': Integer(),
+            'particular_suspeitos': Integer(),
+            'particular_confirmados': Integer(),
+            'data_boletim': Date()
+        })
+
+        leitosExclusivos.to_sql("SESA_base_leitosMacrorregiao", con=session.get_bind(), if_exists='replace', method='multi',
+        dtype={
+            'leitos': String(),
+            'uti adulto exist': Integer(),
+            'uti adulto ocup': Integer(),
+            'uti adulto tx ocup': Float(),
+            'enf adulto exist': Integer(),
+            'enf adulto ocup': Integer(),
+            'enf adulto tx ocup': Float(),
+            'uti infantil exist': Integer(),
+            'uti infantil ocup': Integer(),
+            'uti infantil tx ocup': Float(),
+            'enf infantil exist': Float(),
+            'enf infantil ocup': Integer(),
+            'enf infantil tx ocup': Float(),
+            'data_boletim': Date()
+        })
