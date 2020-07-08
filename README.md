@@ -92,7 +92,7 @@ Com o virtual enviroment criado e sendo executa será necessário baixar as bibl
 # Install all requeriments
 $ sudo pip3 install -r requeriments.txt
 ```
-Com a criação do ambiente finalizada, configure o arquivo Config.json com as credenciais de seu banco de dados e voalá! É só rodar o arquivo main.py para inserir todas as bases em seu banco de dados. É importante lembrar que não se utilize nenhum lint do Python na compilação dos algoritmos, pois o mesmo demonstra alguns bugs para importação de packages.
+Com a criação do ambiente finalizada, configure o arquivo credentials.json com as credenciais de seu banco de dados e voalá! É só rodar o arquivo main.py para inserir todas as bases em seu banco de dados. É importante lembrar que não se utilize nenhum lint do Python na compilação dos algoritmos, pois o mesmo demonstra alguns bugs para importação de packages.
 
 As bibliotecas utilizadas no projeto estão presentes no arquivo requeriments.txt.
 
