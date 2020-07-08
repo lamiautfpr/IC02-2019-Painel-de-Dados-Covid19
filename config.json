@@ -1,9 +1,0 @@
-{
-    "data": {
-        "user": "dashboardcovid",
-        "password": "&8lamia$f",
-        "port": 5432,
-        "database": "dashcovid19",
-        "host": "200.134.21.220"
-        }
-}
