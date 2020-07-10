@@ -129,13 +129,29 @@ typing-extensions==3.7.4.2
 urllib3==1.25.9
 wrapt==1.12.1
 ```
+## Tecnologias
 
-## Créditos
+Painel Paraná Inteligente Covid-19 usa os seguintes algoritmos e tecnologias:
 
-* [pandas](https://pandas.pydata.org/) - pandas is a fast, powerful, flexible and easy to use open source data analysis and manipulation tool,
-built on top of the Python programming language.
-* [NumPy](https://numpy.org/) - NumPy is an open source project aiming to enable numerical computing with Python.
-* [tabula-py](https://tabula-py.readthedocs.io/en/latest/tabula.html/) - tabula-py is a simple Python wrapper of tabula-java, which can read table of PDF.
-* [SQLAlchemy](https://docs.sqlalchemy.org/en/13/) - The SQLAlchemy SQL Toolkit and Object Relational Mapper is a comprehensive set of tools for working with databases and Python.
-* [Requests](https://requests.readthedocs.io/en/master/) - Requests is an elegant and simple HTTP library for Python, built for human beings.
-* [schedule](https://pypi.org/project/schedule/) - Schedule lets you run Python functions (or any other callable) periodically at pre-determined intervals using a simple, human-friendly syntax.
+* [Regressão Logística](https://medium.com/turing-talks/turing-talks-14-modelo-de-predi%C3%A7%C3%A3o-regress%C3%A3o-log%C3%ADstica-7b70a9098e43) - executar predições
+* [Regressão Linear](https://medium.com/@lucasoliveiras/regress%C3%A3o-linear-do-zero-com-python-ef74a81c4b84) - executar predições
+* [Mínimos Quadrados](https://www.scielo.br/scielo.php?pid=S0100-40422007000200020&script=sci_arttext) - comparar predições geradas e efetuar ajustes
+* [Árvores de Decisão](https://www.vooo.pro/insights/um-tutorial-completo-sobre-a-modelagem-baseada-em-tree-arvore-do-zero-em-r-python/) - gerar tomadas de decisão com base em condições pré-estabelecidas
+* [Tabula-py](https://tabula-py.readthedocs.io/en/latest/tabula.html/) - tabula-py é um wrapper Python simples de tabula-java, que pode ler a tabelad de arquivos PDF.
+* [SQLAlchemy](https://docs.sqlalchemy.org/en/13/) - O SQLAlchemy SQL Toolkit e o Object Relational Mapper são um conjunto abrangente de ferramentas para trabalhar com bancos de dados e Python.
+* [Requests](https://requests.readthedocs.io/en/master/) - Utilizada para fazer requisições HTTP pelo Python.
+* [Schedule](https://pypi.org/project/schedule/) - O Schedule permite executar funções Python (ou qualquer outra chamada) periodicamente em intervalos predeterminados.
+* [Numpy](https://numpy.org/) - plotagens de dados e gráficos
+* [Pandas](https://pandas.pydata.org/) - execução de algoritmos de predição
+* [Beautiful Soap](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) - extração automática de dados
+
+## Citação
+
+Se você utliza e quer citar o projeto em sua pesquisa, por favor utilize o formato de citação abaixo:
+    
+    @inproceedings{LAMIA_ic02,
+      title={Painel Inteligente de Dados Covid-19},
+      author={Naves, T. F.; BEUREN, A. T.; BRILHADOR, A.},
+      journal={IEEE Conference on Big Data},
+      year={2020}
+    }
