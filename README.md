@@ -31,6 +31,14 @@ Guilherme Yoshida <a href="https://github.com/guiyshd" target="_blank">(Yoshida,
 Hugo de Freitas <a href="https://github.com/HugoJFreitas" target="_blank">(Freitas, H. J. T</a>) - Membro  <br>
 </p>
 
+<p align="center">
+<b>Parceiros:</b>  
+<br>
+Sistema Regional de Inovação do Oeste do Paraná <a href="https://sri.oesteemdesenvolvimento.com.br/" target="_blank"> (SRI Iguassu Valley )</a>   <br>
+Koredata <a href="https://biopark.com.br/site/pt/blog_detalhes/nova-residente-no-biopark-atua-com-solues-em-inteligncia-de-mercado" target="_blank"> (Koredata)</a>  <br>
+</p>
+
+
 <p align="center">  
 <b>Grupo</b>: <a href="https://lamia.sh.utfpr.edu.br" target="_blank">LAMIA - Laboratório de Aprendizado de Máquina e Imagens Aplicados à Indústria </a> <br>
 <b>Email</b>: <a href="mailto:lamia-sh@utfpr.edu.br" target="_blank">lamia-sh@utfpr.edu.br</a> <br>
