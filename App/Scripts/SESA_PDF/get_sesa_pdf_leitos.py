@@ -167,8 +167,8 @@ def insertData(session):
     hoje = now().date() # HOJE 
     
     # TEST DATE
-    # start_date = datetime(2020, 7, 7, 14, 0, 0).date()
-    # hoje = datetime(2020, 7, 7, 14, 0, 0).date()
+    # start_date = datetime(2020, 7, 9, 14, 0, 0).date()
+    # hoje = datetime(2020, 7, 9, 14, 0, 0).date()
 
 
     ocupacaoLeitos = pd.DataFrame()
@@ -196,10 +196,10 @@ def insertData(session):
         
         if not response.ok:
             if not data_check:
-                print("Sem Dados")
+                print("Sem dados get_sesa_pdf_leitos")
+                return
             break
-        
-        print(data_check)
+
         page = 5 if start_date > datetime(2020, 5, 18, 14, 0, 0).date() else 4
 
         df = tabula.read_pdf(url, pages=[page], pandas_options={'header': None, 'dtype': str})
@@ -257,17 +257,20 @@ def insertData(session):
         })
 
         # STATIC TABLES
-        ocupacaoLeitos.to_sql("SESA_base_ocupacaoLeitos", con=session.get_bind(), if_exists='replace', method='multi',
+        ocupacaoLeitos['insert_date'] = hoje
+        ocupacaoLeitos.to_sql("SESA_base_ocupacaoLeitos", index_label='id', con=session.get_bind(), if_exists='replace', method='multi',
         dtype={
             'tipo_de_leito': String(),
             'sus_suspeitos': Integer(),
             'sus_confirmados': Integer(),
             'particular_suspeitos': Integer(),
             'particular_confirmados': Integer(),
-            'data_boletim': Date()
+            'data_boletim': Date(),
+            'insert_date': Date()
         })
 
-        leitosExclusivos.to_sql("SESA_base_leitosMacrorregiao", con=session.get_bind(), if_exists='replace', method='multi',
+        leitosExclusivos['insert_date'] = hoje
+        leitosExclusivos.to_sql("SESA_base_leitosMacrorregiao", index_label='id', con=session.get_bind(), if_exists='replace', method='multi',
         dtype={
             'leitos': String(),
             'uti adulto exist': Integer(),
@@ -282,5 +285,6 @@ def insertData(session):
             'enf infantil exist': Float(),
             'enf infantil ocup': Integer(),
             'enf infantil tx ocup': Float(),
-            'data_boletim': Date()
+            'data_boletim': Date(),
+            'insert_date': Date()
         })
