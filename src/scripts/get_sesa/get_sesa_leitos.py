@@ -258,7 +258,7 @@ def insert(session):
         })
 
         # STATIC TABLES
-        ocupacaoLeitos['insert_date'] = hoje
+        ocupacaoLeitos['insert_date'] = now()
         ocupacaoLeitos.to_sql("SESA_base_ocupacaoLeitos", index_label='id', con=session.get_bind(), if_exists='replace', method='multi',
         dtype={
             'tipo_de_leito': String(),
@@ -266,8 +266,7 @@ def insert(session):
             'sus_confirmados': Integer(),
             'particular_suspeitos': Integer(),
             'particular_confirmados': Integer(),
-            'data_boletim': Date(),
-            'insert_date': Date()
+            'data_boletim': Date()
         })
 
         leitosExclusivos['insert_date'] = hoje
@@ -286,7 +285,6 @@ def insert(session):
             'enf infantil exist': Float(),
             'enf infantil ocup': Integer(),
             'enf infantil tx ocup': Float(),
-            'data_boletim': Date(),
-            'insert_date': Date()
+            'data_boletim': Date()
         })
     return print("sesa_leitos inserido com sucesso!")

@@ -6,8 +6,7 @@ from scripts.functions import now, format_date, previous_date
 def catcher():
     gid = [
         '1593460334', '618041857', '1431072159',
-        '1317012264', '1222957039', '1297484146',
-        '354728218', '355601818', '1342035615'
+        '1317012264', '354728218', '355601818', '1342035615'
     ]
     datasets = []
 
@@ -42,10 +41,9 @@ def insert(session):
 
     datasets = catcher()
     titles = [
-            'dadosGerais', 'faixaEtaria', 'evoluConfirmados', 
-            'examesRT', 'ocupacaoLeitos', 'leitosMacrorregiao', 
-            'casosSRAG', 'comorbidadesObitos', 'obitosCor'
-            ]
+        'dadosGerais', 'faixaEtaria', 'evoluConfirmados', 
+        'examesRT', 'casosSRAG', 'comorbidadesObitos', 'obitosCor'
+    ]
     for idx, title in enumerate(titles):
         datasets[idx].to_sql('SESA_base_{}'.format(title), con=session.get_bind(), 
                                     index_label='id', if_exists='replace', method='multi', chunksize=50000)
