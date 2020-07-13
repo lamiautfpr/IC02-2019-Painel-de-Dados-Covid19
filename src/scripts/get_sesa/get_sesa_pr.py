@@ -35,7 +35,8 @@ def transform(dfs):
 
 def insert(session):
     print("Inserindo get_sesa_pr.")
-    page_list = list(range(17, 27))
+    
+    page_list = list(range(18, 27))
     complements = ['_atualizado', '_1', '_0', '']
     texto = 'informe_epidemiologico'
     base_url = 'http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/{}/{}_{}{}.pdf'
