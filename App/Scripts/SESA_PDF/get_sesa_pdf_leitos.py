@@ -1,6 +1,6 @@
-from Scripts.functions import now, urlGenerator, getApi, getNextDate, formatDate
+from Scripts.functions import now
 from DataBase import sqlCreator
-from sqlalchemy.types import String, Date, Integer, Float
+from sqlalchemy.types import String, Date, Integer, Float, DateTime
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
@@ -167,8 +167,8 @@ def insertData(session):
     hoje = now().date() # HOJE 
     
     # TEST DATE
-    # start_date = datetime(2020, 7, 9, 14, 0, 0).date()
-    # hoje = datetime(2020, 7, 9, 14, 0, 0).date()
+    # start_date = datetime(2020, 7, 12, 14, 0, 0).date()
+    # hoje = datetime(2020, 7, 12, 14, 0, 0).date()
 
 
     ocupacaoLeitos = pd.DataFrame()
@@ -227,7 +227,7 @@ def insertData(session):
         start_date += timedelta(days=1)
 
     if data_check:
-        # TIME TABLES
+        # # TIME TABLES
         ocupacaoLeitos.to_sql("SESA_time_ocupacaoLeitos", con=session.get_bind(), if_exists='append', method='multi',
         dtype={
             'tipo_de_leito': String(),
@@ -257,7 +257,7 @@ def insertData(session):
         })
 
         # STATIC TABLES
-        ocupacaoLeitos['insert_date'] = hoje
+        ocupacaoLeitos['insert_date'] = now()
         ocupacaoLeitos.to_sql("SESA_base_ocupacaoLeitos", index_label='id', con=session.get_bind(), if_exists='replace', method='multi',
         dtype={
             'tipo_de_leito': String(),
@@ -266,10 +266,10 @@ def insertData(session):
             'particular_suspeitos': Integer(),
             'particular_confirmados': Integer(),
             'data_boletim': Date(),
-            'insert_date': Date()
+            'insert_date': DateTime()
         })
 
-        leitosExclusivos['insert_date'] = hoje
+        leitosExclusivos['insert_date'] = now()
         leitosExclusivos.to_sql("SESA_base_leitosMacrorregiao", index_label='id', con=session.get_bind(), if_exists='replace', method='multi',
         dtype={
             'leitos': String(),
@@ -286,5 +286,5 @@ def insertData(session):
             'enf infantil ocup': Integer(),
             'enf infantil tx ocup': Float(),
             'data_boletim': Date(),
-            'insert_date': Date()
+            'insert_date': DateTime()
         })
