@@ -167,7 +167,7 @@ def insertData(session):
     hoje = now().date() # HOJE 
     
     # TEST DATE
-    # start_date = datetime(2020, 7, 12, 14, 0, 0).date()
+    # start_date = datetime(2020, 5, 6, 14, 0, 0).date()
     # hoje = datetime(2020, 7, 12, 14, 0, 0).date()
 
 
@@ -195,16 +195,17 @@ def insertData(session):
                     break
         
         if not response.ok:
-            if not data_check:
-                print("Sem dados get_sesa_pdf_leitos")
-                return
             break
 
-        page = 5 if start_date > datetime(2020, 5, 18, 14, 0, 0).date() else 4
+        # page = 5 if start_date > datetime(2020, 5, 18, 14, 0, 0).date() else 4
+        page = 6 if start_date >= datetime(2020, 7, 14, 14, 0, 0).date() else 5 if start_date > datetime(2020, 5, 18, 14, 0, 0).date() else 4
+
+        print(page)
 
         df = tabula.read_pdf(url, pages=[page], pandas_options={'header': None, 'dtype': str})
-         
+
         dfs = []
+
         for d in df:
             if len(d) >= 5:
                 dfs.append(d)
@@ -222,7 +223,6 @@ def insertData(session):
         else:
             dfs[0]['data_boletim'] = start_date
             leitosExclusivos = pd.concat([leitosExclusivos, dfs[0]])
-        
 
         start_date += timedelta(days=1)
 
@@ -287,4 +287,4 @@ def insertData(session):
             'enf infantil tx ocup': Float(),
             'data_boletim': Date(),
             'insert_date': DateTime()
-        })
+        })  
