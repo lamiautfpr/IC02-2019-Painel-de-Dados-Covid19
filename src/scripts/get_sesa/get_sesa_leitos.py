@@ -1,11 +1,12 @@
 from scripts.functions import now
 from database import sql_creator
-from sqlalchemy.types import String, Date, Integer, Float
+from sqlalchemy.types import String, Date, Integer, Float, DateTime
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 import requests
 import tabula
+
 
 ocupacao_columns = [
     'tipo_de_leito',
@@ -19,7 +20,6 @@ ocupacao_columns = [
     'total conf',
     'total total'
 ]
-
 leitos_columns = [
     'leitos',
     'uti adulto exist',
@@ -36,8 +36,8 @@ leitos_columns = [
     'enf infantil tx ocup'
 ]
 
-def transform(dfs):
 
+def transform(dfs):
     for df in dfs:
         for d in df:
             try:              
@@ -46,8 +46,8 @@ def transform(dfs):
                 pass
     return dfs
         
-def cleanner(dfs):
 
+def cleanner(dfs):
     if len(dfs) == 2:
         ocupacao = dfs[0]
 
@@ -151,8 +151,8 @@ def cleanner(dfs):
         dfs[0] = leitos
         
     dfs = transform(dfs)
-
     return dfs
+
 
 def insert(session):
     print("Inserindo get_sesa_leitos.")
@@ -168,9 +168,8 @@ def insert(session):
     hoje = now().date() # HOJE 
     
     # TEST DATE
-    # start_date = datetime(2020, 7, 9, 14, 0, 0).date()
-    # hoje = datetime(2020, 7, 9, 14, 0, 0).date()
-
+    # start_date = datetime(2020, 7, 12, 14, 0, 0).date()
+    # hoje = datetime(2020, 7, 12, 14, 0, 0).date()
 
     ocupacaoLeitos = pd.DataFrame()
     leitosExclusivos = pd.DataFrame()
@@ -197,11 +196,10 @@ def insert(session):
         
         if not response.ok:
             if not data_check:
-                print("sesa_leitos is up to date!")
-                return
+                return print("sesa_leitos is up to date!")
             break
 
-        page = 5 if start_date > datetime(2020, 5, 18, 14, 0, 0).date() else 4
+        page = 6 if start_date >= datetime(2020, 7, 14, 14, 0, 0).date() else 5 if start_date > datetime(2020, 5, 18, 14, 0, 0).date() else 4
 
         df = tabula.read_pdf(url, pages=[page], pandas_options={'header': None, 'dtype': str})
          
@@ -224,11 +222,10 @@ def insert(session):
             dfs[0]['data_boletim'] = start_date
             leitosExclusivos = pd.concat([leitosExclusivos, dfs[0]])
         
-
         start_date += timedelta(days=1)
 
     if data_check:
-        # TIME TABLES
+        # # TIME TABLES
         ocupacaoLeitos.to_sql("SESA_time_ocupacaoLeitos", con=session.get_bind(), if_exists='append', method='multi',
         dtype={
             'tipo_de_leito': String(),
@@ -266,10 +263,11 @@ def insert(session):
             'sus_confirmados': Integer(),
             'particular_suspeitos': Integer(),
             'particular_confirmados': Integer(),
-            'data_boletim': Date()
+            'data_boletim': Date(),
+            'insert_date': DateTime()
         })
 
-        leitosExclusivos['insert_date'] = hoje
+        leitosExclusivos['insert_date'] = now()
         leitosExclusivos.to_sql("SESA_base_leitosMacrorregiao", index_label='id', con=session.get_bind(), if_exists='replace', method='multi',
         dtype={
             'leitos': String(),
@@ -285,6 +283,7 @@ def insert(session):
             'enf infantil exist': Float(),
             'enf infantil ocup': Integer(),
             'enf infantil tx ocup': Float(),
-            'data_boletim': Date()
+            'data_boletim': Date(),
+            'insert_date': DateTime()
         })
-    return print("sesa_leitos inserido com sucesso!")
+        return print("sesa_leitos inserido com sucesso!")
