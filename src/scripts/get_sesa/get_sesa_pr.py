@@ -36,14 +36,14 @@ def transform(dfs):
 def insert(session):
     print("Inserindo get_sesa_pr.")
     
-    page_list = list(range(18, 27))
+    page_list = list(range(19, 29))
     complements = ['_atualizado', '_1', '_0', '']
     texto = 'informe_epidemiologico'
     base_url = 'http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/{}/{}_{}{}.pdf'
 
-    hoje = datetime(2020, 7, 2, 14, 0, 0).date()
+    # hoje = datetime(2020, 7, 2, 14, 0, 0).date()
 
-    # hoje = now().date() # HOJE
+    hoje = now().date() # HOJE
 
     for com in complements:
         url = base_url.format(hoje.strftime('%Y-%m'), texto, hoje.strftime('%d_%m_%Y'), com)
