@@ -41,9 +41,9 @@ def insert(session):
     texto = 'informe_epidemiologico'
     base_url = 'http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/{}/{}_{}{}.pdf'
 
-    hoje = datetime(2020, 7, 2, 14, 0, 0).date()
+    # hoje = datetime(2020, 7, 2, 14, 0, 0).date()
 
-    # hoje = now().date() # HOJE
+    hoje = now().date() # HOJE
 
     for com in complements:
         url = base_url.format(hoje.strftime('%Y-%m'), texto, hoje.strftime('%d_%m_%Y'), com)
