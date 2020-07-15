@@ -199,7 +199,7 @@ def insert(session):
                 return print("sesa_leitos is up to date!")
             break
 
-        page = 5 if start_date > datetime(2020, 5, 18, 14, 0, 0).date() else 4
+        page = 6 if start_date >= datetime(2020, 7, 14, 14, 0, 0).date() else 5 if start_date > datetime(2020, 5, 18, 14, 0, 0).date() else 4
 
         df = tabula.read_pdf(url, pages=[page], pandas_options={'header': None, 'dtype': str})
          
