@@ -174,7 +174,8 @@ def insert(session):
     start_date = selectObj.Date('data_boletim', '"SESA_time_leitosExclusivos"') # DATABASE DATE
     start_date += timedelta(days=1)
     hoje = now().date() # HOJE 
-    
+
+
     # TEST DATE
     # start_date = datetime(2020, 7, 16, 14, 0, 0).date()
     # hoje = datetime(2020, 7, 16, 14, 0, 0).date()
