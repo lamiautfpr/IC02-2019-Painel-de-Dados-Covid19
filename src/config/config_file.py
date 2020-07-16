@@ -3,7 +3,7 @@ import json
 
 
 dirname = os.path.dirname(__file__)
-filename = os.path.join(dirname, r'../../credentials.json')
+filename = os.path.join(dirname, r'../../exCered.json')
 
 
 def database_config():

@@ -18,10 +18,11 @@ mcroaa_columns = [
 ]
 
 def transform(dfs):
+    
     dfs.dropna(inplace=True)
+    dfs.reset_index(drop=True, inplace=True)
     dfs.loc['Total' ] = '0'
     for col in mcroaa_columns:
-        print(dfs[col])
         try:
             dfs[col] = dfs[col].str.replace(".", "").astype(int)
             dfs.loc['Total', col] = dfs[col].sum()
@@ -30,18 +31,27 @@ def transform(dfs):
         
     dfs.loc['Total', 'REGIONAL'] = ''
     dfs.loc['Total', 'MUNICIPIO'] = ''
+
     return dfs
 
+def cleanner(df):
+    
+    if len(df.columns) > 8:
+        df.drop(columns=[3], inplace=True)
+        df.columns = range(df.shape[1])
+
+    return df
 
 def insert(session):
     print("Inserindo get_sesa_pr.")
     
+    data_check = False
     page_list = list(range(20, 30))
     complements = ['_atualizado', '_1', '_0', '']
     texto = 'informe_epidemiologico'
     base_url = 'http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/{}/{}_{}{}.pdf'
 
-    # hoje = datetime(2020, 7, 2, 14, 0, 0).date()
+    # hoje = datetime(2020, 7, 15, 14, 0, 0).date()
 
     hoje = now().date() # HOJE
 
@@ -67,8 +77,7 @@ def insert(session):
     if not response.ok: # end of the days
         if not data_check:
             print("sesa_pr is up to date!")
-    
-    print(data_check)
+            return 
 
     if data_check:
         df = pd.DataFrame()
@@ -77,7 +86,9 @@ def insert(session):
         dfs = pd.DataFrame()
         for d in range(len(df)):
             if len(df[d].keys()) > 5:
-                dfs = pd.concat([dfs, df[d]])
+                df[d] = cleanner(df[d])
+                # print(df[d])
+                dfs = pd.concat([dfs, df[d]], ignore_index=True)
         
         dfs = dfs[1:]
         dfs.drop(columns=[0], inplace=True)
@@ -104,4 +115,4 @@ def insert(session):
             'INVESTIGACAO': Integer(),
             'DATA': Date()
         })
-        return print("sesa_pr inserido com sucesso!")
+        

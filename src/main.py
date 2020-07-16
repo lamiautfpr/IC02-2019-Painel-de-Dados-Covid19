@@ -13,59 +13,59 @@ def insert_all():
     session = Session()
 
 
-    # Get_HDX_Mundial
-    with suppress(Exception):
-        get_hdx_mundial.insert(session)
+    # # Get_HDX_Mundial
+    # with suppress(Exception):
+    #     get_hdx_mundial.insert(session)
 
 
-    # Get_SESA_Sheets
-    with suppress(Exception):
-        get_sesa_sheets.insert(session)
+    # # Get_SESA_Sheets
+    # with suppress(Exception):
+    #     get_sesa_sheets.insert(session)
 
 
     # Get_SESA_PDF
-    with suppress(Exception):
-        get_sesa_leitos.insert(session)
+    # with suppress(Exception):
+    get_sesa_leitos.insert(session)
 
 
     # Get_SESA_PR
-    with suppress(Exception):
-        get_sesa_pr.insert(session)
+    # with suppress(Exception):
+    get_sesa_pr.insert(session)
 
 
-    # Get_WCota_Leitos
-    with suppress(Exception):
-        get_wcota_leitos.insert(session)
+    # # Get_WCota_Leitos
+    # with suppress(Exception):
+    #     get_wcota_leitos.insert(session)
 
 
-    # Get_WCota_Nacional
-    with suppress(Exception):
-        get_wcota_nacional.insert(session)
+    # # Get_WCota_Nacional
+    # with suppress(Exception):
+    #     get_wcota_nacional.insert(session)
 
 
-    # Get_WCota_Suspeitos
-    with suppress(Exception):
-        get_wcota_suspeitos.insert(session)
+    # # Get_WCota_Suspeitos
+    # with suppress(Exception):
+    #     get_wcota_suspeitos.insert(session)
 
 
-    # Get_BRio_Nacional
-    with suppress(Exception):
-        get_brio_nacional.insert(session)
+    # # Get_BRio_Nacional
+    # with suppress(Exception):
+    #     get_brio_nacional.insert(session)
 
 
-    # Get_BRio_Cartorio
-    with suppress(Exception):
-        get_brio_cartorio.insert(session)
+    # # Get_BRio_Cartorio
+    # with suppress(Exception):
+    #     get_brio_cartorio.insert(session)
 
 
-    # Get_BRApi_Nacional
-    with suppress(Exception):
-        get_brapi_nacional.insert(session)
+    # # Get_BRApi_Nacional
+    # with suppress(Exception):
+    #     get_brapi_nacional.insert(session)
 
 
-    # Get_BRApi_Mundial
-    with suppress(Exception):
-        get_brapi_mundial.insert(session)
+    # # Get_BRApi_Mundial
+    # with suppress(Exception):
+    #     get_brapi_mundial.insert(session)
 
 
     session.close()
