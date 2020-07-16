@@ -77,7 +77,8 @@ def insert(session):
     if not response.ok: # end of the days
         if not data_check:
             print("sesa_pr is up to date!")
-            return 
+            return
+            
 
     if data_check:
         df = pd.DataFrame()
