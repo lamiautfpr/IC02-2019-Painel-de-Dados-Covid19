@@ -38,6 +38,7 @@ leitos_columns = [
 
 
 def transform(dfs):
+
     for df in dfs:
         for d in df:
             try:              
@@ -46,12 +47,16 @@ def transform(dfs):
                 pass
     return dfs
         
+        
 
 def cleanner(dfs):
+
     if len(dfs) == 2:
         ocupacao = dfs[0]
+        ocupacao.dropna(thresh=3, axis='columns', inplace=True)
+        ocupacao.dropna(thresh=2, inplace=True)
 
-        if len(ocupacao.dropna()) == 3:
+        if len(ocupacao.dropna(thresh=2)) == 3:
             ocupacao.dropna(inplace=True)
             ocupacao[0] = ''
             ocupacao = ocupacao.astype(str).values.tolist()
@@ -74,8 +79,11 @@ def cleanner(dfs):
             ocupacao.iloc[-1][0] = "UTI E CLÍNICO"
 
         else:
-            ocupacao = pd.concat([ocupacao[4:6], ocupacao[7:8]]).astype(str).values.tolist()
-            new_ocupacao = []
+            # print(ocupacao)
+            # ocupacao = pd.concat([ocupacao[4:6], ocupacao[7:8]]).astype(str).values.tolist()
+            ocupacao = ocupacao[2:].astype(str).values.tolist()
+            
+            new_ocupacao = []   
 
             for ocup in ocupacao:
                 new_line = []
@@ -153,8 +161,8 @@ def cleanner(dfs):
     dfs = transform(dfs)
     return dfs
 
-
 def insert(session):
+    
     print("Inserindo get_sesa_leitos.")
 
     data_check = False
@@ -166,10 +174,11 @@ def insert(session):
     start_date = selectObj.Date('data_boletim', '"SESA_time_leitosExclusivos"') # DATABASE DATE
     start_date += timedelta(days=1)
     hoje = now().date() # HOJE 
-    
+
+
     # TEST DATE
-    # start_date = datetime(2020, 7, 12, 14, 0, 0).date()
-    # hoje = datetime(2020, 7, 12, 14, 0, 0).date()
+    # start_date = datetime(2020, 7, 16, 14, 0, 0).date()
+    # hoje = datetime(2020, 7, 16, 14, 0, 0).date()
 
     ocupacaoLeitos = pd.DataFrame()
     leitosExclusivos = pd.DataFrame()
@@ -254,7 +263,7 @@ def insert(session):
             'data_boletim': Date()
         })
 
-        # STATIC TABLES
+        # # STATIC TABLES
         ocupacaoLeitos['insert_date'] = now()
         ocupacaoLeitos.to_sql("SESA_base_ocupacaoLeitos", index_label='id', con=session.get_bind(), if_exists='replace', method='multi',
         dtype={
