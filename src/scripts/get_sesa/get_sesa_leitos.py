@@ -53,7 +53,7 @@ def cleanner(dfs):
 
     if len(dfs) == 2:
         ocupacao = dfs[0]
-        ocupacao.dropna(thresh=3, axis='columns', inplace=True)d
+        ocupacao.dropna(thresh=3, axis='columns', inplace=True)
 
         if len(ocupacao.dropna()) == 3:
             ocupacao.dropna(inplace=True)
