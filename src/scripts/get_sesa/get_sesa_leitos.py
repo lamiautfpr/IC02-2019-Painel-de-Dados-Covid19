@@ -38,6 +38,7 @@ leitos_columns = [
 
 
 def transform(dfs):
+
     for df in dfs:
         for d in df:
             try:              
@@ -46,10 +47,13 @@ def transform(dfs):
                 pass
     return dfs
         
+        
 
 def cleanner(dfs):
+
     if len(dfs) == 2:
         ocupacao = dfs[0]
+        ocupacao.dropna(thresh=3, axis='columns', inplace=True)d
 
         if len(ocupacao.dropna()) == 3:
             ocupacao.dropna(inplace=True)
@@ -153,8 +157,8 @@ def cleanner(dfs):
     dfs = transform(dfs)
     return dfs
 
-
 def insert(session):
+    
     print("Inserindo get_sesa_leitos.")
 
     data_check = False
@@ -162,14 +166,14 @@ def insert(session):
     texto = 'informe_epidemiologico'
     base_url = 'http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/{}/{}_{}{}.pdf'
     
-    selectObj = sql_creator.Select(session)
-    start_date = selectObj.Date('data_boletim', '"SESA_time_leitosExclusivos"') # DATABASE DATE
-    start_date += timedelta(days=1)
-    hoje = now().date() # HOJE 
+    # selectObj = sql_creator.Select(session)
+    # start_date = selectObj.Date('data_boletim', '"SESA_time_leitosExclusivos"') # DATABASE DATE
+    # start_date += timedelta(days=1)
+    # hoje = now().date() # HOJE 
     
     # TEST DATE
-    # start_date = datetime(2020, 7, 12, 14, 0, 0).date()
-    # hoje = datetime(2020, 7, 12, 14, 0, 0).date()
+    start_date = datetime(2020, 7, 15, 14, 0, 0).date()
+    hoje = datetime(2020, 7, 15, 14, 0, 0).date()
 
     ocupacaoLeitos = pd.DataFrame()
     leitosExclusivos = pd.DataFrame()
@@ -225,65 +229,65 @@ def insert(session):
         start_date += timedelta(days=1)
 
     if data_check:
-        # # TIME TABLES
-        ocupacaoLeitos.to_sql("SESA_time_ocupacaoLeitos", con=session.get_bind(), if_exists='append', method='multi',
-        dtype={
-            'tipo_de_leito': String(),
-            'sus_suspeitos': Integer(),
-            'sus_confirmados': Integer(),
-            'particular_suspeitos': Integer(),
-            'particular_confirmados': Integer(),
-            'data_boletim': Date()
-        })
+        # # # TIME TABLES
+        # ocupacaoLeitos.to_sql("SESA_time_ocupacaoLeitos", con=session.get_bind(), if_exists='append', method='multi',
+        # dtype={
+        #     'tipo_de_leito': String(),
+        #     'sus_suspeitos': Integer(),
+        #     'sus_confirmados': Integer(),
+        #     'particular_suspeitos': Integer(),
+        #     'particular_confirmados': Integer(),
+        #     'data_boletim': Date()
+        # })
 
-        leitosExclusivos.to_sql("SESA_time_leitosExclusivos", con=session.get_bind(), if_exists='append', method='multi',
-        dtype={
-            'leitos': String(),
-            'uti adulto exist': Integer(),
-            'uti adulto ocup': Integer(),
-            'uti adulto tx ocup': Float(),
-            'enf adulto exist': Integer(),
-            'enf adulto ocup': Integer(),
-            'enf adulto tx ocup': Float(),
-            'uti infantil exist': Integer(),
-            'uti infantil ocup': Integer(),
-            'uti infantil tx ocup': Float(),
-            'enf infantil exist': Float(),
-            'enf infantil ocup': Integer(),
-            'enf infantil tx ocup': Float(),
-            'data_boletim': Date()
-        })
+        # leitosExclusivos.to_sql("SESA_time_leitosExclusivos", con=session.get_bind(), if_exists='append', method='multi',
+        # dtype={
+        #     'leitos': String(),
+        #     'uti adulto exist': Integer(),
+        #     'uti adulto ocup': Integer(),
+        #     'uti adulto tx ocup': Float(),
+        #     'enf adulto exist': Integer(),
+        #     'enf adulto ocup': Integer(),
+        #     'enf adulto tx ocup': Float(),
+        #     'uti infantil exist': Integer(),
+        #     'uti infantil ocup': Integer(),
+        #     'uti infantil tx ocup': Float(),
+        #     'enf infantil exist': Float(),
+        #     'enf infantil ocup': Integer(),
+        #     'enf infantil tx ocup': Float(),
+        #     'data_boletim': Date()
+        # })
 
-        # STATIC TABLES
-        ocupacaoLeitos['insert_date'] = now()
-        ocupacaoLeitos.to_sql("SESA_base_ocupacaoLeitos", index_label='id', con=session.get_bind(), if_exists='replace', method='multi',
-        dtype={
-            'tipo_de_leito': String(),
-            'sus_suspeitos': Integer(),
-            'sus_confirmados': Integer(),
-            'particular_suspeitos': Integer(),
-            'particular_confirmados': Integer(),
-            'data_boletim': Date(),
-            'insert_date': DateTime()
-        })
+        # # STATIC TABLES
+        # ocupacaoLeitos['insert_date'] = now()
+        # ocupacaoLeitos.to_sql("SESA_base_ocupacaoLeitos", index_label='id', con=session.get_bind(), if_exists='replace', method='multi',
+        # dtype={
+        #     'tipo_de_leito': String(),
+        #     'sus_suspeitos': Integer(),
+        #     'sus_confirmados': Integer(),
+        #     'particular_suspeitos': Integer(),
+        #     'particular_confirmados': Integer(),
+        #     'data_boletim': Date(),
+        #     'insert_date': DateTime()
+        # })
 
-        leitosExclusivos['insert_date'] = now()
-        leitosExclusivos.to_sql("SESA_base_leitosMacrorregiao", index_label='id', con=session.get_bind(), if_exists='replace', method='multi',
-        dtype={
-            'leitos': String(),
-            'uti adulto exist': Integer(),
-            'uti adulto ocup': Integer(),
-            'uti adulto tx ocup': Float(),
-            'enf adulto exist': Integer(),
-            'enf adulto ocup': Integer(),
-            'enf adulto tx ocup': Float(),
-            'uti infantil exist': Integer(),
-            'uti infantil ocup': Integer(),
-            'uti infantil tx ocup': Float(),
-            'enf infantil exist': Float(),
-            'enf infantil ocup': Integer(),
-            'enf infantil tx ocup': Float(),
-            'data_boletim': Date(),
-            'insert_date': DateTime()
-        })
+        # leitosExclusivos['insert_date'] = now()
+        # leitosExclusivos.to_sql("SESA_base_leitosMacrorregiao", index_label='id', con=session.get_bind(), if_exists='replace', method='multi',
+        # dtype={
+        #     'leitos': String(),
+        #     'uti adulto exist': Integer(),
+        #     'uti adulto ocup': Integer(),
+        #     'uti adulto tx ocup': Float(),
+        #     'enf adulto exist': Integer(),
+        #     'enf adulto ocup': Integer(),
+        #     'enf adulto tx ocup': Float(),
+        #     'uti infantil exist': Integer(),
+        #     'uti infantil ocup': Integer(),
+        #     'uti infantil tx ocup': Float(),
+        #     'enf infantil exist': Float(),
+        #     'enf infantil ocup': Integer(),
+        #     'enf infantil tx ocup': Float(),
+        #     'data_boletim': Date(),
+        #     'insert_date': DateTime()
+        # })
         return print("sesa_leitos inserido com sucesso!")
