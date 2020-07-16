@@ -9,16 +9,16 @@ from scripts.get_brapi import get_brapi_nacional, get_brapi_mundial
 
 
 def insert_all():
+   
     Session = sessionmaker(bind=engine_db())
     session = Session()
 
-
-    # # Get_HDX_Mundial
+    # Get_HDX_Mundial
     # with suppress(Exception):
     #     get_hdx_mundial.insert(session)
 
 
-    # # Get_SESA_Sheets
+    # Get_SESA_Sheets
     # with suppress(Exception):
     #     get_sesa_sheets.insert(session)
 
@@ -30,7 +30,7 @@ def insert_all():
 
     # Get_SESA_PR
     # with suppress(Exception):
-    get_sesa_pr.insert(session)
+    #     get_sesa_pr.insert(session)
 
 
     # # Get_WCota_Leitos
