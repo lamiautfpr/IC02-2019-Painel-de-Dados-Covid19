@@ -6,7 +6,6 @@ from datetime import datetime, timedelta
 import requests
 import tabula
 
-
 mcroaa_columns = [
     'REGIONAL',
     'MUNICIPIO',
@@ -79,7 +78,6 @@ def insert(session):
             print("sesa_pr is up to date!")
             return
             
-
     if data_check:
         df = pd.DataFrame()
         df = tabula.read_pdf(url, pages=page_list, pandas_options={'header': None, 'dtype': str})
