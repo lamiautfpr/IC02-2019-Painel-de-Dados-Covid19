@@ -20,6 +20,7 @@ ocupacao_columns = [
     'total conf',
     'total total'
 ]
+
 leitos_columns = [
     'leitos',
     'uti adulto exist',
@@ -45,60 +46,58 @@ def transform(dfs):
                 df[d] = df[d].str.replace(".", "").str.replace("%", "").astype(int)
             except:
                 pass
-    return dfs
-        
-        
+    return dfs  
 
 def cleanner(dfs):
 
     if len(dfs) == 2:
+    
         ocupacao = dfs[0]
-        ocupacao.dropna(thresh=3, axis='columns', inplace=True)
-        ocupacao.dropna(thresh=2, inplace=True)
+        ocupacao.dropna(thresh=3, axis='columns', inplace=True) # Dropa coluna com pelo menos de 3 valones não nulos
 
-        if len(ocupacao.dropna(thresh=2)) == 3:
-            ocupacao.dropna(inplace=True)
-            ocupacao[0] = ''
-            ocupacao = ocupacao.astype(str).values.tolist()
-            new_ocupacao = []
+        if len(ocupacao.dropna()) == 3: # start 24-6
+            print("DropNa = 3")
+            if(len(ocupacao)) <=6:
+                print("Tamanho <= 6") # 24-6 -> 15-7
+                ocupacao.dropna(inplace=True)
+                ocupacao[0] = ''
+                ocupacao = ocupacao.astype(str).values.tolist()
+                
+            else: # 16-7 -> ??-??
+                print('Tamanho > 6')
+                ocupacao.dropna(thresh=2, inplace=True)
+                ocupacao = ocupacao[2:].astype(str).values.tolist()
 
-            for ocup in ocupacao:
-                new_line = []
-                for oo in ocup:
-                    if len(oo) > 5:
-                        oo = oo.split(' ')
-                        for o in oo:
-                            new_line.append(o)
-                    else:
-                        new_line.append(oo)
-                new_ocupacao.append(new_line)
-
-            ocupacao = pd.DataFrame(new_ocupacao)
-            ocupacao.iloc[0][0] = "UTI"
-            ocupacao.iloc[1][0] = "CLÍNICO"
-            ocupacao.iloc[-1][0] = "UTI E CLÍNICO"
-
-        else:
-            # print(ocupacao)
-            # ocupacao = pd.concat([ocupacao[4:6], ocupacao[7:8]]).astype(str).values.tolist()
-            ocupacao = ocupacao[2:].astype(str).values.tolist()
+        else: # 10-6 -> 23-6 / 17-7
+            print("DropNa != 3")
+            if(len(ocupacao) < 8 ): # 17-7
+                print("ENTROU AQUI")
+                ocupacao[0] = ''
+                ocupacao = ocupacao[2:].astype(str).values.tolist()
+            else: # 10-6 -> 23-6
+                ocupacao.dropna(thresh=2, inplace=True)
+                ocupacao = ocupacao[2:].astype(str).values.tolist()
             
-            new_ocupacao = []   
+        new_ocupacao = []
+        for ocup in ocupacao:
+            new_line = []
+            for oo in ocup:
+                if len(oo) > 5:
+                    oo = oo.split(' ')
+                    for o in oo:
+                        new_line.append(o)
+                else:
+                    new_line.append(oo)
+            new_ocupacao.append(new_line)
 
-            for ocup in ocupacao:
-                new_line = []
-                for oo in ocup:
-                    if len(oo) > 5:
-                        oo = oo.split(' ')
-                        for o in oo:
-                            new_line.append(o)
-                    else:
-                        new_line.append(oo)
-                new_ocupacao.append(new_line)
+        ocupacao = pd.DataFrame(new_ocupacao)
+        ocupacao.iloc[0][0] = "UTI"
+        ocupacao.iloc[1][0] = "CLÍNICO"
+        ocupacao.iloc[-1][0] = "UTI E CLÍNICO"
 
-            ocupacao = pd.DataFrame(new_ocupacao)
-            ocupacao.iloc[-1][0] = "UTI E CLÍNICO"
-
+        # print('======================================')
+        # print(ocupacao)
+        # print('======================================')
         ocupacao.columns = ocupacao_columns
         ocupacao.drop(columns=['sus total', 'priv total', 'total susp', 'total conf', 'total total'], inplace=True)
         
@@ -117,6 +116,7 @@ def cleanner(dfs):
 
         leitos = pd.DataFrame(new_leitos)
 
+        #24-6 -> ??-?
         if len(leitos.columns) == 17:
             leitos.drop(columns=[4, 8, 12, 16], inplace=True)
         elif len(leitos.columns) == 16:
@@ -175,10 +175,9 @@ def insert(session):
     start_date += timedelta(days=1)
     hoje = now().date() # HOJE 
 
-
     # TEST DATE
-    # start_date = datetime(2020, 7, 16, 14, 0, 0).date()
-    # hoje = datetime(2020, 7, 16, 14, 0, 0).date()
+    # start_date = datetime(2020, 5, 6, 14, 0, 0).date()
+    # hoje = datetime(2020, 7, 17, 14, 0, 0).date()
 
     ocupacaoLeitos = pd.DataFrame()
     leitosExclusivos = pd.DataFrame()
@@ -217,11 +216,15 @@ def insert(session):
             if len(d) >= 5:
                 dfs.append(d)
 
+        # for df in dfs:
+        #     print(df)
+        
         dfs = cleanner(dfs)
         
         for df in dfs:
             print(df)
         
+    
         if len(dfs) == 2:
             dfs[0]['data_boletim'] = start_date
             dfs[1]['data_boletim'] = start_date
@@ -234,7 +237,7 @@ def insert(session):
         start_date += timedelta(days=1)
 
     if data_check:
-        # # TIME TABLES
+        # TIME TABLES
         ocupacaoLeitos.to_sql("SESA_time_ocupacaoLeitos", con=session.get_bind(), if_exists='append', method='multi',
         dtype={
             'tipo_de_leito': String(),
@@ -263,9 +266,9 @@ def insert(session):
             'data_boletim': Date()
         })
 
-        # # STATIC TABLES
-        ocupacaoLeitos['insert_date'] = now()
-        ocupacaoLeitos.to_sql("SESA_base_ocupacaoLeitos", index_label='id', con=session.get_bind(), if_exists='replace', method='multi',
+        # STATIC TABLES
+        dfs[0]['insert_date'] = now()
+        dfs[0].to_sql("SESA_base_ocupacaoLeitos", index_label='id', con=session.get_bind(), if_exists='replace', method='multi',
         dtype={
             'tipo_de_leito': String(),
             'sus_suspeitos': Integer(),
@@ -276,8 +279,8 @@ def insert(session):
             'insert_date': DateTime()
         })
 
-        leitosExclusivos['insert_date'] = now()
-        leitosExclusivos.to_sql("SESA_base_leitosMacrorregiao", index_label='id', con=session.get_bind(), if_exists='replace', method='multi',
+        dfs[1]['insert_date'] = now()
+        dfs[1].to_sql("SESA_base_leitosMacrorregiao", index_label='id', con=session.get_bind(), if_exists='replace', method='multi',
         dtype={
             'leitos': String(),
             'uti adulto exist': Integer(),
