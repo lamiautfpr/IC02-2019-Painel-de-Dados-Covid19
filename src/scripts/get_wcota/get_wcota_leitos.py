@@ -22,7 +22,7 @@ def cleaner(temp_dataset):
     dataset['quantidadeLeitos'] = pd.to_numeric(dataset['quantidadeLeitos'], errors='coerce')
     dataset['totalOcupacao'] = (dataset['leitosOcupados']/dataset['quantidadeLeitos']) * 100
     dataset['ultimaAtualizacao'] = dataset['ultimaAtualizacao'] + "/2020"
-    dataset['ultimaAtualizacao'] = pd.to_datetime(dataset.ultimaAtualizacao, format='%d/%m/%Y')
+    # dataset['ultimaAtualizacao'] = pd.to_datetime(dataset.ultimaAtualizacao, format='%d/%m/%Y')
 
     dataset = dataset.dropna(how='all')
     return dataset
