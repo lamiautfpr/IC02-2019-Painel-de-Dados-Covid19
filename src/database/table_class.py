@@ -21,8 +21,7 @@ def WCota_leitos():
     db_format = {
         "leitosOcupados": Integer(),
         "quantidadeLeitos": Integer(),
-        "totalOcupacao": Float(),
-        "ultimaAtualizacao": Date()
+        "totalOcupacao": Float()
     }
     return db_format
 
