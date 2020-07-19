@@ -70,7 +70,7 @@ def cleanner(dfs):
 
         else: # 10-6 -> 23-6 / 17-7
             print("DropNa != 3")
-            if(len(ocupacao) < 8 ): # 17-7
+            if(len(ocupacao) < 8 ): # 17-7 -> 18-7
                 print("ENTROU AQUI")
                 ocupacao[0] = ''
                 ocupacao = ocupacao[2:].astype(str).values.tolist()
@@ -176,7 +176,7 @@ def insert(session):
     hoje = now().date() # HOJE 
 
     # TEST DATE
-    # start_date = datetime(2020, 5, 6, 14, 0, 0).date()
+    # start_date = datetime(2020, 7, 17, 14, 0, 0).date()
     # hoje = datetime(2020, 7, 17, 14, 0, 0).date()
 
     ocupacaoLeitos = pd.DataFrame()
@@ -202,11 +202,6 @@ def insert(session):
                     data_check = True
                     break
         
-        if not response.ok:
-            if not data_check:
-                return print("sesa_leitos is up to date!")
-            break
-
         page = 6 if start_date >= datetime(2020, 7, 14, 14, 0, 0).date() else 5 if start_date > datetime(2020, 5, 18, 14, 0, 0).date() else 4
 
         df = tabula.read_pdf(url, pages=[page], pandas_options={'header': None, 'dtype': str})
@@ -221,10 +216,9 @@ def insert(session):
         
         dfs = cleanner(dfs)
         
-        for df in dfs:
-            print(df)
+        # for df in dfs:
+        #     print(df)
         
-    
         if len(dfs) == 2:
             dfs[0]['data_boletim'] = start_date
             dfs[1]['data_boletim'] = start_date
@@ -237,6 +231,7 @@ def insert(session):
         start_date += timedelta(days=1)
 
     if data_check:
+
         # TIME TABLES
         ocupacaoLeitos.to_sql("SESA_time_ocupacaoLeitos", con=session.get_bind(), if_exists='append', method='multi',
         dtype={
@@ -298,4 +293,4 @@ def insert(session):
             'data_boletim': Date(),
             'insert_date': DateTime()
         })
-        return print("sesa_leitos inserido com sucesso!")
+        print("sesa_leitos inserido com sucesso!")

@@ -73,10 +73,9 @@ def insert(session):
                 data_check = True
                 break
         
-    if not response.ok: # end of the days
-        if not data_check:
-            print("sesa_pr is up to date!")
-            return
+    if not data_check:
+        print("sesa_pr is up to date!")
+        return
             
     if data_check:
         df = pd.DataFrame()
@@ -95,13 +94,13 @@ def insert(session):
         
         dfs = transform(dfs)
         
-        print(dfs)
+        # print(dfs)
         
         dfs['DATA'] = hoje
         # Full data
-        print("CRIANDO Clean DIA = ", hoje.strftime("%d-%m"))
-        with pd.ExcelWriter('SESA_FULL-Clean.xlsx') as writer:
-            dfs.to_excel(writer, index=False, engine='xlsxwriter', encoding='UTF-8', sheet_name='SESA_FULL')
+        # print("CRIANDO Clean DIA = ", hoje.strftime("%d-%m"))
+        # with pd.ExcelWriter('SESA_FULL-Clean.xlsx') as writer:
+        #     dfs.to_excel(writer, index=False, engine='xlsxwriter', encoding='UTF-8', sheet_name='SESA_FULL')
 
         dfs.to_sql('SESA_base_PR', con=session.get_bind(), if_exists='replace', method='multi',
         dtype={
