@@ -53,7 +53,7 @@ def cleanner(dfs):
     if len(dfs) == 2:
     
         ocupacao = dfs[0]
-        ocupacao.dropna(thresh=3, axis='columns', inplace=True) # Dropa coluna com pelo menos de 3 valones não nulos
+        ocupacao.dropna(thresh=3, axis='columns', inplace=True) # Dropa coluna com menos de 3 valones não nulos
 
         if len(ocupacao.dropna()) == 3: # start 24-6
             print("DropNa = 3")
@@ -201,9 +201,15 @@ def insert(session):
                     print(url)
                     data_check = True
                     break
+
+        if not response.ok:
+            if not data_check:
+                return
+            break
         
         page = 6 if start_date >= datetime(2020, 7, 14, 14, 0, 0).date() else 5 if start_date > datetime(2020, 5, 18, 14, 0, 0).date() else 4
-
+        print(page)
+       
         df = tabula.read_pdf(url, pages=[page], pandas_options={'header': None, 'dtype': str})
          
         dfs = []
@@ -216,8 +222,8 @@ def insert(session):
         
         dfs = cleanner(dfs)
         
-        # for df in dfs:
-        #     print(df)
+        for df in dfs:
+            print(df)
         
         if len(dfs) == 2:
             dfs[0]['data_boletim'] = start_date
