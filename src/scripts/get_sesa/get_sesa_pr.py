@@ -45,12 +45,12 @@ def insert(session):
     print("Inserindo get_sesa_pr.")
     
     data_check = False
-    page_list = list(range(20, 30))
+    page_list = list(range(22, 32))
     complements = ['_atualizado', '_1', '_0', '']
     texto = 'informe_epidemiologico'
     base_url = 'http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/{}/{}_{}{}.pdf'
 
-    # hoje = datetime(2020, 7, 15, 14, 0, 0).date()
+    # hoje = datetime(2020, 7, 19, 14, 0, 0).date()
 
     hoje = now().date() # HOJE
 
@@ -72,14 +72,11 @@ def insert(session):
                 print(url)
                 data_check = True
                 break
-        
-    if not data_check:
-        print("sesa_pr is up to date!")
-        return
             
     if data_check:
         df = pd.DataFrame()
         df = tabula.read_pdf(url, pages=page_list, pandas_options={'header': None, 'dtype': str})
+        
         
         dfs = pd.DataFrame()
         for d in range(len(df)):
@@ -88,19 +85,20 @@ def insert(session):
                 # print(df[d])
                 dfs = pd.concat([dfs, df[d]], ignore_index=True)
         
+        # print("CRIANDO Clean DIA = ", hoje.strftime("%d-%m"))
+        # with pd.ExcelWriter('SESA_FULL-Clean.xlsx') as writer:
+        #     dfs.to_excel(writer, index=False, engine='xlsxwriter', encoding='UTF-8', sheet_name='SESA_FULL')
+        
         dfs = dfs[1:]
         dfs.drop(columns=[0], inplace=True)
         dfs.columns = mcroaa_columns
         
         dfs = transform(dfs)
         
-        # print(dfs)
+        print(dfs)
         
         dfs['DATA'] = hoje
         # Full data
-        # print("CRIANDO Clean DIA = ", hoje.strftime("%d-%m"))
-        # with pd.ExcelWriter('SESA_FULL-Clean.xlsx') as writer:
-        #     dfs.to_excel(writer, index=False, engine='xlsxwriter', encoding='UTF-8', sheet_name='SESA_FULL')
 
         dfs.to_sql('SESA_base_PR', con=session.get_bind(), if_exists='replace', method='multi',
         dtype={
