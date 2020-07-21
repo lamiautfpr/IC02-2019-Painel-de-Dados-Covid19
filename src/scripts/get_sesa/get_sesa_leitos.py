@@ -204,6 +204,7 @@ def insert(session):
 
         if not response.ok:
             if not data_check:
+                print("get_sesa_leitos is up to date")
                 return
             break
         
