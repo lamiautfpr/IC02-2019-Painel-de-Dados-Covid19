@@ -77,7 +77,6 @@ def insert(session):
         df = pd.DataFrame()
         df = tabula.read_pdf(url, pages=page_list, pandas_options={'header': None, 'dtype': str})
         
-        
         dfs = pd.DataFrame()
         for d in range(len(df)):
             if len(df[d].keys()) > 5:
@@ -111,3 +110,6 @@ def insert(session):
             'INVESTIGACAO': Integer(),
             'DATA': Date()
         })
+        print("get_sesa_pr inserido com sucesso")
+    else:
+        print("get_sesa_pr is up to date")
