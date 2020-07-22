@@ -112,3 +112,6 @@ def insert(session):
             'INVESTIGACAO': Integer(),
             'DATA': Date()
         })
+        print("get_sesa_pr inserido com sucesso")
+    else:
+        print("get_sesa_pr is up to date")
