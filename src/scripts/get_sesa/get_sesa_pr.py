@@ -23,6 +23,7 @@ def transform(dfs):
     dfs.loc['Total' ] = '0'
     for col in mcroaa_columns:
         try:
+            dfs[col] = dfs[col].str.replace("-", "0")
             dfs[col] = dfs[col].str.replace(".", "").astype(int)
             dfs.loc['Total', col] = dfs[col].sum()
         except:
@@ -46,7 +47,7 @@ def insert(session):
     
     data_check = False
     page_list = list(range(22, 32))
-    complements = ['_atualizado', '_1', '_0', '']
+    complements = ['%20', '_atualizado', '_1', '_0', '']
     texto = 'informe_epidemiologico'
     base_url = 'http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/{}/{}_{}{}.pdf'
 
@@ -74,9 +75,9 @@ def insert(session):
                 break
             
     if data_check:
+
         df = pd.DataFrame()
         df = tabula.read_pdf(url, pages=page_list, pandas_options={'header': None, 'dtype': str})
-        
         
         dfs = pd.DataFrame()
         for d in range(len(df)):
@@ -85,15 +86,15 @@ def insert(session):
                 # print(df[d])
                 dfs = pd.concat([dfs, df[d]], ignore_index=True)
         
-        # print("CRIANDO Clean DIA = ", hoje.strftime("%d-%m"))
-        # with pd.ExcelWriter('SESA_FULL-Clean.xlsx') as writer:
-        #     dfs.to_excel(writer, index=False, engine='xlsxwriter', encoding='UTF-8', sheet_name='SESA_FULL')
-        
         dfs = dfs[1:]
         dfs.drop(columns=[0], inplace=True)
         dfs.columns = mcroaa_columns
         
         dfs = transform(dfs)
+            
+        print("CRIANDO Clean DIA = ", hoje.strftime("%d-%m"))
+        with pd.ExcelWriter('SESA_FULL-Clean.xlsx') as writer:
+            dfs.to_excel(writer, index=False, engine='xlsxwriter', encoding='UTF-8', sheet_name='SESA_FULL')
         
         print(dfs)
         
