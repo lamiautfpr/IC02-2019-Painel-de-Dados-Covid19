@@ -18,6 +18,15 @@ src/scripts/get_sesa/__pycache__/get_sesa_sheets.cpython-37.pyc
 src/scripts/get_wcota/__pycache__/get_wcota_leitos.cpython-37.pyc
 src/scripts/get_wcota/__pycache__/get_wcota_nacional.cpython-37.pyc
 src/scripts/get_wcota/__pycache__/get_wcota_suspeitos.cpython-37.pyc
+config/__pycache__/config_file.cpython-37.pyc
+database/__pycache__/table_class.cpython-37.pyc
+main.py
+scripts/__pycache__/functions.cpython-37.pyc
+scripts/get_sesa/__pycache__/get_sesa_leitos.cpython-37.pyc
+scripts/get_sesa/__pycache__/get_sesa_pr.cpython-37.pyc
+scripts/get_sesa/get_sesa_leitos.py
+scripts/get_sesa/get_sesa_pr.py
+scripts/get_wcota/__pycache__/get_wcota_leitos.cpython-37.pyc
 
 config.json
 venv
