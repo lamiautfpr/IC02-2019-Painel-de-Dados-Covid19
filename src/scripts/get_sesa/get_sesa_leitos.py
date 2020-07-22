@@ -166,18 +166,18 @@ def insert(session):
     print("Inserindo get_sesa_leitos.")
 
     data_check = False
-    complements = ['_atualizado', '_1', '_0', '']
+    complements = ['%20', '_atualizado', '_1', '_0', '']
     texto = 'informe_epidemiologico'
     base_url = 'http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/{}/{}_{}{}.pdf'
-    
+
     selectObj = sql_creator.Select(session)
     start_date = selectObj.Date('data_boletim', '"SESA_time_leitosExclusivos"') # DATABASE DATE
     start_date += timedelta(days=1)
     hoje = now().date() # HOJE 
 
     # TEST DATE
-    # start_date = datetime(2020, 7, 17, 14, 0, 0).date()
-    # hoje = datetime(2020, 7, 17, 14, 0, 0).date()
+    # start_date = datetime(2020, 7, 21, 14, 0, 0).date()
+    # hoje = datetime(2020, 7, 21, 14, 0, 0).date()
 
     ocupacaoLeitos = pd.DataFrame()
     leitosExclusivos = pd.DataFrame()
@@ -186,6 +186,7 @@ def insert(session):
         for com in complements:
             url = base_url.format(start_date.strftime('%Y-%m'), texto, start_date.strftime('%d_%m_%Y'), com)
             response = requests.get(url)
+            print(url)
             if response.ok:
                 print("COMPLEMENTO = ", com)
                 print("link do dia ", start_date.strftime("%d-%m"))
@@ -195,6 +196,7 @@ def insert(session):
             else:
                 url =  url = base_url.format(start_date.strftime('%Y-%m'), texto.upper(), start_date.strftime('%d_%m_%Y'), com)
                 response = requests.get(url)
+                print(url)
                 if response.ok:
                     print("COMPLEMENTO = ", com)
                     print("link do dia ", start_date.strftime("%d-%m"))
@@ -204,6 +206,7 @@ def insert(session):
 
         if not response.ok:
             if not data_check:
+                print("get_sesa_leitos sem boletim")
                 return
             break
         
@@ -300,3 +303,6 @@ def insert(session):
             'insert_date': DateTime()
         })
         print("sesa_leitos inserido com sucesso!")
+    
+    else:
+        print("get_sesa_leitos is up to date")
