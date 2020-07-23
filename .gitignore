@@ -2,19 +2,4 @@
 credentials.json
 venv
 
-config/__pycache__/config_file.cpython-37.pyc
-database/__pycache__/engine_creator.cpython-37.pyc
-database/__pycache__/sql_creator.cpython-37.pyc
-database/__pycache__/table_class.cpython-37.pyc
-scripts/__pycache__/functions.cpython-37.pyc
-scripts/get_brapi/__pycache__/get_brapi_mundial.cpython-37.pyc
-scripts/get_brapi/__pycache__/get_brapi_nacional.cpython-37.pyc
-scripts/get_brio/__pycache__/get_brio_cartorio.cpython-37.pyc
-scripts/get_brio/__pycache__/get_brio_nacional.cpython-37.pyc
-scripts/get_hdx/__pycache__/get_hdx_mundial.cpython-37.pyc
-scripts/get_sesa/__pycache__/get_sesa_leitos.cpython-37.pyc
-scripts/get_sesa/__pycache__/get_sesa_pr.cpython-37.pyc
-scripts/get_sesa/__pycache__/get_sesa_sheets.cpython-37.pyc
-scripts/get_wcota/__pycache__/get_wcota_leitos.cpython-37.pyc
-scripts/get_wcota/__pycache__/get_wcota_nacional.cpython-37.pyc
-scripts/get_wcota/__pycache__/get_wcota_suspeitos.cpython-37.pyc
+__pycache__/
