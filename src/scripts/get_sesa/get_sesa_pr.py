@@ -51,7 +51,7 @@ def insert(session):
     texto = 'informe_epidemiologico'
     base_url = 'http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/{}/{}_{}{}.pdf'
 
-    # hoje = datetime(2020, 7, 19, 14, 0, 0).date()
+    # hoje = datetime(2020, 7, 25, 14, 0, 0).date()
 
     hoje = now().date() # HOJE
 
@@ -73,7 +73,11 @@ def insert(session):
                 print(url)
                 data_check = True
                 break
-            
+        
+    if not response.ok:
+        print("get_sesa_pr sem boletim")
+        return
+
     if data_check:
 
         df = pd.DataFrame()
@@ -89,17 +93,15 @@ def insert(session):
         dfs = dfs[1:]
         dfs.drop(columns=[0], inplace=True)
         dfs.columns = mcroaa_columns
-        
+
         dfs = transform(dfs)
             
-        print("CRIANDO Clean DIA = ", hoje.strftime("%d-%m"))
-        with pd.ExcelWriter('SESA_FULL-Clean.xlsx') as writer:
-            dfs.to_excel(writer, index=False, engine='xlsxwriter', encoding='UTF-8', sheet_name='SESA_FULL')
+        # print("CRIANDO Clean DIA = ", hoje.strftime("%d-%m"))
+        # with pd.ExcelWriter('SESA_FULL-Clean.xlsx') as writer:
+        #     dfs.to_excel(writer, index=False, engine='xlsxwriter', encoding='UTF-8', sheet_name='SESA_FULL')
         
         print(dfs)
-        
         dfs['DATA'] = hoje
-        # Full data
 
         dfs.to_sql('SESA_base_PR', con=session.get_bind(), if_exists='replace', method='multi',
         dtype={
@@ -112,3 +114,6 @@ def insert(session):
             'INVESTIGACAO': Integer(),
             'DATA': Date()
         })
+        print("get_sesa_pr inserido com sucesso")
+    else:
+        print("get_sesa_pr is up to date")
