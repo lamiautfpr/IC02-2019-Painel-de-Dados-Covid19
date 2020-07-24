@@ -264,33 +264,33 @@ def insert(session):
     if data_check:
 
         # # TIME TABLES
-        # ocupacaoLeitos.to_sql("SESA_time_ocupacaoLeitos", con=session.get_bind(), if_exists='append', method='multi',
-        # dtype={
-        #     'tipo_de_leito': String(),
-        #     'sus_suspeitos': Integer(),
-        #     'sus_confirmados': Integer(),
-        #     'particular_suspeitos': Integer(),
-        #     'particular_confirmados': Integer(),
-        #     'data_boletim': Date()
-        # })
+        ocupacaoLeitos.to_sql("SESA_time_ocupacaoLeitos", con=session.get_bind(), if_exists='append', method='multi',
+        dtype={
+            'tipo_de_leito': String(),
+            'sus_suspeitos': Integer(),
+            'sus_confirmados': Integer(),
+            'particular_suspeitos': Integer(),
+            'particular_confirmados': Integer(),
+            'data_boletim': Date()
+        })
 
-        # leitosExclusivos.to_sql("SESA_time_leitosExclusivos", con=session.get_bind(), if_exists='append', method='multi',
-        # dtype={
-        #     'leitos': String(),
-        #     'uti adulto exist': Integer(),
-        #     'uti adulto ocup': Integer(),
-        #     'uti adulto tx ocup': Float(),
-        #     'enf adulto exist': Integer(),
-        #     'enf adulto ocup': Integer(),
-        #     'enf adulto tx ocup': Float(),
-        #     'uti infantil exist': Integer(),
-        #     'uti infantil ocup': Integer(),
-        #     'uti infantil tx ocup': Float(),
-        #     'enf infantil exist': Float(),
-        #     'enf infantil ocup': Integer(),
-        #     'enf infantil tx ocup': Float(),
-        #     'data_boletim': Date()
-        # })
+        leitosExclusivos.to_sql("SESA_time_leitosExclusivos", con=session.get_bind(), if_exists='append', method='multi',
+        dtype={
+            'leitos': String(),
+            'uti adulto exist': Integer(),
+            'uti adulto ocup': Integer(),
+            'uti adulto tx ocup': Float(),
+            'enf adulto exist': Integer(),
+            'enf adulto ocup': Integer(),
+            'enf adulto tx ocup': Float(),
+            'uti infantil exist': Integer(),
+            'uti infantil ocup': Integer(),
+            'uti infantil tx ocup': Float(),
+            'enf infantil exist': Float(),
+            'enf infantil ocup': Integer(),
+            'enf infantil tx ocup': Float(),
+            'data_boletim': Date()
+        })
 
         # STATIC TABLES
         dfs[0]['insert_date'] = now()
