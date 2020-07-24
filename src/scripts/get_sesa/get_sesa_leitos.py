@@ -55,7 +55,7 @@ def cleanner(dfs):
         # 6-5 -> 24-7...
         ocupacao = dfs[0]
         ocupacao[0] = ''
-        print(ocupacao)
+        # print(ocupacao)
         ocupacao = ocupacao[1:]
         ocupacao.dropna(axis='columns', how='all', inplace=True)
         ocupacao.dropna(thresh=5, inplace=True)
@@ -106,9 +106,9 @@ def cleanner(dfs):
         ocupacao.iloc[1][0] = "CLÍNICO"
         ocupacao.iloc[-1][0] = "UTI E CLÍNICO"
 
-        print('======================================')
-        print(ocupacao)
-        print('======================================')
+        # print('======================================')
+        # print(ocupacao)
+        # print('======================================')
         ocupacao.columns = ocupacao_columns
         ocupacao.drop(columns=['sus total', 'priv total', 'total susp', 'total conf', 'total total'], inplace=True)
         
@@ -194,7 +194,6 @@ def insert(session):
         print("SEM DATA NA BASE DE DADOS")
         start_date = datetime(2020, 5, 6, 14, 0, 0).date()    
     
-    start_date = datetime(2020, 7, 24, 14, 0, 0).date()    
     hoje = now().date() # HOJE 
 
     # TEST DATE
@@ -247,8 +246,8 @@ def insert(session):
         
         dfs = cleanner(dfs)
         
-        # for df in dfs:
-        #     print(df)
+        for df in dfs:
+            print(df)
         
         if len(dfs) == 2:
             dfs[0]['data_boletim'] = start_date
