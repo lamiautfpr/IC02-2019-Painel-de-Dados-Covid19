@@ -51,32 +51,43 @@ def transform(dfs):
 def cleanner(dfs):
 
     if len(dfs) == 2:
-    
+        
+        # 6-5 -> 24-7...
         ocupacao = dfs[0]
-        ocupacao.dropna(thresh=3, axis='columns', inplace=True) # Dropa coluna com menos de 3 valones não nulos
+        ocupacao[0] = ''
+        print(ocupacao)
+        ocupacao = ocupacao[1:]
+        ocupacao.dropna(axis='columns', how='all', inplace=True)
+        ocupacao.dropna(thresh=5, inplace=True)
+        ocupacao = ocupacao[1:].astype(str).values.tolist()
 
-        if len(ocupacao.dropna()) == 3: # start 24-6
-            print("DropNa = 3")
-            if(len(ocupacao)) <=6:
-                print("Tamanho <= 6") # 24-6 -> 15-7
-                ocupacao.dropna(inplace=True)
-                ocupacao[0] = ''
-                ocupacao = ocupacao.astype(str).values.tolist()
+        # ocupacao = dfs[0]
+        # ocupacao.dropna(thresh=3, axis='columns', inplace=True) # mantm colunas menos 3 non-Na
+        # print(ocupacao)
+        # if len(ocupacao.dropna()) == 3: # 24-6 -> 15-7 / 16-7
+        #     print("DropNa = 3")
+        #     if len(ocupacao) <=6: # 24-6 -> 15-7
+        #         print("Tamanho <= 6")
+        #         ocupacao.dropna(inplace=True)
+        #         ocupacao[0] = ''
+        #         ocupacao = ocupacao.astype(str).values.tolist()
                 
-            else: # 16-7 -> ??-??
-                print('Tamanho > 6')
-                ocupacao.dropna(thresh=2, inplace=True)
-                ocupacao = ocupacao[2:].astype(str).values.tolist()
+        #     else: # 16-7 / ??-??
+        #         print('Tamanho > 6')
+        #         ocupacao.dropna(thresh=2, inplace=True)
+        #         ocupacao = ocupacao[2:].astype(str).values.tolist()
 
-        else: # 10-6 -> 23-6 / 17-7
-            print("DropNa != 3")
-            if(len(ocupacao) < 8 ): # 17-7 -> 18-7
-                print("ENTROU AQUI")
-                ocupacao[0] = ''
-                ocupacao = ocupacao[2:].astype(str).values.tolist()
-            else: # 10-6 -> 23-6
-                ocupacao.dropna(thresh=2, inplace=True)
-                ocupacao = ocupacao[2:].astype(str).values.tolist()
+        # else: # 10-6 -> 23-6 / 17-7 -> 23-7
+        #     print("DropNa != 3")
+        #     if len(ocupacao) < 8: # 17-7 -> 24-7
+        #         print("LEN < 9")
+        #         ocupacao[0] = ''
+        #         ocupacao.dropna(inplace=True)
+        #         # print(ocupacao)
+        #         ocupacao = ocupacao[1:].astype(str).values.tolist()
+        #     else: # 10-6 -> 23-6 / 
+        #         ocupacao.dropna(thresh=2, inplace=True) # mantem lihas com pelo menos 2 non-Na
+        #         ocupacao = ocupacao[2:].astype(str).values.tolist()
             
         new_ocupacao = []
         for ocup in ocupacao:
@@ -95,13 +106,16 @@ def cleanner(dfs):
         ocupacao.iloc[1][0] = "CLÍNICO"
         ocupacao.iloc[-1][0] = "UTI E CLÍNICO"
 
-        # print('======================================')
-        # print(ocupacao)
-        # print('======================================')
+        print('======================================')
+        print(ocupacao)
+        print('======================================')
         ocupacao.columns = ocupacao_columns
         ocupacao.drop(columns=['sus total', 'priv total', 'total susp', 'total conf', 'total total'], inplace=True)
         
+        # print(dfs[1])
+        
         leitos = dfs[1].dropna().astype(str).values.tolist() 
+    
         new_leitos = []
         for lei in leitos:
             new_line = [] 
@@ -115,11 +129,13 @@ def cleanner(dfs):
             new_leitos.append(new_line) 
 
         leitos = pd.DataFrame(new_leitos)
-
-        #24-6 -> ??-?
+        # print(leitos)
+        #24-6
         if len(leitos.columns) == 17:
             leitos.drop(columns=[4, 8, 12, 16], inplace=True)
         elif len(leitos.columns) == 16:
+            if(len(leitos) > 5): # 23-7
+                leitos = leitos[1:]
             leitos.insert(0, 'asda', ['LESTE', 'OESTE', 'NOROESTE', 'NORTE', 'TOTAL']) # pos, name, [values]
             leitos.drop(columns=[2, 6, 10, 14], inplace=True)
 
@@ -133,7 +149,7 @@ def cleanner(dfs):
         dfs[0] = ocupacao
         dfs[1] = leitos
 
-    else:
+    else: # 6-5 -> 10-6 / NO MORE DATES
         leitos = dfs[0].dropna().astype(str).values.tolist()
         new_leitos = []
 
@@ -166,18 +182,24 @@ def insert(session):
     print("Inserindo get_sesa_leitos.")
 
     data_check = False
-    complements = ['%20', '_atualizado', '_1', '_0', '']
+    complements = ['NOVO_SUFIXO', '%20', '_atualizado', '_1', '_0', '']
     texto = 'informe_epidemiologico'
     base_url = 'http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/{}/{}_{}{}.pdf'
 
-    selectObj = sql_creator.Select(session)
-    start_date = selectObj.Date('data_boletim', '"SESA_time_leitosExclusivos"') # DATABASE DATE
-    start_date += timedelta(days=1)
+    try:
+        selectObj = sql_creator.Select(session)
+        start_date = selectObj.Date('data_boletim', '"SESA_time_leitosExclusivos"') # DATABASE DATE
+        start_date += timedelta(days=1)
+    except:
+        print("SEM DATA NA BASE DE DADOS")
+        start_date = datetime(2020, 5, 6, 14, 0, 0).date()    
+    
+    start_date = datetime(2020, 7, 24, 14, 0, 0).date()    
     hoje = now().date() # HOJE 
 
     # TEST DATE
-    # start_date = datetime(2020, 7, 21, 14, 0, 0).date()
-    # hoje = datetime(2020, 7, 21, 14, 0, 0).date()
+    # start_date = datetime(2020, 6, 10, 14, 0, 0).date()
+    # hoje = datetime(2020, 7, 23, 14, 0, 0).date()
 
     ocupacaoLeitos = pd.DataFrame()
     leitosExclusivos = pd.DataFrame()
@@ -185,24 +207,24 @@ def insert(session):
     while start_date <= hoje:
         for com in complements:
             url = base_url.format(start_date.strftime('%Y-%m'), texto, start_date.strftime('%d_%m_%Y'), com)
-            response = requests.get(url)
-            print(url)
-            if response.ok:
+            response = requests.get(url) # url com texto em lowercase
+            # print(url)
+            if response.ok: # se True
                 print("COMPLEMENTO = ", com)
                 print("link do dia ", start_date.strftime("%d-%m"))
                 print(url)
                 data_check = True
-                break
-            else:
-                url =  url = base_url.format(start_date.strftime('%Y-%m'), texto.upper(), start_date.strftime('%d_%m_%Y'), com)
-                response = requests.get(url)
-                print(url)
-                if response.ok:
+                break # quebra loop
+            else: # senão, 
+                url = base_url.format(start_date.strftime('%Y-%m'), texto.upper(), start_date.strftime('%d_%m_%Y'), com)
+                response = requests.get(url) # url com texto em uppercase
+                # print(url)
+                if response.ok: # se True
                     print("COMPLEMENTO = ", com)
                     print("link do dia ", start_date.strftime("%d-%m"))
                     print(url)
                     data_check = True
-                    break
+                    break # sai do loop
 
         if not response.ok:
             if not data_check:
@@ -225,8 +247,8 @@ def insert(session):
         
         dfs = cleanner(dfs)
         
-        for df in dfs:
-            print(df)
+        # for df in dfs:
+        #     print(df)
         
         if len(dfs) == 2:
             dfs[0]['data_boletim'] = start_date
@@ -241,34 +263,34 @@ def insert(session):
 
     if data_check:
 
-        # TIME TABLES
-        ocupacaoLeitos.to_sql("SESA_time_ocupacaoLeitos", con=session.get_bind(), if_exists='append', method='multi',
-        dtype={
-            'tipo_de_leito': String(),
-            'sus_suspeitos': Integer(),
-            'sus_confirmados': Integer(),
-            'particular_suspeitos': Integer(),
-            'particular_confirmados': Integer(),
-            'data_boletim': Date()
-        })
+        # # TIME TABLES
+        # ocupacaoLeitos.to_sql("SESA_time_ocupacaoLeitos", con=session.get_bind(), if_exists='append', method='multi',
+        # dtype={
+        #     'tipo_de_leito': String(),
+        #     'sus_suspeitos': Integer(),
+        #     'sus_confirmados': Integer(),
+        #     'particular_suspeitos': Integer(),
+        #     'particular_confirmados': Integer(),
+        #     'data_boletim': Date()
+        # })
 
-        leitosExclusivos.to_sql("SESA_time_leitosExclusivos", con=session.get_bind(), if_exists='append', method='multi',
-        dtype={
-            'leitos': String(),
-            'uti adulto exist': Integer(),
-            'uti adulto ocup': Integer(),
-            'uti adulto tx ocup': Float(),
-            'enf adulto exist': Integer(),
-            'enf adulto ocup': Integer(),
-            'enf adulto tx ocup': Float(),
-            'uti infantil exist': Integer(),
-            'uti infantil ocup': Integer(),
-            'uti infantil tx ocup': Float(),
-            'enf infantil exist': Float(),
-            'enf infantil ocup': Integer(),
-            'enf infantil tx ocup': Float(),
-            'data_boletim': Date()
-        })
+        # leitosExclusivos.to_sql("SESA_time_leitosExclusivos", con=session.get_bind(), if_exists='append', method='multi',
+        # dtype={
+        #     'leitos': String(),
+        #     'uti adulto exist': Integer(),
+        #     'uti adulto ocup': Integer(),
+        #     'uti adulto tx ocup': Float(),
+        #     'enf adulto exist': Integer(),
+        #     'enf adulto ocup': Integer(),
+        #     'enf adulto tx ocup': Float(),
+        #     'uti infantil exist': Integer(),
+        #     'uti infantil ocup': Integer(),
+        #     'uti infantil tx ocup': Float(),
+        #     'enf infantil exist': Float(),
+        #     'enf infantil ocup': Integer(),
+        #     'enf infantil tx ocup': Float(),
+        #     'data_boletim': Date()
+        # })
 
         # STATIC TABLES
         dfs[0]['insert_date'] = now()
