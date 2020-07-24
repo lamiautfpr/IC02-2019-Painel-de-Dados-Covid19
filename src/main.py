@@ -13,7 +13,7 @@ def insert_all():
     session = Session()
 
 
-    # Get_HDX_Mundial
+    # # Get_HDX_Mundial
     # with suppress(Exception):
     #     get_hdx_mundial.insert(session)
 

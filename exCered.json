@@ -1,9 +1,0 @@
-{
-    "data": {
-        "user": "postgres",
-        "password": "123456",
-        "port": 5432,
-        "database": "Hugo",
-        "host": "127.0.0.1"
-        }
-}
