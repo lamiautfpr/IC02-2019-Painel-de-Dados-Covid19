@@ -12,7 +12,7 @@ def database_config():
 
     data = [
         data.get('data').get('user'),
-        data.get('data').get('password'),
+        data.get('data').get('password'),   
         data.get('data').get('host'),
         data.get('data').get('port'),
         data.get('data').get('database')
