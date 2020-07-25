@@ -2,5 +2,5 @@
 venv
 main.py
 ../credentials.json
-
+config/config_file.py
 __pycache__/
