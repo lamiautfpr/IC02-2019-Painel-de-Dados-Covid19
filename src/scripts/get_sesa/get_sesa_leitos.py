@@ -52,7 +52,7 @@ def cleanner(dfs):
 
     if len(dfs) == 2:
         
-        # 6-5 -> 24-7...
+        # 6-5 -> 25-7...
         ocupacao = dfs[0]
         ocupacao[0] = ''
         # print(ocupacao)
@@ -182,48 +182,54 @@ def insert(session):
     print("Inserindo get_sesa_leitos.")
 
     data_check = False
-    complements = ['NOVO_SUFIXO', '%20', '_atualizado', '_1', '_0', '']
+    complements = ['_', '%20', '_atualizado', '_1', '_0', '']
+    prefixes = ['', '_']
     texto = 'informe_epidemiologico'
-    base_url = 'http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/{}/{}_{}{}.pdf'
+    base_url = 'http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/{}/{}{}_{}{}.pdf'
 
     try:
         selectObj = sql_creator.Select(session)
         start_date = selectObj.Date('data_boletim', '"SESA_time_leitosExclusivos"') # DATABASE DATE
         start_date += timedelta(days=1)
+        print("Data has been found, start date is ", start_date)
     except:
-        print("SEM DATA NA BASE DE DADOS")
         start_date = datetime(2020, 5, 6, 14, 0, 0).date()    
+        print("No data found, start date is ", start_date)
     
     hoje = now().date() # HOJE 
 
     # TEST DATE
-    # start_date = datetime(2020, 6, 10, 14, 0, 0).date()
-    # hoje = datetime(2020, 7, 23, 14, 0, 0).date()
+    # start_date = datetime(2020, 7, 25, 14, 0, 0).date()
+    # hoje = datetime(2020, 7, 26, 14, 0, 0).date()
 
     ocupacaoLeitos = pd.DataFrame()
     leitosExclusivos = pd.DataFrame()
 
     while start_date <= hoje:
-        for com in complements:
-            url = base_url.format(start_date.strftime('%Y-%m'), texto, start_date.strftime('%d_%m_%Y'), com)
-            response = requests.get(url) # url com texto em lowercase
-            # print(url)
-            if response.ok: # se True
-                print("COMPLEMENTO = ", com)
-                print("link do dia ", start_date.strftime("%d-%m"))
-                print(url)
-                data_check = True
-                break # quebra loop
-            else: # senão, 
-                url = base_url.format(start_date.strftime('%Y-%m'), texto.upper(), start_date.strftime('%d_%m_%Y'), com)
-                response = requests.get(url) # url com texto em uppercase
+        for pfx in prefixes:
+            for com in complements:
+                url = base_url.format(start_date.strftime('%Y-%m'), pfx, texto, start_date.strftime('%d_%m_%Y'), com)
+                response = requests.get(url) # url com texto em lowercase
                 # print(url)
                 if response.ok: # se True
                     print("COMPLEMENTO = ", com)
                     print("link do dia ", start_date.strftime("%d-%m"))
                     print(url)
                     data_check = True
-                    break # sai do loop
+                    break # quebra loop
+                else: # senão, 
+                    url = base_url.format(start_date.strftime('%Y-%m'), pfx, texto.upper(), start_date.strftime('%d_%m_%Y'), com)
+                    response = requests.get(url) # url com texto em uppercase
+                    # print(url)
+                    if response.ok: # se True
+                        print("COMPLEMENTO = ", com)
+                        print("link do dia ", start_date.strftime("%d-%m"))
+                        print(url)
+                        data_check = True
+                        break # quebra loop com in complements
+        
+            if response.ok:
+                break # quebra loop pfx in prefixes
 
         if not response.ok:
             if not data_check:
