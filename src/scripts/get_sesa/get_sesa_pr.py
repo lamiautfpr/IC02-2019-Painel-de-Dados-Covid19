@@ -48,31 +48,38 @@ def insert(session):
     data_check = False
     page_list = list(range(22, 32))
     complements = ['%20', '_atualizado', '_1', '_0', '']
+    prefixes = ['', '_']
     texto = 'informe_epidemiologico'
-    base_url = 'http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/{}/{}_{}{}.pdf'
+    base_url = 'http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/{}/{}{}_{}{}.pdf'
 
-    # hoje = datetime(2020, 7, 25, 14, 0, 0).date()
+    # hoje = datetime(2020, 7, 29, 14, 0, 0).date()
 
     hoje = now().date() # HOJE
 
-    for com in complements:
-        url = base_url.format(hoje.strftime('%Y-%m'), texto, hoje.strftime('%d_%m_%Y'), com)
-        response = requests.get(url)
-        if response.ok:
-            print("COMPLEMENTO = ", com)
-            print("link do dia ", hoje.strftime("%d-%m"))
-            print(url)
-            data_check = True
-            break
-        else:
-            url =  url = base_url.format(hoje.strftime('%Y-%m'), texto.upper(), hoje.strftime('%d_%m_%Y'), com)
-            response = requests.get(url)
-            if response.ok:
+    for pfx in prefixes:
+        for com in complements:
+            url = base_url.format(hoje.strftime('%Y-%m'), pfx, texto, hoje.strftime('%d_%m_%Y'), com)
+            response = requests.get(url) # url com texto em lowercase
+            # print(url)
+            if response.ok: # se True
                 print("COMPLEMENTO = ", com)
                 print("link do dia ", hoje.strftime("%d-%m"))
                 print(url)
                 data_check = True
-                break
+                break # quebra loop
+            else: # senão, 
+                url = base_url.format(hoje.strftime('%Y-%m'), pfx, texto.upper(), hoje.strftime('%d_%m_%Y'), com)
+                response = requests.get(url) # url com texto em uppercase
+                # print(url)
+                if response.ok: # se True
+                    print("COMPLEMENTO = ", com)
+                    print("link do dia ", hoje.strftime("%d-%m"))
+                    print(url)
+                    data_check = True
+                    break # quebra loop com in complements
+    
+        if response.ok:
+            break # quebra loop pfx in prefixes
         
     if not response.ok:
         print("get_sesa_pr sem boletim")
