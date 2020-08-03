@@ -47,12 +47,12 @@ def insert(session):
     
     data_check = False
     page_list = list(range(22, 32))
-    complements = ['%20', '_atualizado', '_1', '_0', '']
+    complements = ['_', '%20', '_atualizado', '_1', '_0', '']
     prefixes = ['', '_']
     texto = 'informe_epidemiologico'
     base_url = 'http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/{}/{}{}_{}{}.pdf'
 
-    # hoje = datetime(2020, 7, 29, 14, 0, 0).date()
+    # hoje = datetime(2020, 8, 2, 14, 0, 0).date()
 
     hoje = now().date() # HOJE
 
