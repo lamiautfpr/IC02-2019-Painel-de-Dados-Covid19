@@ -1,6 +1,6 @@
 
 venv
-../main.py
+src/main.py
 ../credentials.json
-config/config_file.py
+src/config/config_file.py
 __pycache__/
