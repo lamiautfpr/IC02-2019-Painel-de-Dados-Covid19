@@ -48,7 +48,9 @@ def insert(session):
     prefixes = ['', '_']
     texto = 'informe_epidemiologico'
     base_url = 'http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/{}/{}{}_{}{}.pdf'
-    final_df = pd.DataFrame()
+    final_pr = pd.DataFrame()
+    final_br = pd.DataFrame()
+    final_wld = pd.DataFrame()
 
     try:
         selectObj = sql_creator.Select(session)
@@ -60,7 +62,7 @@ def insert(session):
         print("No data found, start date is ", start_date)
     
     # TEST DATE
-    # start_date = datetime(2020, 4, 29, 14, 0, 0).date()
+    # start_date = datetime(2020, 8, 1, 14, 0, 0).date()
     # hoje = datetime(2020, 5, 1, 14, 0, 0).date()
 
     hoje = now().date()
@@ -104,17 +106,47 @@ def insert(session):
         template_path = templateSelector(start_date)
         df = tabula.read_pdf_with_template(url, template_path, pandas_options={'header': None, 'dtype': str})
 
-        temp_df = pd.DataFrame([[df[0][0][1], df[0][0][2]]], columns=['cases', 'deaths'])
-       
-        temp_df = transform(temp_df)
-        temp_df['date'] = start_date
-        print(temp_df)
-        final_df = pd.concat([final_df, temp_df], ignore_index=True)
+        print(df)
+
+        temp_pr = pd.DataFrame([[df[0][2][1], df[0][2][2]]], columns=['cases', 'deaths'])
+        temp_br = pd.DataFrame([[df[0][1][1], df[0][1][2]]], columns=['cases', 'deaths'])
+        temp_wld = pd.DataFrame([[df[0][0][1], df[0][0][2]]], columns=['cases', 'deaths'])
+
+        temp_pr = transform(temp_pr)
+        temp_br = transform(temp_br)
+        temp_wld = transform(temp_wld)
+
+        temp_pr['date'] = start_date
+        temp_br['date'] = start_date
+        temp_wld['date'] = start_date
+
+        # print("PR")
+        # print(temp_pr)
+        # print("BR")
+        # print(temp_br)
+        # print("WLD")
+        # print(temp_wld)
+
+        final_pr = pd.concat([final_pr, temp_pr], ignore_index=True)
+        final_br = pd.concat([final_br, temp_br], ignore_index=True)
+        final_wld = pd.concat([final_wld, temp_wld], ignore_index=True)
 
         start_date += timedelta(days=1)
 
     if data_check: 
-        final_df.to_sql("SESA_time_PR", index=False, con=session.get_bind(), if_exists='append', method='multi',
+        final_pr.to_sql("SESA_time_PR", index=False, con=session.get_bind(), if_exists='append', method='multi',
+        dtype={
+            'cases': Integer(),
+            'deaths': Integer(),
+            'date': Date()
+        })
+        final_br.to_sql("SESA_time_BRASIL", index=False, con=session.get_bind(), if_exists='append', method='multi',
+        dtype={
+            'cases': Integer(),
+            'deaths': Integer(),
+            'date': Date()
+        })
+        final_wld.to_sql("SESA_time_MUNDO", index=False, con=session.get_bind(), if_exists='append', method='multi',
         dtype={
             'cases': Integer(),
             'deaths': Integer(),
