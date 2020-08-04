@@ -140,13 +140,13 @@ def insert(session):
             'deaths': Integer(),
             'date': Date()
         })
-        final_br.to_sql("SESA_time_BRASIL", index=False, con=session.get_bind(), if_exists='append', method='multi',
+        final_br.to_sql("SESA_time_Br", index=False, con=session.get_bind(), if_exists='append', method='multi',
         dtype={
             'cases': Integer(),
             'deaths': Integer(),
             'date': Date()
         })
-        final_wld.to_sql("SESA_time_MUNDO", index=False, con=session.get_bind(), if_exists='append', method='multi',
+        final_wld.to_sql("SESA_time_mundo", index=False, con=session.get_bind(), if_exists='append', method='multi',
         dtype={
             'cases': Integer(),
             'deaths': Integer(),
