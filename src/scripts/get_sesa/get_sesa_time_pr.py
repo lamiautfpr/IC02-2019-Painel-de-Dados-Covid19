@@ -100,7 +100,8 @@ def insert(session):
 
         if not response.ok:
             if not data_check:
-                print("get_sesa_leitos sem boletim")
+                print("get_sesa_time_pr sem boletim")
+                return
             break
         
         template_path = templateSelector(start_date)
