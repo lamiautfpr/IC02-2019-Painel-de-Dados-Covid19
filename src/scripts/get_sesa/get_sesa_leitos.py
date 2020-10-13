@@ -182,7 +182,7 @@ def insert(session):
     print("Inserindo get_sesa_leitos.")
 
     data_check = False
-    complements = ['_', '%20', '_atualizado', '_1', '_0', '']
+    complements = ['__0', '_', '%20', '_atualizado', '_1', '_0', '']
     prefixes = ['', '_']
     texto = 'informe_epidemiologico'
     base_url = 'http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/{}/{}{}_{}{}.pdf'
@@ -195,41 +195,49 @@ def insert(session):
     except:
         start_date = datetime(2020, 5, 6, 14, 0, 0).date()    
         print("No data found, start date is ", start_date)
-    
+
+
     hoje = now().date() # HOJE 
 
     # TEST DATE
-    # start_date = datetime(2020, 6, 1, 14, 0, 0).date()
-    # hoje = datetime(2020, 6, 2, 14, 0, 0).date()
+    # start_date = datetime(2020, 10, 4, 14, 0, 0).date()
+    # hoje = datetime(2020, 8, 11, 14, 0, 0).date()
 
     ocupacaoLeitos = pd.DataFrame()
     leitosExclusivos = pd.DataFrame()
 
     while start_date <= hoje:
-        for pfx in prefixes:
-            for com in complements:
-                url = base_url.format(start_date.strftime('%Y-%m'), pfx, texto, start_date.strftime('%d_%m_%Y'), com)
-                response = requests.get(url) # url com texto em lowercase
-                # print(url)
-                if response.ok: # se True
-                    print("COMPLEMENTO = ", com)
-                    print("link do dia ", start_date.strftime("%d-%m"))
-                    print(url)
-                    data_check = True
-                    break # quebra loop
-                else: # senão, 
-                    url = base_url.format(start_date.strftime('%Y-%m'), pfx, texto.upper(), start_date.strftime('%d_%m_%Y'), com)
-                    response = requests.get(url) # url com texto em uppercase
+        if start_date !=  datetime(2020, 8, 12, 14, 0, 0).date():
+            for pfx in prefixes:
+                for com in complements:
+                    url = base_url.format(start_date.strftime('%Y-%m'), pfx, texto, start_date.strftime('%d_%m_%Y'), com)
+                    response = requests.get(url) # url com texto em lowercase
                     # print(url)
                     if response.ok: # se True
                         print("COMPLEMENTO = ", com)
                         print("link do dia ", start_date.strftime("%d-%m"))
                         print(url)
                         data_check = True
-                        break # quebra loop com in complements
-        
-            if response.ok:
-                break # quebra loop pfx in prefixes
+                        break # quebra loop
+                    else: # senão, 
+                        url = base_url.format(start_date.strftime('%Y-%m'), pfx, texto.upper(), start_date.strftime('%d_%m_%Y'), com)
+                        response = requests.get(url) # url com texto em uppercase
+                        # print(url)
+                        if response.ok: # se True
+                            print("COMPLEMENTO = ", com)
+                            print("link do dia ", start_date.strftime("%d-%m"))
+                            print(url)
+                            data_check = True
+                            break # quebra loop com in complements
+            
+                if response.ok:
+                    break # quebra loop pfx in prefixes
+                
+        else:
+            url = "http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/2020-08/INFORME-EPIDEMIOLOGICO-12-08-2020.pdf"
+            print(url)
+            response = requests.get(url)
+            data_check = True
 
         if not response.ok:
             if not data_check:
