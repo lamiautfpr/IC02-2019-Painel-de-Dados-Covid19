@@ -187,19 +187,19 @@ def insert(session):
     texto = 'informe_epidemiologico'
     base_url = 'http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/{}/{}{}_{}{}.pdf'
 
-    # try:
-    #     selectObj = sql_creator.Select(session)
-    #     start_date = selectObj.Date('data_boletim', '"SESA_time_leitosExclusivos"') # DATABASE DATE
-    #     start_date += timedelta(days=1)
-    #     print("Data has been found, start date is ", start_date)
-    # except:
-    #     start_date = datetime(2020, 5, 6, 14, 0, 0).date()    
-    #     print("No data found, start date is ", start_date)
+    try:
+        selectObj = sql_creator.Select(session)
+        start_date = selectObj.Date('data_boletim', '"SESA_time_leitosExclusivos"') # DATABASE DATE
+        start_date += timedelta(days=1)
+        print("Data has been found, start date is ", start_date)
+    except:
+        start_date = datetime(2020, 5, 6, 14, 0, 0).date()    
+        print("No data found, start date is ", start_date)
     
     hoje = now().date() # HOJE 
 
     # TEST DATE
-    start_date = datetime(2020, 10, 4, 14, 0, 0).date()
+    # start_date = datetime(2020, 10, 4, 14, 0, 0).date()
     # hoje = datetime(2020, 8, 11, 14, 0, 0).date()
 
     ocupacaoLeitos = pd.DataFrame()
