@@ -44,7 +44,7 @@ def insert(session):
 
     print("Inserindo SESA_time_PR")
     data_check = False
-    complements = ['_', '%20', '_atualizado', '_1', '_0', '']
+    complements = ['__0', '_', '%20', '_atualizado', '_1', '_0', '']
     prefixes = ['', '_']
     texto = 'informe_epidemiologico'
     base_url = 'http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/{}/{}{}_{}{}.pdf'
@@ -62,27 +62,18 @@ def insert(session):
         print("No data found, start date is ", start_date)
     
     # TEST DATE
-    # start_date = datetime(2020, 8, 1, 14, 0, 0).date()
-    # hoje = datetime(2020, 5, 1, 14, 0, 0).date()
+    # start_date = datetime(2020, 10, 4, 14, 0, 0).date()
+    # hoje = datetime(2020, 10, 11, 14, 0, 0).date()
 
     hoje = now().date()
 
     while start_date <= hoje:
         if start_date != datetime(2020, 4, 30, 14, 0, 0).date():
-            for pfx in prefixes:
-                for com in complements:
-                    url = base_url.format(start_date.strftime('%Y-%m'), pfx, texto, start_date.strftime('%d_%m_%Y'), com)
-                    response = requests.get(url) # url com texto em lowercase
-                    # print(url)
-                    if response.ok: # se True
-                        print("COMPLEMENTO = ", com)
-                        print("link do dia ", start_date.strftime("%d-%m"))
-                        print(url)
-                        data_check = True
-                        break # quebra loop complements
-                    else: # senão, 
-                        url = base_url.format(start_date.strftime('%Y-%m'), pfx, texto.upper(), start_date.strftime('%d_%m_%Y'), com)
-                        response = requests.get(url) # url com texto em uppercase
+            if start_date != datetime(2020, 8, 12, 14, 0, 0).date():
+                for pfx in prefixes:
+                    for com in complements:
+                        url = base_url.format(start_date.strftime('%Y-%m'), pfx, texto, start_date.strftime('%d_%m_%Y'), com)
+                        response = requests.get(url) # url com texto em lowercase
                         # print(url)
                         if response.ok: # se True
                             print("COMPLEMENTO = ", com)
@@ -90,13 +81,31 @@ def insert(session):
                             print(url)
                             data_check = True
                             break # quebra loop complements
-       
-                if response.ok:
-                    break # quebra loop pfx in prefixes
-                
+                        else: # senão, 
+                            url = base_url.format(start_date.strftime('%Y-%m'), pfx, texto.upper(), start_date.strftime('%d_%m_%Y'), com)
+                            response = requests.get(url) # url com texto em uppercase
+                            # print(url)
+                            if response.ok: # se True
+                                print("COMPLEMENTO = ", com)
+                                print("link do dia ", start_date.strftime("%d-%m"))
+                                print(url)
+                                data_check = True
+                                break # quebra loop complements
+        
+                    if response.ok:
+                        break # quebra loop pfx in prefixes
+
+            else:
+                url = "http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/2020-08/INFORME-EPIDEMIOLOGICO-12-08-2020.pdf"
+                print(url)
+                response = requests.get(url)
+                data_check = True
+
         else: # 30/04 url issue -> /2020-05/informe_epidemiologico_30_04_2020_0.pdf"
             url = "http://www.saude.pr.gov.br/sites/default/arquivos_restritos/files/documento/2020-05/informe_epidemiologico_30_04_2020_0.pdf"
             print(url)
+            response = requests.get(url)
+            data_check = True
 
         if not response.ok:
             if not data_check:
