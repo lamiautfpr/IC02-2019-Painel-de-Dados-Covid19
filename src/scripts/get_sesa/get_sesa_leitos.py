@@ -195,7 +195,8 @@ def insert(session):
     except:
         start_date = datetime(2020, 5, 6, 14, 0, 0).date()    
         print("No data found, start date is ", start_date)
-    
+
+
     hoje = now().date() # HOJE 
 
     # TEST DATE

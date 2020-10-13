@@ -61,11 +61,11 @@ def insert(session):
         start_date = datetime(2020, 4, 17, 14, 0, 0).date()    
         print("No data found, start date is ", start_date)
     
+    hoje = now().date()
+
     # TEST DATE
     # start_date = datetime(2020, 10, 4, 14, 0, 0).date()
     # hoje = datetime(2020, 10, 11, 14, 0, 0).date()
-
-    hoje = now().date()
 
     while start_date <= hoje:
         if start_date != datetime(2020, 4, 30, 14, 0, 0).date():
