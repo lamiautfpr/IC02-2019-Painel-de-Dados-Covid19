@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="http://www.lamia-sh.utfpr.edu.br">
+  <a href="https://www.lamia.sh.utfpr.edu.br/">
     <img src="https://user-images.githubusercontent.com/26206052/86039037-3dfa0b80-ba18-11ea-9ab3-7e0696b505af.png" alt="LAMIA - Laboratório de                  Aprendizagem de Máquina e Imagens Aplicados à Indústria" width="400"></a>
 <br> <br>
 Painel de Dados Coronavírus (COVID-19) - Paraná
@@ -40,7 +40,7 @@ Koredata <a href="https://biopark.com.br/site/pt/blog_detalhes/nova-residente-no
 
 
 <p align="center">  
-<b>Grupo</b>: <a href="https://lamia.sh.utfpr.edu.br" target="_blank">LAMIA - Laboratório de Aprendizado de Máquina e Imagens Aplicados à Indústria </a> <br>
+<b>Grupo</b>: <a href="https://www.lamia.sh.utfpr.edu.br/" target="_blank">LAMIA - Laboratório de Aprendizado de Máquina e Imagens Aplicados à Indústria </a> <br>
 <b>Email</b>: <a href="mailto:lamia-sh@utfpr.edu.br" target="_blank">lamia-sh@utfpr.edu.br</a> <br>
 <b>Organização</b>: <a href="http://portal.utfpr.edu.br" target="_blank">Universidade Tecnológica Federal do Paraná</a> <a href="http://www.utfpr.edu.br/campus/santahelena" target="_blank"> - Campus Santa Helena</a> <br>
 </p>
