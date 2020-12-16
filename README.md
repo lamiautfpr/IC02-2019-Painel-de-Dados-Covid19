@@ -8,7 +8,7 @@ Painel de Dados Coronavírus (COVID-19) - Paraná
 </h1>
 
 <p align="center">
-  <a href="https://lamia.sh.utfpr.edu.br">
+  <a href="https://www.lamia.sh.utfpr.edu.br/">
     <img src="https://img.shields.io/badge/Follow-Lab%20Page-blue" alt="Lab">
   <a href="https://bit.ly/paineldadoscovid19">
     <img src="https://img.shields.io/badge/Application-PowerBI-black" alt="Application">
