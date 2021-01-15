@@ -11,10 +11,9 @@ def cleaner(dataset):
 
 
 def catcher():
-    url = ("https://raw.githubusercontent.com/wcota/"
-           "covid19br/master/cases-brazil-cities-time.csv")
+    url = ("https://github.com/wcota/covid19br/blob/master/cases-brazil-cities-time.csv.gz?raw=true")
     dataset = pd.read_csv(url, encoding='utf-8',
-                          engine='python', error_bad_lines=False)
+                          engine='python', error_bad_lines=False, compression='gzip')
 
     dataset = cleaner(dataset)
 

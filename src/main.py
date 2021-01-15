@@ -6,6 +6,7 @@ from scripts.get_sesa import get_sesa_sheets, get_sesa_leitos, get_sesa_pr, get_
 from scripts.get_wcota import get_wcota_leitos, get_wcota_nacional, get_wcota_suspeitos
 from scripts.get_brio import get_brio_nacional, get_brio_cartorio
 from scripts.get_brapi import get_brapi_nacional, get_brapi_mundial
+#from scripts.get_SH import get_SH_sheets
 
 
 def insert_all():
@@ -13,30 +14,30 @@ def insert_all():
     session = Session()
 
 
-    # Get_HDX_Mundial
+    # # Get_HDX_Mundial
     with suppress(Exception):
         get_hdx_mundial.insert(session)
 
 
-    # Get_SESA_Sheets
+    # # Get_SESA_Sheets
     with suppress(Exception):
         get_sesa_sheets.insert(session)
 
-    # Get_SESA_TIME_PR
+    # # Get_SESA_TIME_PR
     with suppress(Exception):
         get_sesa_time_pr.insert(session)
 
-    # Get_SESA_PDF
+    # # Get_SESA_PDF
     with suppress(Exception):
         get_sesa_leitos.insert(session)
 
 
-    # Get_SESA_PR
+    # # Get_SESA_PR
     with suppress(Exception):
         get_sesa_pr.insert(session)
 
 
-    # Get_WCota_Leitos
+    # # Get_WCota_Leitos
     with suppress(Exception):
         get_wcota_leitos.insert(session)
 
@@ -46,29 +47,33 @@ def insert_all():
         get_wcota_nacional.insert(session)
 
 
-    # Get_WCota_Suspeitos
+    # # Get_WCota_Suspeitos
     with suppress(Exception):
         get_wcota_suspeitos.insert(session)
 
 
-    # Get_BRio_Nacional
+    # # Get_BRio_Nacional
     with suppress(Exception):
         get_brio_nacional.insert(session)
 
 
-    # Get_BRio_Cartorio
+    # # Get_BRio_Cartorio
     with suppress(Exception):
         get_brio_cartorio.insert(session)
 
 
-    # Get_BRApi_Nacional
+    # # Get_BRApi_Nacional
     with suppress(Exception):
         get_brapi_nacional.insert(session)
 
 
-    # Get_BRApi_Mundial
+    # # Get_BRApi_Mundial
     with suppress(Exception):
         get_brapi_mundial.insert(session)
+
+    # Get_SH_Sheets
+    # with suppress(Exception):
+    #get_SH_sheets.insert(session)        
 
 
     session.close()
