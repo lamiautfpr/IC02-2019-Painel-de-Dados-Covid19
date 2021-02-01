@@ -21,7 +21,8 @@ def WCota_leitos():
     db_format = {
         "leitosOcupados": Integer(),
         "quantidadeLeitos": Integer(),
-        "totalOcupacao": Float()
+        "totalOcupacao": Float(),
+        "ultimaAtualizacao": Date()
     }
     return db_format
 
@@ -36,6 +37,21 @@ def WCota_suspeitos():
         "novosCasos": Integer(),
         "novosObitos": Integer()
     }
+    return db_format
+
+
+def WCota_vacinas():
+
+    db_format = {
+        "Data": Date(),
+        "Estado": String(),
+        "Suspeitos": Integer(),
+        "Testes": Integer(),
+        "Testes_100k": Float(),
+        "Vacinados": Integer(),
+        "Vacinados_100k": Float()
+    }
+
     return db_format
 
 
@@ -79,4 +95,19 @@ def Brasil_io_cartorio():
     "new_deaths_septicemia_2019": Integer(),
     "new_deaths_septicemia_2020": Integer()
     }
+    return db_format
+
+def get_sesa_vacinas():
+
+    db_format = {
+        'Regional': String(),
+        'Municipio': String(),
+        'Trabalhadores': Integer(),
+        '1-Dose': Integer(),
+        '2-Dose': Integer(),
+        'Numero_Doses': Integer(),
+        'Numero_Arredondado': Integer(),
+        'Data_Insercao': Date()
+    }
+    
     return db_format
