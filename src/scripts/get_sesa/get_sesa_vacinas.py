@@ -21,13 +21,14 @@ def transform(dfs):
     dfs.info()
     
     for df in dfs:
-        print(df)
-        print(dfs[df])
+        # print(df)
+        # print(dfs[df])
         try:
             dfs[df] = dfs[df].str.replace(".", "").astype(int)
         except:
             pass
     
+    dfs["Data_Insercao"] = now()
     return dfs
 
 def cleanner(dfs):

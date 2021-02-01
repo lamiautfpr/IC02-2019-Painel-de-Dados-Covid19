@@ -106,7 +106,8 @@ def get_sesa_vacinas():
         '1-Dose': Integer(),
         '2-Dose': Integer(),
         'Numero_Doses': Integer(),
-        'Numero_Arredondado': Integer()
+        'Numero_Arredondado': Integer(),
+        'Data_Insercao': Date()
     }
     
     return db_format
