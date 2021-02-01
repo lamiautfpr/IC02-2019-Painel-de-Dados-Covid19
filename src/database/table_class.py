@@ -40,6 +40,21 @@ def WCota_suspeitos():
     return db_format
 
 
+def WCota_vacinas():
+
+    db_format = {
+        "Data": Date(),
+        "Estado": String(),
+        "Suspeitos": Integer(),
+        "Testes": Integer(),
+        "Testes_100k": Float(),
+        "Vacinados": Integer(),
+        "Vacinados_100k": Float()
+    }
+
+    return db_format
+
+
 def Brasil_io_nacional():
     db_format = {
     "date": Date(),
