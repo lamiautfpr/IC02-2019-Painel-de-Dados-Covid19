@@ -96,3 +96,17 @@ def Brasil_io_cartorio():
     "new_deaths_septicemia_2020": Integer()
     }
     return db_format
+
+def get_sesa_vacinas():
+
+    db_format = {
+        'Regional': String(),
+        'Municipio': String(),
+        'Trabalhadores': Integer(),
+        '1-Dose': Integer(),
+        '2-Dose': Integer(),
+        'Numero_Doses': Integer(),
+        'Numero_Arredondado': Integer()
+    }
+    
+    return db_format

@@ -2,7 +2,7 @@ from sqlalchemy.orm import sessionmaker
 from contextlib import suppress
 from database.engine_creator import engine_db
 from scripts.get_hdx import get_hdx_mundial
-from scripts.get_sesa import get_sesa_sheets, get_sesa_leitos, get_sesa_pr, get_sesa_time_pr 
+from scripts.get_sesa import get_sesa_sheets, get_sesa_leitos, get_sesa_pr, get_sesa_time_pr, get_sesa_vacinas
 from scripts.get_wcota import get_wcota_leitos, get_wcota_nacional, get_wcota_suspeitos, get_wcota_vacinas
 from scripts.get_brio import get_brio_nacional, get_brio_cartorio
 from scripts.get_brapi import get_brapi_nacional, get_brapi_mundial
@@ -12,7 +12,8 @@ def insert_all():
     Session = sessionmaker(bind=engine_db())
     session = Session()
 
-    get_wcota_vacinas.insert(session)
+    get_sesa_vacinas.insert(session)
+    # get_wcota_vacinas.insert(session)
 
     # # Get_HDX_Mundial
     # with suppress(Exception):
