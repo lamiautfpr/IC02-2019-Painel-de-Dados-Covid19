@@ -269,7 +269,7 @@ def insert(session):
                 return
             break
         
-        page = 6 if start_date >= datetime(2020, 7, 14, 14, 0, 0).date() else 5 if start_date > datetime(2020, 5, 18, 14, 0, 0).date() else 4
+        page = 7 if start_date >= datetime(2021, 2, 17, 14, 0, 0).date() else 6 if start_date >= datetime(2020, 7, 14, 14, 0, 0).date() else 5 if start_date > datetime(2020, 5, 18, 14, 0, 0).date() else 4
         print(page)
        
         df = tabula.read_pdf(url, pages=[page], pandas_options={'header': None, 'dtype': str})
