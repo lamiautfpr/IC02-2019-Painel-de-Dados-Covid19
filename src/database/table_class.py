@@ -49,7 +49,9 @@ def WCota_vacinas():
         "Testes": Integer(),
         "Testes_100k": Float(),
         "Vacinados": Integer(),
-        "Vacinados_100k": Float()
+        "Vacinados_100k": Float(),
+        "Segunda_Dose": Integer(),
+        "Segunda_Dose_100k": Float()
     }
 
     return db_format
