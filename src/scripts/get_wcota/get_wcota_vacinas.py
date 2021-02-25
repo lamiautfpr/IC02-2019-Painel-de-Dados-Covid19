@@ -14,6 +14,8 @@ def cleaner(dataset):
     
     dataset['Testes_100k'] = round(dataset['Testes_100k'], 2)
     dataset['Vacinados_100k'] = round(dataset['Vacinados_100k'], 2)
+    dataset['Segunda_Dose_100k'] = round(dataset['Segunda_Dose_100k'], 2)
+
 
 
     return dataset
