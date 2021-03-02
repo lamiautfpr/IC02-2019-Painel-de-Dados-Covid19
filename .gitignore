@@ -1,5 +1,4 @@
-
-credentials.json
-venv
-
-__pycache__/
+*credentials.json*
+*.pyc
+.vscode/*
+*__pycache__*
