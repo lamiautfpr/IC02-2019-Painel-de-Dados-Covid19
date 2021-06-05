@@ -19,8 +19,6 @@ Painel de Dados Coronavírus (COVID-19) - Paraná
    </a></a></a></a>
 </p>
 
-
-
 <p align="center">
 <b>Equipe:</b>  
 <br>
