@@ -10,27 +10,22 @@ def cleaner(dataset):
         'totalCases', 'deathsMS', 'totalCasesMS', 'deaths_per_100k_inhabitants', 
         'totalCases_per_100k_inhabitants', 'deaths_by_totalCases', 'recovered'], inplace=True)
     # print(dataset[dataset['state'] == 'TOTAL'])
-    dataset.columns = ['Data', 'Estado', 'Suspeitos', 'Testes', 'Testes_100k', 'Vacinados', 'Vacinados_100k', 'Segunda_Dose', 'Segunda_Dose_100k']
+    dataset.columns = ['Data', 'Estado', 'Suspeitos', 'Testes', 'Testes_100k', 'Vacinados', 'Vacinados_100k', 'Segunda_Dose', 'Segunda_Dose_100k', 'Dose_Unica', 'Dose_Unica_100k']
     
     dataset['Testes_100k'] = round(dataset['Testes_100k'], 2)
     dataset['Vacinados_100k'] = round(dataset['Vacinados_100k'], 2)
     dataset['Segunda_Dose_100k'] = round(dataset['Segunda_Dose_100k'], 2)
-
-
+    dataset['Dose_Unica_100k'] = round(dataset['Dose_Unica_100k'], 2)
 
     return dataset
 
  
 def catcher():
-
-    # https://raw.githubusercontent.com/wcota/covid19br/master/cases-brazil-states.csv
-
+    
     url = ("https://raw.githubusercontent.com/wcota/"
            "covid19br/master/cases-brazil-states.csv")
     
     dataset = pd.read_csv(url, delimiter=',', encoding='utf-8', engine='python', error_bad_lines=False)
-
-    print(dataset)
 
     dataset = cleaner(dataset)
 
