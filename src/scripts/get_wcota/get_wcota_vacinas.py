@@ -5,12 +5,14 @@ from scripts.functions import now
 
 def cleaner(dataset):
 
+    print(dataset.columns)
     dataset.drop(dataset[dataset.state == 'TOTAL'].index, inplace=True)
     dataset.drop(columns=['epi_week','country', 'city', 'newDeaths', 'deaths', 'newCases',
         'totalCases', 'deathsMS', 'totalCasesMS', 'deaths_per_100k_inhabitants', 
         'totalCases_per_100k_inhabitants', 'deaths_by_totalCases', 'recovered'], inplace=True)
     # print(dataset[dataset['state'] == 'TOTAL'])
-    dataset.columns = ['Data', 'Estado', 'Suspeitos', 'Testes', 'Testes_100k', 'Vacinados', 'Vacinados_100k', 'Segunda_Dose', 'Segunda_Dose_100k', 'Dose_Unica', 'Dose_Unica_100k']
+    dataset.columns = ['Data', 'Estado', 'Suspeitos', 'Testes', 'Testes_100k', 'Vacinados', 'Vacinados_100k', 'Segunda_Dose', 'Segunda_Dose_100k', 
+                        'Dose_Unica', 'Dose_Unica_100k', 'Terceira_Dose', 'Terceira_Dose_100k']
     
     dataset['Testes_100k'] = round(dataset['Testes_100k'], 2)
     dataset['Vacinados_100k'] = round(dataset['Vacinados_100k'], 2)
