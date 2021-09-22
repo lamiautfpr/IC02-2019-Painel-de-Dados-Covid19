@@ -13,7 +13,7 @@ def insert_all():
     
     # get_sesa_time_pr.insert(session)
     # get_sesa_vacinas.insert(session)
-    get_wcota_vacinas.insert(session)
+    # get_wcota_vacinas.insert(session)
     get_wcota_nacional.insert(session)
    
     # Get_HDX_Mundial
