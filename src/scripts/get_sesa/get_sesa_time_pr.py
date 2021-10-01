@@ -233,7 +233,7 @@ def insert(session):
                         for com in complements:
                             url = base_url.format(start_date.strftime('%Y-%m'), pfx, texto, start_date.strftime('%d_%m_%Y'), com)
                             response = requests.get(url) # url com texto em lowercase
-                            # print(url)
+                            print(url)
                             if response.ok: # se True
                                 # print("COMPLEMENTO = ", com)
                                 # print("link do dia ", start_date.strftime("%d-%m"))
@@ -243,7 +243,7 @@ def insert(session):
                             else: # senão, 
                                 url = base_url.format(start_date.strftime('%Y-%m'), pfx, texto.upper(), start_date.strftime('%d_%m_%Y'), com)
                                 response = requests.get(url) # url com texto em uppercase
-                                # print(url)
+                                print(url)
                                 if response.ok: # se True
                                     # print("COMPLEMENTO = ", com)
                                     # print("link do dia ", start_date.strftime("%d-%m"))
@@ -298,8 +298,8 @@ def insert(session):
         # for d in df:
         #     print(d)
 
-        print(br)
-        # print(pr)
+        print(pr)
+        # print(br)
 
         # old version xx-x -> 12-2 
         # temp_pr = pd.DataFrame([[df[0][2][1], df[0][2][2]]], columns=['cases', 'deaths'])
@@ -335,8 +335,8 @@ def insert(session):
   
     print("PR")
     print(final_pr)
-    print("BR")
-    print(final_br)
+    # print("BR")
+    # print(final_br)
     # print("WLD")
     # print(final_wld)
     
@@ -347,12 +347,12 @@ def insert(session):
             'deaths': Integer(),
             'date': Date()
         })
-        final_br.to_sql("SESA_time_Br", index=False, con=session.get_bind(), if_exists='append', method='multi',
-        dtype={
-            'cases': Integer(),
-            'deaths': Integer(),
-            'date': Date()
-        })
+        # final_br.to_sql("SESA_time_Br", index=False, con=session.get_bind(), if_exists='append', method='multi',
+        # dtype={
+        #     'cases': Integer(),
+        #     'deaths': Integer(),
+        #     'date': Date()
+        # })
         # final_wld.to_sql("SESA_time_mundo", index=False, con=session.get_bind(), if_exists='append', method='multi',
         # dtype={
         #     'cases': Integer(),
