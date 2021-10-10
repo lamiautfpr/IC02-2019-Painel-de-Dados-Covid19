@@ -232,8 +232,8 @@ def insert(session):
                     for pfx in prefixes:
                         for com in complements:
                             url = base_url.format(start_date.strftime('%Y-%m'), pfx, texto, start_date.strftime('%d_%m_%Y'), com)
-                            response = requests.get(url) # url com texto em lowercase
                             print(url)
+                            response = requests.get(url) # url com texto em lowercase
                             if response.ok: # se True
                                 # print("COMPLEMENTO = ", com)
                                 # print("link do dia ", start_date.strftime("%d-%m"))
@@ -242,8 +242,8 @@ def insert(session):
                                 break # quebra loop complements
                             else: # senão, 
                                 url = base_url.format(start_date.strftime('%Y-%m'), pfx, texto.upper(), start_date.strftime('%d_%m_%Y'), com)
-                                response = requests.get(url) # url com texto em uppercase
                                 print(url)
+                                response = requests.get(url) # url com texto em uppercase
                                 if response.ok: # se True
                                     # print("COMPLEMENTO = ", com)
                                     # print("link do dia ", start_date.strftime("%d-%m"))
