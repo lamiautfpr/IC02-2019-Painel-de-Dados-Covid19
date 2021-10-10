@@ -51,7 +51,9 @@ def WCota_vacinas():
         "Vacinados": Integer(),
         "Vacinados_100k": Float(),
         "Segunda_Dose": Integer(),
-        "Segunda_Dose_100k": Float()
+        "Segunda_Dose_100k": Float(),
+        "Dose_Unica": Integer(),
+        "Dose_Unica_100k": Float()
     }
 
     return db_format
@@ -110,6 +112,20 @@ def get_sesa_vacinas():
         'Numero_Doses': Integer(),
         'Numero_Arredondado': Integer(),
         'Data_Insercao': Date()
+    }
+    
+    return db_format
+
+def get_mob():
+
+    db_format = {
+        'data': Date(),
+        'varejo e recreação': Integer(),
+        'mercearia e farmácia': Integer(),
+        'parques': Integer(),
+        'estações de trânsito': Integer(),
+        'locais de trabalho': Integer(),
+        'residências': Integer()
     }
     
     return db_format
