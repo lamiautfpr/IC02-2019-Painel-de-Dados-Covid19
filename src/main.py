@@ -11,10 +11,10 @@ def insert_all():
     Session = sessionmaker(bind=engine_db())
     session = Session()
     
-    # get_sesa_time_pr.insert(session)
+    get_sesa_time_pr.insert(session)
     # get_sesa_vacinas.insert(session)
     # get_wcota_vacinas.insert(session)
-    get_wcota_nacional.insert(session)
+    # get_wcota_nacional.insert(session)
    
     # Get_HDX_Mundial
     # with suppress(Exception):
