@@ -8,6 +8,10 @@ unzip /var/projetos-lamia/2019/IC02-2019-Painel-de-Dados-Covid19/src/Region_Mobi
 
 rm /var/projetos-lamia/2019/IC02-2019-Painel-de-Dados-Covid19/src/Region_Mobility_Report_CSVs.zip
 
+source /var/projetos-lamia/2019/IC02-2019-Painel-de-Dados-Covid19/venv/Scripts/activate
+
 python3	/var/projetos-lamia/2019/IC02-2019-Painel-de-Dados-Covid19/src/get_mob.py
+
+deactivate
 
 rm /var/projetos-lamia/2019/IC02-2019-Painel-de-Dados-Covid19/src/*.csv
